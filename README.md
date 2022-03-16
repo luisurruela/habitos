@@ -1,5 +1,3 @@
-# habitos
+# Habitos
 
 A new Flutter project.
-
-# habitos
