@@ -1,14 +1,62 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  var email = TextEditingController();
+  var password = TextEditingController();
+  var confirmPassword = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    email.dispose();
+    password.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
 
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
+  }
+
+  Future<void> signUp() async {
+    try {
+      if (password.text == confirmPassword.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email.text, password: password.text);
+        email.text = '';
+        password.text = '';
+        confirmPassword.text = '';
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              // Retrieve the text the that user has entered by using the
+              // TextEditingController.
+              content: Text("Password doesn't match"),
+            );
+          },
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
+      print(e);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   @override
@@ -79,31 +127,33 @@ class SignUpScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 30,
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 260,
                                 height: 60,
                                 child: TextField(
-                                  decoration: InputDecoration(
+                                  controller: email,
+                                  decoration: const InputDecoration(
                                       suffix: Icon(
                                         FontAwesomeIcons.envelope,
                                         color: Colors.red,
                                       ),
                                       labelText: "Email Address",
-                                      border: OutlineInputBorder(
+                                      border: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(8)),
+                                            const Radius.circular(8)),
                                       )),
                                 ),
                               ),
                               const SizedBox(
                                 height: 12,
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 260,
                                 height: 60,
                                 child: TextField(
+                                  controller: password,
                                   obscureText: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       suffix: Icon(
                                         FontAwesomeIcons.eyeSlash,
                                         color: Colors.red,
@@ -118,12 +168,13 @@ class SignUpScreen extends StatelessWidget {
                               const SizedBox(
                                 height: 12,
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 260,
                                 height: 60,
                                 child: TextField(
+                                  controller: confirmPassword,
                                   obscureText: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       suffix: Icon(
                                         FontAwesomeIcons.eyeSlash,
                                         color: Colors.red,
@@ -153,14 +204,17 @@ class SignUpScreen extends StatelessWidget {
                                             Color(0xFFE94057),
                                             Color(0xFFF27121),
                                           ])),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Text(
-                                      'Register',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: TextButton(
+                                      onPressed: () => signUp(),
+                                      child: const Text(
+                                        'Register',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
