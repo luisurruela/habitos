@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDTtqlHDNxGWLP_inbzQOb_BDVOubQDgP4',
-    appId: '1:443723990346:android:9dd62ccbddf25a2d396db3',
+    appId: '1:443723990346:android:b3de0867a206af99396db3',
     messagingSenderId: '443723990346',
     projectId: 'habitoskids-183cf',
     storageBucket: 'habitoskids-183cf.appspot.com',
@@ -56,11 +56,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDTLINPvE6xdjqIX8My3PtNQjJup477xHY',
-    appId: '1:443723990346:ios:5091b3a6d8a4eac6396db3',
+    appId: '1:443723990346:ios:17fa4f0450f79cb9396db3',
     messagingSenderId: '443723990346',
     projectId: 'habitoskids-183cf',
     storageBucket: 'habitoskids-183cf.appspot.com',
-    iosClientId: '443723990346-bog4eg3paii81vie23uafv8qcs94e7e8.apps.googleusercontent.com',
-    iosBundleId: 'habitos.kids.app',
+    iosClientId: '443723990346-3imlmdkp93r79vpjgg0h1ckk350sfe8q.apps.googleusercontent.com',
+    iosBundleId: 'kids.habits.com',
   );
 }

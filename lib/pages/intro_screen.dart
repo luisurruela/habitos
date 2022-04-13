@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_onboard/flutter_onboard.dart';
+import 'package:habitos/pages/account_type.dart';
 import 'package:habitos/pages/login.dart';
 
 class IntroScreen extends StatelessWidget {
@@ -57,7 +58,7 @@ class IntroScreen extends StatelessWidget {
                       : Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Login()));
+                              builder: (context) => const AccountType()));
                 }
               },
               child: Container(

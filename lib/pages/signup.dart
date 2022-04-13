@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:habitos/pages/signup.dart';
-import 'package:lottie/lottie.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
@@ -63,7 +62,7 @@ class Login extends StatelessWidget {
                                 height: 30,
                               ),
                               const Text(
-                                "Hello",
+                                "Hello parent!",
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold),
                               ),
@@ -71,7 +70,7 @@ class Login extends StatelessWidget {
                                 height: 10,
                               ),
                               const Text(
-                                "Please Login to Your Account",
+                                "Please, register a new account",
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 15,
@@ -116,22 +115,28 @@ class Login extends StatelessWidget {
                                       )),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Forget Password",
-                                        style:
-                                            TextStyle(color: Colors.deepOrange),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              const SizedBox(
+                                width: 260,
+                                height: 60,
+                                child: TextField(
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                      suffix: Icon(
+                                        FontAwesomeIcons.eyeSlash,
+                                        color: Colors.red,
                                       ),
-                                    )
-                                  ],
+                                      labelText: "Re type Password",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      )),
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 25,
                               ),
                               GestureDetector(
                                 child: Container(
@@ -151,7 +156,7 @@ class Login extends StatelessWidget {
                                   child: const Padding(
                                     padding: EdgeInsets.all(12.0),
                                     child: Text(
-                                      'Login',
+                                      'Register',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 20,
@@ -163,53 +168,9 @@ class Login extends StatelessWidget {
                               const SizedBox(
                                 height: 17,
                               ),
-                              const Text(
-                                "Or Login using Social Media Account",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                          FontAwesomeIcons.facebook,
-                                          color: Colors.blue)),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        FontAwesomeIcons.google,
-                                        color: Colors.redAccent,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        FontAwesomeIcons.twitter,
-                                        color: Colors.orangeAccent,
-                                      )),
-                                ],
-                              )
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(35.0),
-                          child: TextButton(
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignUpScreen())),
-                              child: const Text(
-                                'Register a new account',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 246, 77)),
-                              )),
-                        )
                       ],
                     ),
                   ),
