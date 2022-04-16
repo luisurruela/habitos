@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:habitos/pages/login.dart';
+
+import 'package:habitos/screens/signin_screen.dart';
 
 class AccountType extends StatelessWidget {
   const AccountType({Key? key}) : super(key: key);

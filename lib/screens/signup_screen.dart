@@ -1,15 +1,64 @@
-import 'package:firebase_core/firebase_core.dart';
+// ignore_for_file: unnecessary_const
 import 'package:flutter/material.dart';
-import 'package:habitos/pages/signup.dart';
-import 'package:lottie/lottie.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  var email = TextEditingController();
+  var password = TextEditingController();
+  var confirmPassword = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    email.dispose();
+    password.dispose();
+    confirmPassword.dispose();
+    super.dispose();
+  }
 
   Future<FirebaseApp> _initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
+  }
+
+  Future<void> signUp() async {
+    try {
+      if (password.text == confirmPassword.text) {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: email.text, password: password.text);
+        email.text = '';
+        password.text = '';
+        confirmPassword.text = '';
+      } else {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return const AlertDialog(
+              // Retrieve the text the that user has entered by using the
+              // TextEditingController.
+              content: Text("Password doesn't match"),
+            );
+          },
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      // ignore: avoid_print
+      print(e);
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   @override
@@ -63,7 +112,7 @@ class Login extends StatelessWidget {
                                 height: 30,
                               ),
                               const Text(
-                                "Hello",
+                                "Hello parent!",
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold),
                               ),
@@ -71,7 +120,7 @@ class Login extends StatelessWidget {
                                 height: 10,
                               ),
                               const Text(
-                                "Please Login to Your Account",
+                                "Please, register a new account",
                                 style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 15,
@@ -80,31 +129,33 @@ class Login extends StatelessWidget {
                               const SizedBox(
                                 height: 30,
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 260,
                                 height: 60,
                                 child: TextField(
-                                  decoration: InputDecoration(
+                                  controller: email,
+                                  decoration: const InputDecoration(
                                       suffix: Icon(
                                         FontAwesomeIcons.envelope,
                                         color: Colors.red,
                                       ),
                                       labelText: "Email Address",
-                                      border: OutlineInputBorder(
+                                      border: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
-                                            Radius.circular(8)),
+                                            const Radius.circular(8)),
                                       )),
                                 ),
                               ),
                               const SizedBox(
                                 height: 12,
                               ),
-                              const SizedBox(
+                              SizedBox(
                                 width: 260,
                                 height: 60,
                                 child: TextField(
+                                  controller: password,
                                   obscureText: true,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       suffix: Icon(
                                         FontAwesomeIcons.eyeSlash,
                                         color: Colors.red,
@@ -116,22 +167,29 @@ class Login extends StatelessWidget {
                                       )),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 30, 0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {},
-                                      child: const Text(
-                                        "Forget Password",
-                                        style:
-                                            TextStyle(color: Colors.deepOrange),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              SizedBox(
+                                width: 260,
+                                height: 60,
+                                child: TextField(
+                                  controller: confirmPassword,
+                                  obscureText: true,
+                                  decoration: const InputDecoration(
+                                      suffix: Icon(
+                                        FontAwesomeIcons.eyeSlash,
+                                        color: Colors.red,
                                       ),
-                                    )
-                                  ],
+                                      labelText: "Re type Password",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(8)),
+                                      )),
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 25,
                               ),
                               GestureDetector(
                                 child: Container(
@@ -148,14 +206,17 @@ class Login extends StatelessWidget {
                                             Color(0xFFE94057),
                                             Color(0xFFF27121),
                                           ])),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(12.0),
-                                    child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: TextButton(
+                                      onPressed: () => signUp(),
+                                      child: const Text(
+                                        'Register',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -163,53 +224,9 @@ class Login extends StatelessWidget {
                               const SizedBox(
                                 height: 17,
                               ),
-                              const Text(
-                                "Or Login using Social Media Account",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                          FontAwesomeIcons.facebook,
-                                          color: Colors.blue)),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        FontAwesomeIcons.google,
-                                        color: Colors.redAccent,
-                                      )),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        FontAwesomeIcons.twitter,
-                                        color: Colors.orangeAccent,
-                                      )),
-                                ],
-                              )
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(35.0),
-                          child: TextButton(
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignUpScreen())),
-                              child: const Text(
-                                'Register a new account',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 255, 246, 77)),
-                              )),
-                        )
                       ],
                     ),
                   ),

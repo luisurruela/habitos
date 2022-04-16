@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_onboard/flutter_onboard.dart';
-import 'package:habitos/pages/account_type.dart';
-import 'package:habitos/pages/login.dart';
+import 'package:habitos/screens/account_type_screen.dart';
+import 'package:habitos/screens/signin_screen.dart';
 
 class IntroScreen extends StatelessWidget {
   final PageController _pageController = PageController();
+
+  IntroScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
