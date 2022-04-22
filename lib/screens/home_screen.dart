@@ -8,26 +8,33 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Hello! ${currentUser?.uid}',
-              style: const TextStyle(fontSize: 34),
+    return WillPopScope(
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Home'),
+            automaticallyImplyLeading: false,
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Hello! ${currentUser?.uid}',
+                  style: const TextStyle(fontSize: 34),
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => const Login()));
+                    },
+                    child: const Text('Sign out')),
+              ],
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => const Login()));
-                },
-                child: const Text('Sign out')),
-          ],
+          ),
         ),
-      ),
-    );
+        onWillPop: () async {
+          return true;
+        });
   }
 }

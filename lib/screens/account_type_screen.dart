@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:habitos/screens/signin_screen.dart';
-
 class AccountType extends StatelessWidget {
   const AccountType({Key? key}) : super(key: key);
 
@@ -14,8 +12,7 @@ class AccountType extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextButton(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Login())),
+              onPressed: () => Navigator.pushNamed(context, 'login'),
               child: const Text('Parent')),
           TextButton(onPressed: () {}, child: const Text('Kid'))
         ],
