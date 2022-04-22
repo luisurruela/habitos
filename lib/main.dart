@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:habitos/screens/home_screen.dart';
 import 'package:habitos/screens/onboarding_screen.dart';
 import 'firebase_options.dart';
 
@@ -17,8 +19,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = FirebaseAuth.instance.currentUser;
     return MaterialApp(
-      home: IntroScreen(),
+      home: user != null ? HomeScreen() : IntroScreen(),
     );
   }
 }

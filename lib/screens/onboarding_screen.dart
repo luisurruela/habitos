@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_onboard/flutter_onboard.dart';
 import 'package:habitos/screens/account_type_screen.dart';
-import 'package:habitos/screens/signin_screen.dart';
 
 class IntroScreen extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -11,79 +10,99 @@ class IntroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: OnBoard(
-        pageController: _pageController,
-        // Either Provide onSkip Callback or skipButton Widget to handle skip state
-        onSkip: () {
-          // print('skipped');
-        },
-        // Either Provide onDone Callback or nextButton Widget to handle done state
-        onDone: () {},
-        onBoardData: onBoardData,
-        titleStyles: const TextStyle(
-          color: Colors.deepOrange,
-          fontSize: 18,
-          fontWeight: FontWeight.w900,
-          letterSpacing: 0.15,
-        ),
-        descriptionStyles: TextStyle(
-          fontSize: 16,
-          color: Colors.brown.shade300,
-        ),
-        pageIndicatorStyle: const PageIndicatorStyle(
-          width: 100,
-          inactiveColor: Colors.deepOrangeAccent,
-          activeColor: Colors.deepOrange,
-          inactiveSize: Size(8, 8),
-          activeSize: Size(12, 12),
-        ),
-        // Either Provide onSkip Callback or skipButton Widget to handle skip state
-        skipButton: TextButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Login()));
-          },
-          child: const Text(
-            "Skip",
-            style: TextStyle(color: Colors.deepOrangeAccent),
-          ),
-        ),
-        // Either Provide onDone Callback or nextButton Widget to handle done state
-        nextButton: OnBoardConsumer(
-          builder: (context, ref, child) {
-            final state = ref.watch(onBoardStateProvider);
-            return InkWell(
-              onTap: () {
-                {
-                  !state.isLastPage
-                      ? _onNextTap(state)
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AccountType()));
-                }
-              },
-              child: Container(
-                width: 230,
-                height: 50,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  gradient: const LinearGradient(
-                    colors: [Colors.redAccent, Colors.deepOrangeAccent],
+      body: Column(
+        children: [
+          SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                  gradient: RadialGradient(
+                      center: Alignment(-0.3, -0.95),
+                      radius: 0.8,
+                      colors: [
+                    Color.fromRGBO(255, 130, 205, 1),
+                    Color.fromRGBO(62, 40, 201, 1),
+                  ])),
+              child: OnBoard(
+                pageController: _pageController,
+                // Either Provide onSkip Callback or skipButton Widget to handle skip state
+                onSkip: () {
+                  // print('skipped');
+                },
+                // Either Provide onDone Callback or nextButton Widget to handle done state
+                onDone: () {},
+                imageWidth: MediaQuery.of(context).size.width * 0.85,
+                onBoardData: onBoardData,
+                titleStyles: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 0.15,
+                ),
+                descriptionStyles: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+                pageIndicatorStyle: const PageIndicatorStyle(
+                  width: 100,
+                  inactiveColor: Color.fromRGBO(255, 205, 235, 1),
+                  activeColor: Color.fromRGBO(255, 130, 205, 1),
+                  inactiveSize: Size(8, 8),
+                  activeSize: Size(12, 12),
+                ),
+                // Either Provide onSkip Callback or skipButton Widget to handle skip state
+                skipButton: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AccountType()));
+                  },
+                  child: const Text(
+                    "Skip",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
-                child: Text(
-                  state.isLastPage ? "Get Started" : "Next",
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+                // Either Provide onDone Callback or nextButton Widget to handle done state
+                nextButton: OnBoardConsumer(
+                  builder: (context, ref, child) {
+                    final state = ref.watch(onBoardStateProvider);
+                    return InkWell(
+                      onTap: () {
+                        {
+                          !state.isLastPage
+                              ? _onNextTap(state)
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const AccountType()));
+                        }
+                      },
+                      child: Container(
+                        width: 230,
+                        height: 50,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          color: const Color.fromRGBO(218, 240, 75, 1),
+                        ),
+                        child: Text(
+                          state.isLastPage ? "Get Started" : "Next",
+                          style: const TextStyle(
+                            color: Color.fromRGBO(12, 8, 40, 1),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -103,20 +122,24 @@ class IntroScreen extends StatelessWidget {
 
 final List<OnBoardModel> onBoardData = [
   const OnBoardModel(
-    title: "Set your own goals and get better",
-    description: "Goal support your motivation and inspire you to work harder",
-    imgUrl: "assets/images/weight.png",
+    title: "Create a visual list of activities for your child",
+    description:
+        "Maintain healthy habits, and activities that organize your child’s daily schedule.",
+    imgUrl: "assets/images/img_slide_1.png",
   ),
   const OnBoardModel(
-    title: "Track your progress with statistics",
-    description:
-        "Analyse personal result with detailed chart and numerical values",
-    imgUrl: 'assets/images/graph.png',
+    title: "Add amazing rewards for your kids",
+    description: "Rewards will keep yout children motivated and on task.",
+    imgUrl: 'assets/images/img_slide_2.png',
   ),
   const OnBoardModel(
-    title: "Create photo comparision and share your results",
-    description:
-        "Take before and after photos to visualize progress and get the shape that you dream about",
-    imgUrl: 'assets/images/phone.png',
+    title: "Notifications to encourage healthy habits",
+    description: "Be aware of all your kid’s actions using push notifications",
+    imgUrl: 'assets/images/img_slide_3.png',
+  ),
+  const OnBoardModel(
+    title: "Perfect sync between parent and child",
+    description: "Develop new useful habits in your children together",
+    imgUrl: 'assets/images/img_slide_4.png',
   ),
 ];
