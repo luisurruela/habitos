@@ -11,16 +11,19 @@ class HomeScreen extends StatelessWidget {
     return WillPopScope(
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Home'),
+            title: const Text('Kids Habits'),
             automaticallyImplyLeading: false,
           ),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Hello! ${currentUser?.uid}',
-                  style: const TextStyle(fontSize: 34),
+                const Text(
+                  'Hello!',
+                  style: TextStyle(fontSize: 34, fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(
+                  height: 50,
                 ),
                 ElevatedButton(
                     onPressed: () async {

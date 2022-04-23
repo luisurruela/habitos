@@ -186,7 +186,10 @@ class _LoginState extends State<Login> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, 'forget-password');
+                                    },
                                     child: const Text(
                                       "Forget Password",
                                       style:
@@ -280,9 +283,8 @@ class _LoginState extends State<Login> {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email.text, password: password.text);
-      setState(() {
-        isLoading = false;
-      });
+      isLoading = false;
+      setState(() {});
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         Navigator.of(context).pushReplacement(
@@ -336,6 +338,7 @@ class _LoginState extends State<Login> {
   }
 }
 
+// ignore: camel_case_types
 class loader extends StatelessWidget {
   const loader({
     Key? key,

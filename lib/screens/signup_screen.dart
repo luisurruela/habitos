@@ -305,6 +305,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
+// ignore: camel_case_types
 class loader extends StatelessWidget {
   const loader({
     Key? key,
