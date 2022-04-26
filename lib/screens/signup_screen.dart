@@ -87,6 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     SizedBox(
                                       width: 260,
                                       child: TextFormField(
+                                        enabled: !isLoading,
                                         onChanged: (value) {
                                           if (registerError) {
                                             resetCredentials();
@@ -130,6 +131,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     SizedBox(
                                       width: 260,
                                       child: TextFormField(
+                                        enabled: !isLoading,
                                         onChanged: (value) {
                                           if (registerError) {
                                             resetCredentials();
@@ -154,6 +156,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     SizedBox(
                                       width: 260,
                                       child: TextFormField(
+                                        enabled: !isLoading,
                                         onChanged: (value) {
                                           if (registerError) {
                                             resetCredentials();
@@ -178,44 +181,56 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ],
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    signUp();
-                                  }
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: 250,
-                                  decoration: const BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(50)),
-                                      gradient: LinearGradient(
-                                          begin: Alignment.centerLeft,
-                                          end: Alignment.centerRight,
-                                          colors: [
-                                            Color(0xFF8A2387),
-                                            Color(0xFFE94057),
-                                            Color(0xFFF27121),
-                                          ])),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: TextButton(
-                                      onPressed: () => {
-                                        if (_formKey.currentState!.validate())
-                                          {signUp()}
-                                      },
-                                      child: const Text(
-                                        'Register',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height: 48,
+                                child: ElevatedButton(
+                                    onPressed: isLoading
+                                        ? null
+                                        : () =>
+                                            _formKey.currentState!.validate()
+                                                ? signUp()
+                                                : null,
+                                    child: const Text('Register')),
                               ),
+                              // GestureDetector(
+                              //   onTap: () {
+                              //     if (_formKey.currentState!.validate()) {
+                              //       signUp();
+                              //     }
+                              //   },
+                              //   child: Container(
+                              //     alignment: Alignment.center,
+                              //     width: 250,
+                              //     decoration: const BoxDecoration(
+                              //         borderRadius:
+                              //             BorderRadius.all(Radius.circular(50)),
+                              //         gradient: LinearGradient(
+                              //             begin: Alignment.centerLeft,
+                              //             end: Alignment.centerRight,
+                              //             colors: [
+                              //               Color(0xFF8A2387),
+                              //               Color(0xFFE94057),
+                              //               Color(0xFFF27121),
+                              //             ])),
+                              //     child: Padding(
+                              //       padding: const EdgeInsets.all(2.0),
+                              //       child: TextButton(
+                              //         onPressed: () => {
+                              //           if (_formKey.currentState!.validate())
+                              //             {signUp()}
+                              //         },
+                              //         child: const Text(
+                              //           'Register',
+                              //           style: TextStyle(
+                              //               color: Colors.white,
+                              //               fontSize: 20,
+                              //               fontWeight: FontWeight.bold),
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                               const SizedBox(
                                 height: 20,
                               )
@@ -313,9 +328,9 @@ class loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SpinKitChasingDots(
-      color: Colors.blue,
-      size: 50.0,
+    return const SpinKitRing(
+      color: Colors.pink,
+      size: 60.0,
     );
   }
 }
