@@ -266,7 +266,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: email.text, password: password.text);
+          email: email.text.trim(), password: password.text.trim());
       email.text = '';
       password.text = '';
       confirmPassword.text = '';

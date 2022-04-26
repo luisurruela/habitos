@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/signin_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,55 +9,72 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-        child: Scaffold(
-          key: _scaffoldKey,
-          drawer: const sidebar(),
-          appBar: AppBar(
-            title: const Text('Kids Habits'),
-            automaticallyImplyLeading: false,
-            leading: IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+  Widget build(BuildContext context) => currentUser!.emailVerified
+      ? WillPopScope(
+          child: Scaffold(
+            key: _scaffoldKey,
+            drawer: const sidebar(),
+            appBar: AppBar(
+              title: const Text('Kids Habits'),
+              automaticallyImplyLeading: false,
+              leading: IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+              ),
             ),
+            body: HomeWidget(currentUser: currentUser),
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 200,
-                  height: 200,
-                  child: TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'add-kid');
-                      },
-                      child: const Icon(
-                        Icons.add,
-                        color: Color.fromARGB(255, 204, 204, 204),
-                        size: 80,
-                      )),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: Colors.grey.shade50,
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Color.fromARGB(255, 214, 214, 214),
-                          spreadRadius: 3),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
+          onWillPop: () async {
+            return true;
+          })
+      : const EmailVerificationScreen();
+}
+
+class HomeWidget extends StatelessWidget {
+  const HomeWidget({
+    Key? key,
+    required this.currentUser,
+  }) : super(key: key);
+
+  final User? currentUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Verified user? ${currentUser?.emailVerified}'),
+          const SizedBox(
+            height: 40,
+          ),
+          Container(
+            width: 200,
+            height: 200,
+            child: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'add-kid');
+                },
+                child: const Icon(
+                  Icons.add,
+                  color: Color.fromARGB(255, 204, 204, 204),
+                  size: 80,
+                )),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: Colors.grey.shade50,
+              boxShadow: const [
+                BoxShadow(
+                    color: Color.fromARGB(255, 214, 214, 214), spreadRadius: 3),
               ],
             ),
           ),
-        ),
-        onWillPop: () async {
-          return true;
-        });
+          const SizedBox(
+            height: 50,
+          ),
+        ],
+      ),
+    );
   }
 }
 
