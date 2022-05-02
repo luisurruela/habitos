@@ -63,17 +63,17 @@ class _LoginState extends State<Login> {
                               height: 30,
                             ),
                             const Text(
-                              "Hello",
+                              "Hello Again",
                               style: TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold),
+                                  fontSize: 34, fontWeight: FontWeight.w300),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             const Text(
-                              "Please Login to Your Account",
+                              "Please login to your account",
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: Color.fromARGB(255, 120, 120, 120),
                                 fontSize: 15,
                               ),
                             ),
@@ -98,10 +98,10 @@ class _LoginState extends State<Login> {
                                       },
                                       controller: email,
                                       decoration: const InputDecoration(
-                                          labelText: "Email Address",
+                                          labelText: "Email",
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
+                                                Radius.circular(4)),
                                           )),
                                       validator: emailValidate,
                                       autovalidateMode:
@@ -149,7 +149,7 @@ class _LoginState extends State<Login> {
                                           labelText: "Password",
                                           border: OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(8)),
+                                                Radius.circular(4)),
                                           )),
                                       validator: passwordValidate,
                                       autovalidateMode:
@@ -194,81 +194,58 @@ class _LoginState extends State<Login> {
                                     },
                                     child: const Text(
                                       "Forget Password",
-                                      style:
-                                          TextStyle(color: Colors.deepOrange),
+                                      style: TextStyle(color: Colors.black54),
                                     ),
                                   )
                                 ],
                               ),
                             ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.6,
                               height: 48,
                               child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      elevation: MaterialStateProperty.all(0),
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              const Color.fromRGBO(
+                                                  218, 240, 75, 1)),
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(30))))),
                                   onPressed: isLoading
                                       ? null
                                       : () => _formKey.currentState!.validate()
                                           ? signIn()
                                           : null,
-                                  child: const Text('Login')),
+                                  child: const Text(
+                                    'Login',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(12, 8, 40, 1)),
+                                  )),
                             ),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     if (_formKey.currentState!.validate() &&
-                            //         !isLoading) {
-                            //       signIn();
-                            //     }
-                            //   },
-                            //   child: Container(
-                            //     alignment: Alignment.center,
-                            //     width: 250,
-                            //     decoration: const BoxDecoration(
-                            //         borderRadius:
-                            //             BorderRadius.all(Radius.circular(50)),
-                            //         gradient: LinearGradient(
-                            //             begin: Alignment.centerLeft,
-                            //             end: Alignment.centerRight,
-                            //             colors: [
-                            //               Color(0xFF8A2387),
-                            //               Color(0xFFE94057),
-                            //               Color(0xFFF27121),
-                            //             ])),
-                            //     child: TextButton(
-                            //       onPressed: () =>
-                            //           _formKey.currentState!.validate() &&
-                            //                   !isLoading
-                            //               ? signIn()
-                            //               : null,
-                            //       child: const Text(
-                            //         'Login',
-                            //         style: TextStyle(
-                            //             color: Colors.white,
-                            //             fontSize: 20,
-                            //             fontWeight: FontWeight.bold),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
                             const SizedBox(
                               height: 20,
                             ),
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: TextButton(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const SignUpScreen())),
-                            child: const Text(
-                              'Register a new account',
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 255, 246, 77)),
-                            )),
-                      )
+                      const SizedBox(height: 30),
+                      TextButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen())),
+                          child: const Text(
+                            'Register a new account',
+                            style: TextStyle(
+                                color: Color.fromRGBO(218, 240, 75, 1),
+                                fontSize: 16),
+                          ))
                     ],
                   ),
                 ),
@@ -360,7 +337,7 @@ class loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SpinKitRing(
-      color: Color.fromARGB(255, 243, 33, 166),
+      color: Color.fromRGBO(62, 40, 201, 1),
       size: 50.0,
     );
   }

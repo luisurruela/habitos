@@ -65,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const Text(
                                 "Hello parent!",
                                 style: TextStyle(
-                                    fontSize: 28, fontWeight: FontWeight.bold),
+                                    fontSize: 34, fontWeight: FontWeight.w300),
                               ),
                               const SizedBox(
                                 height: 10,
@@ -73,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const Text(
                                 "Please, register a new account",
                                 style: TextStyle(
-                                  color: Colors.grey,
+                                  color: Color.fromARGB(255, 120, 120, 120),
                                   fontSize: 15,
                                 ),
                               ),
@@ -95,10 +95,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         },
                                         controller: email,
                                         decoration: const InputDecoration(
-                                            labelText: "Email Address",
-                                            border: const OutlineInputBorder(
+                                            labelText: "Email",
+                                            border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
-                                                  const Radius.circular(8)),
+                                                  Radius.circular(4)),
                                             )),
                                         validator: emailValidate,
                                         autovalidateMode:
@@ -143,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             labelText: "Password",
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
+                                                  Radius.circular(4)),
                                             )),
                                         validator: passwordValidate,
                                         autovalidateMode:
@@ -165,10 +165,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         controller: confirmPassword,
                                         obscureText: true,
                                         decoration: const InputDecoration(
-                                            labelText: "Re type Password",
+                                            labelText: "Confirm Password",
                                             border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
-                                                  Radius.circular(8)),
+                                                  Radius.circular(4)),
                                             )),
                                         validator: passwordValidate,
                                         autovalidateMode:
@@ -185,52 +185,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 width: MediaQuery.of(context).size.width * 0.6,
                                 height: 48,
                                 child: ElevatedButton(
-                                    onPressed: isLoading
-                                        ? null
-                                        : () =>
-                                            _formKey.currentState!.validate()
-                                                ? signUp()
-                                                : null,
-                                    child: const Text('Register')),
+                                  style: ButtonStyle(
+                                      elevation: MaterialStateProperty.all(0),
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              const Color.fromRGBO(
+                                                  218, 240, 75, 1)),
+                                      shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                          const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(30))))),
+                                  onPressed: isLoading
+                                      ? null
+                                      : () => _formKey.currentState!.validate()
+                                          ? signUp()
+                                          : null,
+                                  child: const Text(
+                                    'Register',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(12, 8, 40, 1)),
+                                  ),
+                                ),
                               ),
-                              // GestureDetector(
-                              //   onTap: () {
-                              //     if (_formKey.currentState!.validate()) {
-                              //       signUp();
-                              //     }
-                              //   },
-                              //   child: Container(
-                              //     alignment: Alignment.center,
-                              //     width: 250,
-                              //     decoration: const BoxDecoration(
-                              //         borderRadius:
-                              //             BorderRadius.all(Radius.circular(50)),
-                              //         gradient: LinearGradient(
-                              //             begin: Alignment.centerLeft,
-                              //             end: Alignment.centerRight,
-                              //             colors: [
-                              //               Color(0xFF8A2387),
-                              //               Color(0xFFE94057),
-                              //               Color(0xFFF27121),
-                              //             ])),
-                              //     child: Padding(
-                              //       padding: const EdgeInsets.all(2.0),
-                              //       child: TextButton(
-                              //         onPressed: () => {
-                              //           if (_formKey.currentState!.validate())
-                              //             {signUp()}
-                              //         },
-                              //         child: const Text(
-                              //           'Register',
-                              //           style: TextStyle(
-                              //               color: Colors.white,
-                              //               fontSize: 20,
-                              //               fontWeight: FontWeight.bold),
-                              //         ),
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
                               const SizedBox(
                                 height: 20,
                               )
@@ -329,7 +306,7 @@ class loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SpinKitRing(
-      color: Colors.pink,
+      color: Color.fromRGBO(62, 40, 201, 1),
       size: 60.0,
     );
   }

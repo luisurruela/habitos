@@ -5,11 +5,13 @@ class AccountType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
+          height: height,
+          width: width,
           decoration: const BoxDecoration(
               gradient: RadialGradient(
                   center: Alignment(-0.3, -0.95),
@@ -28,8 +30,8 @@ class AccountType extends StatelessWidget {
                   'Select your user type',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600),
+                      fontSize: 28,
+                      fontWeight: FontWeight.w500),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -42,7 +44,7 @@ class AccountType extends StatelessWidget {
                   'Your permissions will be created based on this selection',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 22,
+                      fontSize: 21,
                       fontWeight: FontWeight.w300),
                   textAlign: TextAlign.center,
                 ),

@@ -22,6 +22,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     var user = FirebaseAuth.instance.currentUser;
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Roboto'),
       home: user != null ? HomeScreen() : IntroScreen(),
       routes: AppRouters.routes,
     );
