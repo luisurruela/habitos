@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:habitos/theme/theme.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -22,6 +23,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         children: [
@@ -30,15 +33,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               SingleChildScrollView(
                 child: Center(
                   child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
+                    height: height,
+                    width: width,
                     decoration: const BoxDecoration(
                         gradient: RadialGradient(
                             center: Alignment(-0.3, -0.95),
                             radius: 0.8,
                             colors: [
-                          Color.fromRGBO(255, 130, 205, 1),
-                          Color.fromRGBO(62, 40, 201, 1),
+                          AppTheme.secondary,
+                          AppTheme.primary,
                         ])),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,8 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               const Text(
                                 "Hello parent!",
-                                style: TextStyle(
-                                    fontSize: 34, fontWeight: FontWeight.w300),
+                                style: AppTheme.fontTitle,
                               ),
                               const SizedBox(
                                 height: 10,
@@ -73,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               const Text(
                                 "Please, register a new account",
                                 style: TextStyle(
-                                  color: Color.fromARGB(255, 120, 120, 120),
+                                  color: AppTheme.darkGrey,
                                   fontSize: 15,
                                 ),
                               ),
@@ -94,9 +96,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           }
                                         },
                                         controller: email,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                            floatingLabelStyle:
+                                                MaterialStateTextStyle
+                                                    .resolveWith(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                              final Color color = states
+                                                      .contains(
+                                                          MaterialState.error)
+                                                  ? Theme.of(context).errorColor
+                                                  : AppTheme.primary;
+                                              return TextStyle(color: color);
+                                            }),
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: AppTheme.primary,
+                                                  width: 2.0),
+                                            ),
                                             labelText: "Email",
-                                            border: OutlineInputBorder(
+                                            border: const OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(4)),
                                             )),
@@ -139,9 +159,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         },
                                         controller: password,
                                         obscureText: true,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                            floatingLabelStyle:
+                                                MaterialStateTextStyle
+                                                    .resolveWith(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                              final Color color = states
+                                                      .contains(
+                                                          MaterialState.error)
+                                                  ? Theme.of(context).errorColor
+                                                  : AppTheme.primary;
+                                              return TextStyle(color: color);
+                                            }),
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: AppTheme.primary,
+                                                  width: 2.0),
+                                            ),
                                             labelText: "Password",
-                                            border: OutlineInputBorder(
+                                            border: const OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(4)),
                                             )),
@@ -164,9 +202,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         },
                                         controller: confirmPassword,
                                         obscureText: true,
-                                        decoration: const InputDecoration(
+                                        decoration: InputDecoration(
+                                            floatingLabelStyle:
+                                                MaterialStateTextStyle
+                                                    .resolveWith(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                              final Color color = states
+                                                      .contains(
+                                                          MaterialState.error)
+                                                  ? Theme.of(context).errorColor
+                                                  : AppTheme.primary;
+                                              return TextStyle(color: color);
+                                            }),
+                                            focusedBorder:
+                                                const OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: AppTheme.primary,
+                                                  width: 2.0),
+                                            ),
                                             labelText: "Confirm Password",
-                                            border: OutlineInputBorder(
+                                            border: const OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(4)),
                                             )),
@@ -182,15 +238,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.6,
+                                width: width * 0.6,
                                 height: 48,
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                       elevation: MaterialStateProperty.all(0),
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
-                                              const Color.fromRGBO(
-                                                  218, 240, 75, 1)),
+                                              AppTheme.tertiary),
                                       shape: MaterialStateProperty.all<
                                               RoundedRectangleBorder>(
                                           const RoundedRectangleBorder(
@@ -203,8 +258,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                           : null,
                                   child: const Text(
                                     'Register',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(12, 8, 40, 1)),
+                                    style:
+                                        TextStyle(color: AppTheme.darkPurple),
                                   ),
                                 ),
                               ),

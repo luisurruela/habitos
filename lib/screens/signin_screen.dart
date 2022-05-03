@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:habitos/screens/home_screen.dart';
 import 'package:habitos/screens/signup_screen.dart';
+import 'package:habitos/theme/theme.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         children: [
@@ -30,15 +33,15 @@ class _LoginState extends State<Login> {
             children: [
               SingleChildScrollView(
                 child: Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
+                  height: height,
+                  width: width,
                   decoration: const BoxDecoration(
                       gradient: RadialGradient(
                           center: Alignment(-0.3, -0.95),
                           radius: 0.8,
                           colors: [
-                        Color.fromRGBO(255, 130, 205, 1),
-                        Color.fromRGBO(62, 40, 201, 1),
+                        AppTheme.secondary,
+                        AppTheme.primary,
                       ])),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -64,8 +67,7 @@ class _LoginState extends State<Login> {
                             ),
                             const Text(
                               "Hello Again",
-                              style: TextStyle(
-                                  fontSize: 34, fontWeight: FontWeight.w300),
+                              style: AppTheme.fontTitle,
                             ),
                             const SizedBox(
                               height: 10,
@@ -97,12 +99,27 @@ class _LoginState extends State<Login> {
                                         }
                                       },
                                       controller: email,
-                                      decoration: const InputDecoration(
-                                          labelText: "Email",
-                                          border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(4)),
-                                          )),
+                                      decoration: InputDecoration(
+                                        floatingLabelStyle:
+                                            MaterialStateTextStyle.resolveWith(
+                                                (Set<MaterialState> states) {
+                                          final Color color = states
+                                                  .contains(MaterialState.error)
+                                              ? Theme.of(context).errorColor
+                                              : AppTheme.primary;
+                                          return TextStyle(color: color);
+                                        }),
+                                        focusedBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: AppTheme.primary,
+                                              width: 2.0),
+                                        ),
+                                        labelText: "Email",
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4)),
+                                        ),
+                                      ),
                                       validator: emailValidate,
                                       autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
@@ -145,9 +162,26 @@ class _LoginState extends State<Login> {
                                       },
                                       controller: password,
                                       obscureText: true,
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
+                                          floatingLabelStyle:
+                                              MaterialStateTextStyle
+                                                  .resolveWith(
+                                                      (Set<MaterialState>
+                                                          states) {
+                                            final Color color = states.contains(
+                                                    MaterialState.error)
+                                                ? Theme.of(context).errorColor
+                                                : AppTheme.primary;
+                                            return TextStyle(color: color);
+                                          }),
+                                          focusedBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: AppTheme.primary,
+                                                width: 2.0),
+                                          ),
                                           labelText: "Password",
-                                          border: OutlineInputBorder(
+                                          border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4)),
                                           )),
@@ -193,8 +227,9 @@ class _LoginState extends State<Login> {
                                           context, 'forget-password');
                                     },
                                     child: const Text(
-                                      "Forget Password",
-                                      style: TextStyle(color: Colors.black54),
+                                      "Forgot Password",
+                                      style:
+                                          TextStyle(color: AppTheme.darkPurple),
                                     ),
                                   )
                                 ],
@@ -243,8 +278,7 @@ class _LoginState extends State<Login> {
                           child: const Text(
                             'Register a new account',
                             style: TextStyle(
-                                color: Color.fromRGBO(218, 240, 75, 1),
-                                fontSize: 16),
+                                color: AppTheme.tertiary, fontSize: 16),
                           ))
                     ],
                   ),

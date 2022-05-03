@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_onboard/flutter_onboard.dart';
 import 'package:habitos/screens/account_type_screen.dart';
+import 'package:habitos/theme/theme.dart';
 
 class IntroScreen extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -9,6 +10,7 @@ class IntroScreen extends StatelessWidget {
   IntroScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Column(
         children: [
@@ -21,8 +23,8 @@ class IntroScreen extends StatelessWidget {
                       center: Alignment(-0.3, -0.95),
                       radius: 0.8,
                       colors: [
-                    Color.fromRGBO(255, 130, 205, 1),
-                    Color.fromRGBO(62, 40, 201, 1),
+                    AppTheme.secondary,
+                    AppTheme.primary,
                   ])),
               child: OnBoard(
                 pageController: _pageController,
@@ -32,7 +34,7 @@ class IntroScreen extends StatelessWidget {
                 },
                 // Either Provide onDone Callback or nextButton Widget to handle done state
                 onDone: () {},
-                imageWidth: MediaQuery.of(context).size.width * 0.85,
+                imageWidth: width * 0.85,
                 onBoardData: onBoardData,
                 titleStyles: const TextStyle(
                   color: Colors.white,
@@ -47,7 +49,7 @@ class IntroScreen extends StatelessWidget {
                 pageIndicatorStyle: const PageIndicatorStyle(
                   width: 100,
                   inactiveColor: Color.fromRGBO(255, 205, 235, 1),
-                  activeColor: Color.fromRGBO(255, 130, 205, 1),
+                  activeColor: AppTheme.secondary,
                   inactiveSize: Size(8, 8),
                   activeSize: Size(12, 12),
                 ),
@@ -86,12 +88,12 @@ class IntroScreen extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: const Color.fromRGBO(218, 240, 75, 1),
+                          color: AppTheme.tertiary,
                         ),
                         child: Text(
                           state.isLastPage ? "Get Started" : "Next",
                           style: const TextStyle(
-                            color: Color.fromRGBO(12, 8, 40, 1),
+                            color: AppTheme.darkPurple,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
