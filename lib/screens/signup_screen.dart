@@ -74,10 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               const Text(
                                 "Please, register a new account",
-                                style: TextStyle(
-                                  color: AppTheme.darkGrey,
-                                  fontSize: 15,
-                                ),
+                                style: AppTheme.fontSubTitle,
                               ),
                               const SizedBox(
                                 height: 30,

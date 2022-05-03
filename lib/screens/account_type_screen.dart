@@ -25,13 +25,14 @@ class AccountType extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.8,
                 child: const Text(
                   'Select your user type',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500),
+                      fontSize: 30,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'PPAgrandir'),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -39,12 +40,12 @@ class AccountType extends StatelessWidget {
                 height: 30,
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
+                width: MediaQuery.of(context).size.width * 0.8,
                 child: const Text(
                   'Your permissions will be created based on this selection',
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 21,
+                      fontSize: 20,
                       fontWeight: FontWeight.w300),
                   textAlign: TextAlign.center,
                 ),
@@ -64,16 +65,17 @@ class AccountType extends StatelessWidget {
                         "I'm a parent",
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
-                            fontSize: 30,
-                            color: Colors.white),
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontFamily: 'PPAgrandir'),
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 10),
                       Text(
                         "I’ll be managing the account",
                         style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 16,
                           color: Color.fromRGBO(255, 255, 255, 1),
                         ),
                         textAlign: TextAlign.center,
@@ -101,15 +103,16 @@ class AccountType extends StatelessWidget {
                           "I'm a Kid",
                           style: TextStyle(
                               fontWeight: FontWeight.w300,
-                              fontSize: 30,
-                              color: Colors.white),
+                              fontSize: 24,
+                              color: Colors.white,
+                              fontFamily: 'PPAgrandir'),
                         ),
                         SizedBox(height: 10),
                         Text(
                           "You will win points by completing tasks",
                           style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
                             color: Color.fromRGBO(255, 255, 255, 1),
                           ),
                           textAlign: TextAlign.center,

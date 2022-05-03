@@ -7,8 +7,16 @@ class AppTheme {
   static const Color darkGrey = Color.fromARGB(255, 120, 120, 120);
   static const Color darkPurple = Color.fromRGBO(12, 8, 40, 1);
 
-  static const TextStyle fontTitle =
-      TextStyle(fontSize: 34, fontWeight: FontWeight.w300);
+  static const TextStyle fontTitle = TextStyle(
+      fontSize: 32, fontWeight: FontWeight.w700, fontFamily: 'PPAgrandir');
+
+  static const TextStyle fontSubTitle = TextStyle(
+    color: Color.fromARGB(255, 120, 120, 120),
+    fontSize: 16,
+  );
+
+  static const TextStyle linkPrimary =
+      TextStyle(color: AppTheme.primary, fontWeight: FontWeight.w400);
 
   static ButtonStyle mainButton = ButtonStyle(
       elevation: MaterialStateProperty.all(0),

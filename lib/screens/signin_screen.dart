@@ -66,18 +66,15 @@ class _LoginState extends State<Login> {
                               height: 30,
                             ),
                             const Text(
-                              "Hello Again",
+                              "Welcome back",
                               style: AppTheme.fontTitle,
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             const Text(
-                              "Please login to your account",
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 120, 120, 120),
-                                fontSize: 15,
-                              ),
+                              "Login to your account",
+                              style: AppTheme.fontSubTitle,
                             ),
                             const SizedBox(
                               height: 30,
@@ -228,8 +225,7 @@ class _LoginState extends State<Login> {
                                     },
                                     child: const Text(
                                       "Forgot Password",
-                                      style:
-                                          TextStyle(color: AppTheme.darkPurple),
+                                      style: AppTheme.linkPrimary,
                                     ),
                                   )
                                 ],

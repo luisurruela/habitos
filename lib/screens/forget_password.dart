@@ -61,10 +61,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             ),
                             Text(
                               'Get instructions sent to this email that explain how to reset your password',
-                              style: TextStyle(
-                                color: AppTheme.darkGrey,
-                                fontSize: 15,
-                              ),
+                              style: AppTheme.fontSubTitle,
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -180,10 +177,7 @@ class ResetPasswordConfirmation extends StatelessWidget {
             ),
             Text(
               'Follow the instructions sent to $email to recover your password.',
-              style: const TextStyle(
-                color: AppTheme.darkGrey,
-                fontSize: 15,
-              ),
+              style: AppTheme.fontSubTitle,
               textAlign: TextAlign.center,
             ),
             const SizedBox(
