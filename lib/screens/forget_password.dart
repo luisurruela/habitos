@@ -53,7 +53,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           children: const [
                             Text(
                               'Reset your password',
-                              style: AppTheme.fontTitle,
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'PPAgrandir'),
                               textAlign: TextAlign.center,
                             ),
                             SizedBox(

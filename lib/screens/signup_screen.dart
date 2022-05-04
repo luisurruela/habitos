@@ -48,10 +48,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         const SizedBox(
-                          height: 50,
+                          width: 200,
+                          child: Image(
+                              image:
+                                  AssetImage('assets/images/signup-image.png')),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         Container(
                           width: 325,
@@ -66,14 +69,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 height: 30,
                               ),
                               const Text(
-                                "Hello parent!",
+                                "Sign Up",
                                 style: AppTheme.fontTitle,
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
                               const Text(
-                                "Please, register a new account",
+                                "Register a new account",
                                 style: AppTheme.fontSubTitle,
                               ),
                               const SizedBox(
@@ -262,10 +265,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               const SizedBox(
                                 height: 20,
-                              )
+                              ),
                             ],
                           ),
                         ),
+                        const SizedBox(height: 30),
+                        TextButton(
+                            onPressed: () => Navigator.pushReplacementNamed(
+                                context, 'login'),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                Text(
+                                  'Already have an account? ',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 16),
+                                ),
+                                Text(
+                                  'Login',
+                                  style: TextStyle(
+                                      color: AppTheme.tertiary, fontSize: 16),
+                                ),
+                              ],
+                            ))
                       ],
                     ),
                   ),

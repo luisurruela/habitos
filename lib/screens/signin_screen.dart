@@ -48,10 +48,13 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       const SizedBox(
-                        height: 50,
+                        width: 200,
+                        child: Image(
+                            image:
+                                AssetImage('assets/images/signing-image.png')),
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 30,
                       ),
                       Container(
                         width: 325,
@@ -224,7 +227,7 @@ class _LoginState extends State<Login> {
                                           context, 'forget-password');
                                     },
                                     child: const Text(
-                                      "Forgot Password",
+                                      "Forget Password?",
                                       style: AppTheme.linkPrimary,
                                     ),
                                   )
