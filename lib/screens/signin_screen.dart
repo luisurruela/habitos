@@ -100,11 +100,19 @@ class _LoginState extends State<Login> {
                                       },
                                       controller: email,
                                       decoration: InputDecoration(
+                                        enabledBorder: emailError
+                                            ? const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 2.0),
+                                              )
+                                            : null,
                                         floatingLabelStyle:
                                             MaterialStateTextStyle.resolveWith(
                                                 (Set<MaterialState> states) {
-                                          final Color color = states
-                                                  .contains(MaterialState.error)
+                                          Color color = (states.contains(
+                                                      MaterialState.error) ||
+                                                  emailError)
                                               ? Theme.of(context).errorColor
                                               : AppTheme.primary;
                                           return TextStyle(color: color);
@@ -163,13 +171,21 @@ class _LoginState extends State<Login> {
                                       controller: password,
                                       obscureText: true,
                                       decoration: InputDecoration(
+                                          enabledBorder: passwordError
+                                              ? const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 2.0),
+                                                )
+                                              : null,
                                           floatingLabelStyle:
                                               MaterialStateTextStyle
                                                   .resolveWith(
                                                       (Set<MaterialState>
                                                           states) {
-                                            final Color color = states.contains(
-                                                    MaterialState.error)
+                                            Color color = (states.contains(
+                                                        MaterialState.error) ||
+                                                    passwordError)
                                                 ? Theme.of(context).errorColor
                                                 : AppTheme.primary;
                                             return TextStyle(color: color);
@@ -317,15 +333,20 @@ class _LoginState extends State<Login> {
       if (e.code.toString() == "user-not-found" ||
           e.code.toString() == 'invalid-email' ||
           e.code.toString() == 'too-many-requests') {
+        if (e.code.toString() == "user-not-found") {
+          error =
+              "The Email Address that you've entered doesn't match any account, try again.";
+        } else {
+          error = e.message.toString();
+        }
         emailError = true;
-        error = e.message.toString();
         isLoading = false;
         setState(() {});
       }
 
       if (e.code.toString() == 'wrong-password') {
         passwordError = true;
-        error = e.message.toString();
+        error = "The Password that you've entered is incorrect, try again";
         isLoading = false;
         setState(() {});
       }

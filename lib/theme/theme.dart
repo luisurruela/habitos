@@ -11,7 +11,7 @@ class AppTheme {
       fontSize: 32, fontWeight: FontWeight.w700, fontFamily: 'PPAgrandir');
 
   static const TextStyle fontSubTitle = TextStyle(
-    color: Color.fromARGB(255, 120, 120, 120),
+    color: Color.fromARGB(255, 103, 103, 103),
     fontSize: 16,
   );
 
