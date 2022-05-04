@@ -95,16 +95,6 @@ flutter:
       - asset: assets/fonts/Roboto-ThinItalic.ttf
         weight: 100
         style: italic
-  - family: NotoSerif
-    fonts:
-      - asset: assets/fonts/NotoSerif-Regular.ttf
-      - asset: assets/fonts/NotoSerif-Bold.ttf
-        weight: 700
-      - asset: assets/fonts/NotoSerif-BoldItalic.ttf
-        weight: 700
-        style: italic
-      - asset: assets/fonts/NotoSerif-Italic.ttf
-        style: italic
   - family: PPAgrandir
     fonts: 
         - asset: assets/fonts/PPAgrandir-Bold.ttf
