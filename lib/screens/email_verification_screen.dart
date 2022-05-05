@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:habitos/screens/home_screen.dart';
 
+import '../theme/theme.dart';
+
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({Key? key}) : super(key: key);
 
@@ -37,71 +39,157 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => isEmailVerified
-      ? HomeScreen()
-      : Scaffold(
-          appBar: AppBar(
-            title: const Text('Email Verification'),
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                  child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.8,
+  Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (isEmailVerified) {
+      return HomeScreen();
+    } else {
+      return Scaffold(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SingleChildScrollView(
+              child: Container(
+                height: height,
+                width: width,
+                decoration: const BoxDecoration(
+                    gradient: RadialGradient(
+                        center: Alignment(-0.3, -0.95),
+                        radius: 0.8,
+                        colors: [
+                      AppTheme.secondary,
+                      AppTheme.primary,
+                    ])),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Verify your email!',
-                      style:
-                          TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 7),
-                      child: Text(
-                        'We send you an email, click the link inside to verify your account.',
-                        style: TextStyle(color: Colors.black87),
-                        textAlign: TextAlign.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: 325,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Center(
+                                child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.8,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const Text(
+                                    'Verify your email!',
+                                    style: AppTheme.fontTitle,
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 7),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12),
+                                      child: RichText(
+                                          textAlign: TextAlign.center,
+                                          text: TextSpan(
+                                              text: 'Confirm that ',
+                                              style: AppTheme.fontSubTitle,
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text: user!.email,
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                const TextSpan(
+                                                    text:
+                                                        ' is your email address to finalize the Sign Up.')
+                                              ])),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        height: 48,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                elevation: MaterialStateProperty.all(
+                                                    0),
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<Color>(
+                                                        const Color.fromRGBO(
+                                                            218, 240, 75, 1)),
+                                                shape: MaterialStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                    const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(Radius.circular(30))))),
+                                            onPressed: canReSend ? sendEmailVerification : null,
+                                            child: const Text(
+                                              'Re-send',
+                                              style: TextStyle(
+                                                  color: AppTheme.darkPurple),
+                                            )),
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.6,
+                                        height: 48,
+                                        child: TextButton(
+                                            onPressed: () async {
+                                              await FirebaseAuth.instance
+                                                  .signOut();
+                                              Navigator
+                                                  .restorablePushReplacementNamed(
+                                                      context, 'login');
+                                            },
+                                            child: const Text(
+                                              'Cancel',
+                                              style: TextStyle(
+                                                  color: AppTheme.darkPurple),
+                                            )),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )),
+                          )
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: ElevatedButton(
-                              onPressed:
-                                  canReSend ? sendEmailVerification : null,
-                              child: const Text('Re-send')),
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.3,
-                          child: ElevatedButton(
-                              onPressed: () async {
-                                await FirebaseAuth.instance.signOut();
-                                Navigator.restorablePushReplacementNamed(
-                                    context, 'login');
-                              },
-                              child: const Text('Cancel')),
-                        ),
-                      ],
-                    )
                   ],
                 ),
-              )),
-            ],
-          ),
-        );
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   Future checkEmailVerified() async {
     await FirebaseAuth.instance.currentUser?.reload();
