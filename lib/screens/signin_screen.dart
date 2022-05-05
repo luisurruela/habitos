@@ -117,11 +117,17 @@ class _LoginState extends State<Login> {
                                               : AppTheme.primary;
                                           return TextStyle(color: color);
                                         }),
-                                        focusedBorder: const OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: AppTheme.primary,
-                                              width: 2.0),
-                                        ),
+                                        focusedBorder: emailError
+                                            ? const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 2.0),
+                                              )
+                                            : const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppTheme.primary,
+                                                    width: 2.0),
+                                              ),
                                         labelText: "Email",
                                         border: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
@@ -190,12 +196,17 @@ class _LoginState extends State<Login> {
                                                 : AppTheme.primary;
                                             return TextStyle(color: color);
                                           }),
-                                          focusedBorder:
-                                              const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: AppTheme.primary,
-                                                width: 2.0),
-                                          ),
+                                          focusedBorder: passwordError
+                                              ? const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.red,
+                                                      width: 2.0),
+                                                )
+                                              : const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: AppTheme.primary,
+                                                      width: 2.0),
+                                                ),
                                           labelText: "Password",
                                           border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
