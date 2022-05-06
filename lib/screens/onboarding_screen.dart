@@ -18,14 +18,7 @@ class IntroScreen extends StatelessWidget {
             child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                  gradient: RadialGradient(
-                      center: Alignment(-0.3, -0.95),
-                      radius: 0.8,
-                      colors: [
-                    AppTheme.secondary,
-                    AppTheme.primary,
-                  ])),
+              decoration: AppTheme.backgroundGradient,
               child: OnBoard(
                 pageController: _pageController,
                 // Either Provide onSkip Callback or skipButton Widget to handle skip state

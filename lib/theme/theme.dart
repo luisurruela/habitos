@@ -10,9 +10,20 @@ class AppTheme {
   static const TextStyle fontTitle = TextStyle(
       fontSize: 32, fontWeight: FontWeight.w700, fontFamily: 'PPAgrandir');
 
+  static const TextStyle fontTitleWhite = TextStyle(
+      color: Colors.white,
+      fontSize: 32,
+      fontWeight: FontWeight.w700,
+      fontFamily: 'PPAgrandir');
+
   static const TextStyle fontSubTitle = TextStyle(
     color: Color.fromARGB(255, 103, 103, 103),
     fontSize: 16,
+  );
+
+  static const TextStyle fontSubTitleWhite = TextStyle(
+    color: Colors.white70,
+    fontSize: 17,
   );
 
   static const TextStyle linkPrimary =
@@ -24,4 +35,11 @@ class AppTheme {
       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)))));
+
+  static BoxDecoration backgroundGradient = const BoxDecoration(
+      gradient:
+          RadialGradient(center: Alignment(-0.3, -0.95), radius: 0.8, colors: [
+    AppTheme.secondary,
+    AppTheme.primary,
+  ]));
 }

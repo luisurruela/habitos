@@ -35,14 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Container(
                     height: height,
                     width: width,
-                    decoration: const BoxDecoration(
-                        gradient: RadialGradient(
-                            center: Alignment(-0.3, -0.95),
-                            radius: 0.8,
-                            colors: [
-                          AppTheme.secondary,
-                          AppTheme.primary,
-                        ])),
+                    decoration: AppTheme.backgroundGradient,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -271,8 +264,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const SizedBox(height: 30),
                         TextButton(
-                            onPressed: () => Navigator.pushReplacementNamed(
-                                context, 'login'),
+                            onPressed: () => Navigator.pop(context),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [

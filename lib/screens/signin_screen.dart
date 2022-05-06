@@ -35,14 +35,7 @@ class _LoginState extends State<Login> {
                 child: Container(
                   height: height,
                   width: width,
-                  decoration: const BoxDecoration(
-                      gradient: RadialGradient(
-                          center: Alignment(-0.3, -0.95),
-                          radius: 0.8,
-                          colors: [
-                        AppTheme.secondary,
-                        AppTheme.primary,
-                      ])),
+                  decoration: AppTheme.backgroundGradient,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,

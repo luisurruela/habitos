@@ -44,7 +44,6 @@ class HomeWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Verified user? ${currentUser?.emailVerified}'),
           const SizedBox(
             height: 40,
           ),

@@ -32,14 +32,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             child: Container(
           height: height,
           width: width,
-          decoration: const BoxDecoration(
-              gradient: RadialGradient(
-                  center: Alignment(-0.3, -0.95),
-                  radius: 0.8,
-                  colors: [
-                AppTheme.secondary,
-                AppTheme.primary,
-              ])),
+          decoration: AppTheme.backgroundGradient,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -48,8 +41,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 children: [
                   SizedBox(
                     child: TextButton(
-                        onPressed: () =>
-                            Navigator.pushReplacementNamed(context, 'login'),
+                        onPressed: () => Navigator.pop(context),
                         child: const Icon(
                           Icons.arrow_back,
                           color: Colors.white,

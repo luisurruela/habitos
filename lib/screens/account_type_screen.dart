@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habitos/theme/theme.dart';
 
 class AccountType extends StatelessWidget {
   const AccountType({Key? key}) : super(key: key);
@@ -12,14 +13,7 @@ class AccountType extends StatelessWidget {
         child: Container(
           height: height,
           width: width,
-          decoration: const BoxDecoration(
-              gradient: RadialGradient(
-                  center: Alignment(-0.3, -0.95),
-                  radius: 0.8,
-                  colors: [
-                Color.fromRGBO(255, 130, 205, 1),
-                Color.fromRGBO(62, 40, 201, 1),
-              ])),
+          decoration: AppTheme.backgroundGradient,
           child: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
