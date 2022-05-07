@@ -36,6 +36,14 @@ class AppTheme {
           const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(30)))));
 
+  static ButtonStyle mainButtonDisabled = ButtonStyle(
+      elevation: MaterialStateProperty.all(0),
+      backgroundColor:
+          MaterialStateProperty.all<Color>(const Color(0xFFD8D4F4)),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(30)))));
+
   static BoxDecoration backgroundGradient = const BoxDecoration(
       gradient:
           RadialGradient(center: Alignment(-0.3, -0.95), radius: 0.8, colors: [

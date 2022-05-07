@@ -2,8 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../theme/theme.dart';
 
-class AddKidScreen extends StatelessWidget {
+class AddKidScreen extends StatefulWidget {
   const AddKidScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddKidScreen> createState() => _AddKidScreenState();
+}
+
+class _AddKidScreenState extends State<AddKidScreen> {
+  DateTime? selectedDate;
+  TextEditingController name = TextEditingController();
+  TextEditingController currentDate = TextEditingController();
+  bool buttonEnabled = true;
+  final DateTime firstDate = DateTime(1947);
+  final DateTime lastDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,59 +93,70 @@ class AddKidScreen extends StatelessWidget {
                     SizedBox(
                       width: width,
                       child: Form(
+                          key: _formKey,
                           child: Column(
-                        children: [
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white38, width: 2.0),
+                            children: [
+                              TextFormField(
+                                style: const TextStyle(color: Colors.white),
+                                controller: name,
+                                decoration: const InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white24, width: 2.0),
+                                  ),
+                                  floatingLabelStyle:
+                                      TextStyle(color: Colors.white70),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white70, width: 2.0),
+                                  ),
+                                  labelText: "Child's Name",
+                                  labelStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                  ),
+                                ),
+                                validator: nameValidate,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                               ),
-                              floatingLabelStyle:
-                                  TextStyle(color: Colors.white70),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white70, width: 2.0),
+                              const SizedBox(
+                                height: 20,
                               ),
-                              labelText: "Child's Name",
-                              labelStyle: TextStyle(color: Colors.white54),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
+                              TextFormField(
+                                keyboardType: TextInputType.datetime,
+                                style: const TextStyle(color: Colors.white),
+                                controller: currentDate,
+                                onTap: () {
+                                  setState(() {
+                                    _presentDatePicker(context);
+                                  });
+                                },
+                                decoration: const InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white24, width: 2.0),
+                                  ),
+                                  floatingLabelStyle:
+                                      TextStyle(color: Colors.white70),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white70, width: 2.0),
+                                  ),
+                                  labelText: "Date of birth",
+                                  labelStyle: TextStyle(color: Colors.white),
+                                  border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(4)),
+                                  ),
+                                ),
+                                validator: dateValidate,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                               ),
-                            ),
-                            validator: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white38, width: 2.0),
-                              ),
-                              floatingLabelStyle:
-                                  TextStyle(color: Colors.white70),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Colors.white70, width: 2.0),
-                              ),
-                              labelText: "Date of birth",
-                              labelStyle: TextStyle(color: Colors.white54),
-                              border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4)),
-                              ),
-                            ),
-                            validator: null,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                          ),
-                        ],
-                      )),
+                            ],
+                          )),
                     ),
                   ],
                 ),
@@ -143,24 +168,21 @@ class AddKidScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.6,
                 height: 48,
                 child: ElevatedButton(
-                    style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(0),
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color.fromRGBO(218, 240, 75, 1)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(30))))),
-                    onPressed: () {},
-                    child: const SizedBox(
+                    style: buttonEnabled
+                        ? AppTheme.mainButtonDisabled
+                        : AppTheme.mainButton,
+                    onPressed: !buttonEnabled ? () {} : null,
+                    child: SizedBox(
                       width: 200,
                       child: Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Center(
                             child: Text(
                           'Add Child',
-                          style: TextStyle(color: AppTheme.darkPurple),
+                          style: TextStyle(
+                              color: buttonEnabled
+                                  ? const Color(0xFF8B7EDF)
+                                  : AppTheme.darkPurple),
                         )),
                       ),
                     )),
@@ -173,5 +195,48 @@ class AddKidScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String? nameValidate(String? name) {
+    if (name == null || name.isEmpty) {
+      return 'Please enter your kid name';
+    }
+
+    if (name.length < 5 || name.length > 50) {
+      return 'Name must be between 2 and 50 characters';
+    }
+
+    return null;
+  }
+
+  String? dateValidate(String? currentDate) {
+    if (currentDate == null || currentDate.isEmpty) {
+      return r"Please enter your kid's birthday";
+    }
+
+    if (currentDate.length > 10) {
+      return 'Invalid date.';
+    }
+
+    String pattern = r"\d{1,2}/\d{1,2}/\d{4}";
+    RegExp regex = RegExp(pattern);
+    return regex.hasMatch(currentDate) ? null : 'Invalid date.';
+  }
+
+  _presentDatePicker(BuildContext context) async {
+    await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: firstDate,
+            lastDate: lastDate)
+        .then((pickedDate) {
+      if (pickedDate == null) {
+        return;
+      }
+      currentDate.text =
+          "${pickedDate.toLocal().day}/${pickedDate.toLocal().month}/${pickedDate.toLocal().year}";
+      pickedDate = selectedDate = pickedDate;
+      setState(() {});
+    });
   }
 }
