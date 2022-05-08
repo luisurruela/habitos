@@ -36,141 +36,65 @@ class _LoginState extends State<Login> {
                   height: height,
                   width: width,
                   decoration: AppTheme.backgroundGradient,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      const SizedBox(
-                        width: 200,
-                        child: Image(
-                            image:
-                                AssetImage('assets/images/signing-image.png')),
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Container(
-                        width: 325,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        const SizedBox(
+                          width: 200,
+                          child: Image(
+                              image: AssetImage(
+                                  'assets/images/signing-image.png')),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            const Text(
-                              "Welcome back",
-                              style: AppTheme.fontTitle,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              "Login to your account",
-                              style: AppTheme.fontSubTitle,
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Form(
-                              key: _formKey,
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: 260,
-                                    child: TextFormField(
-                                      enabled: !isLoading,
-                                      onChanged: (value) {
-                                        if (emailError) {
-                                          setState(() {
-                                            emailError = false;
-                                            error = '';
-                                          });
-                                        }
-                                      },
-                                      controller: email,
-                                      decoration: InputDecoration(
-                                        enabledBorder: emailError
-                                            ? const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.red,
-                                                    width: 2.0),
-                                              )
-                                            : null,
-                                        floatingLabelStyle:
-                                            MaterialStateTextStyle.resolveWith(
-                                                (Set<MaterialState> states) {
-                                          Color color = (states.contains(
-                                                      MaterialState.error) ||
-                                                  emailError)
-                                              ? Theme.of(context).errorColor
-                                              : AppTheme.primary;
-                                          return TextStyle(color: color);
-                                        }),
-                                        focusedBorder: emailError
-                                            ? const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.red,
-                                                    width: 2.0),
-                                              )
-                                            : const OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: AppTheme.primary,
-                                                    width: 2.0),
-                                              ),
-                                        labelText: "Email",
-                                        border: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(4)),
-                                        ),
-                                      ),
-                                      validator: emailValidate,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                    ),
-                                  ),
-                                  emailError
-                                      ? Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 5,
-                                              left: 45,
-                                              right: 45,
-                                              bottom: 0),
-                                          child: Center(
-                                              child: Text(
-                                            error,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 221, 48, 36),
-                                              fontSize: 12,
-                                            ),
-                                          )),
-                                        )
-                                      : const Padding(
-                                          padding: EdgeInsets.all(0),
-                                        ),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  SizedBox(
-                                    width: 260,
-                                    child: TextFormField(
-                                      enabled: !isLoading,
-                                      onChanged: (value) {
-                                        if (passwordError) {
-                                          setState(() {
-                                            passwordError = false;
-                                            error = '';
-                                          });
-                                        }
-                                      },
-                                      controller: password,
-                                      obscureText: true,
-                                      decoration: InputDecoration(
-                                          enabledBorder: passwordError
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: 325,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              const Text(
+                                "Welcome back",
+                                style: AppTheme.fontTitle,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                "Login to your account",
+                                style: AppTheme.fontSubTitle,
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      width: 260,
+                                      child: TextFormField(
+                                        enabled: !isLoading,
+                                        onChanged: (value) {
+                                          if (emailError) {
+                                            setState(() {
+                                              emailError = false;
+                                              error = '';
+                                            });
+                                          }
+                                        },
+                                        controller: email,
+                                        decoration: InputDecoration(
+                                          enabledBorder: emailError
                                               ? const OutlineInputBorder(
                                                   borderSide: BorderSide(
                                                       color: Colors.red,
@@ -184,12 +108,12 @@ class _LoginState extends State<Login> {
                                                           states) {
                                             Color color = (states.contains(
                                                         MaterialState.error) ||
-                                                    passwordError)
+                                                    emailError)
                                                 ? Theme.of(context).errorColor
                                                 : AppTheme.primary;
                                             return TextStyle(color: color);
                                           }),
-                                          focusedBorder: passwordError
+                                          focusedBorder: emailError
                                               ? const OutlineInputBorder(
                                                   borderSide: BorderSide(
                                                       color: Colors.red,
@@ -200,106 +124,189 @@ class _LoginState extends State<Login> {
                                                       color: AppTheme.primary,
                                                       width: 2.0),
                                                 ),
-                                          labelText: "Password",
+                                          labelText: "Email",
                                           border: const OutlineInputBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(4)),
-                                          )),
-                                      validator: passwordValidate,
-                                      autovalidateMode:
-                                          AutovalidateMode.onUserInteraction,
-                                    ),
-                                  ),
-                                  passwordError
-                                      ? Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 5,
-                                              left: 45,
-                                              right: 45,
-                                              bottom: 0),
-                                          child: Center(
-                                              child: Text(
-                                            error,
-                                            style: const TextStyle(
-                                              color: Color.fromARGB(
-                                                  255, 221, 48, 36),
-                                              fontSize: 12,
-                                            ),
-                                          )),
-                                        )
-                                      : const Padding(
-                                          padding: EdgeInsets.all(0),
+                                          ),
                                         ),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 30, 0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, 'forget-password');
-                                    },
-                                    child: const Text(
-                                      "Forget Password?",
-                                      style: AppTheme.linkPrimary,
+                                        validator: emailValidate,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                      ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              height: 48,
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              const Color.fromRGBO(
-                                                  218, 240, 75, 1)),
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                          const RoundedRectangleBorder(
+                                    emailError
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 5,
+                                                left: 45,
+                                                right: 45,
+                                                bottom: 0),
+                                            child: Center(
+                                                child: Text(
+                                              error,
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 221, 48, 36),
+                                                fontSize: 12,
+                                              ),
+                                            )),
+                                          )
+                                        : const Padding(
+                                            padding: EdgeInsets.all(0),
+                                          ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    SizedBox(
+                                      width: 260,
+                                      child: TextFormField(
+                                        enabled: !isLoading,
+                                        onChanged: (value) {
+                                          if (passwordError) {
+                                            setState(() {
+                                              passwordError = false;
+                                              error = '';
+                                            });
+                                          }
+                                        },
+                                        controller: password,
+                                        obscureText: true,
+                                        decoration: InputDecoration(
+                                            enabledBorder: passwordError
+                                                ? const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.red,
+                                                        width: 2.0),
+                                                  )
+                                                : null,
+                                            floatingLabelStyle:
+                                                MaterialStateTextStyle
+                                                    .resolveWith(
+                                                        (Set<MaterialState>
+                                                            states) {
+                                              Color color = (states.contains(
+                                                          MaterialState
+                                                              .error) ||
+                                                      passwordError)
+                                                  ? Theme.of(context).errorColor
+                                                  : AppTheme.primary;
+                                              return TextStyle(color: color);
+                                            }),
+                                            focusedBorder: passwordError
+                                                ? const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.red,
+                                                        width: 2.0),
+                                                  )
+                                                : const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: AppTheme.primary,
+                                                        width: 2.0),
+                                                  ),
+                                            labelText: "Password",
+                                            border: const OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
-                                                  Radius.circular(30))))),
-                                  onPressed: isLoading
-                                      ? null
-                                      : () => _formKey.currentState!.validate()
-                                          ? signIn()
-                                          : null,
-                                  child: const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(12, 8, 40, 1)),
-                                  )),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                          ],
+                                                  Radius.circular(4)),
+                                            )),
+                                        validator: passwordValidate,
+                                        autovalidateMode:
+                                            AutovalidateMode.onUserInteraction,
+                                      ),
+                                    ),
+                                    passwordError
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 5,
+                                                left: 45,
+                                                right: 45,
+                                                bottom: 0),
+                                            child: Center(
+                                                child: Text(
+                                              error,
+                                              style: const TextStyle(
+                                                color: Color.fromARGB(
+                                                    255, 221, 48, 36),
+                                                fontSize: 12,
+                                              ),
+                                            )),
+                                          )
+                                        : const Padding(
+                                            padding: EdgeInsets.all(0),
+                                          ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 12,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 30, 0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, 'forget-password');
+                                      },
+                                      child: const Text(
+                                        "Forget Password?",
+                                        style: AppTheme.linkPrimary,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                height: 48,
+                                child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        elevation: MaterialStateProperty.all(0),
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                const Color.fromRGBO(
+                                                    218, 240, 75, 1)),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30))))),
+                                    onPressed: isLoading
+                                        ? null
+                                        : () => _formKey.currentState!.validate()
+                                            ? signIn()
+                                            : null,
+                                    child: const Text(
+                                      'Login',
+                                      style: TextStyle(
+                                          color: Color.fromRGBO(12, 8, 40, 1)),
+                                    )),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                      TextButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen())),
-                          child: const Text(
-                            'Register a new account',
-                            style: TextStyle(
-                                color: AppTheme.tertiary, fontSize: 16),
-                          ))
-                    ],
+                        const SizedBox(height: 30),
+                        TextButton(
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SignUpScreen())),
+                            child: const Text(
+                              'Register a new account',
+                              style: TextStyle(
+                                  color: AppTheme.tertiary, fontSize: 16),
+                            ))
+                      ],
+                    ),
                   ),
                 ),
               ),

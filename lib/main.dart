@@ -6,12 +6,12 @@ import 'package:habitos/routes/app_routes.dart';
 import 'package:habitos/screens/home_screen.dart';
 import 'package:habitos/screens/onboarding_screen.dart';
 import 'firebase_options.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -33,171 +33,174 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           height: height,
           width: width,
           decoration: AppTheme.backgroundGradient,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SafeArea(
-                  child: Row(
-                children: [
-                  SizedBox(
-                    child: TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        )),
-                  )
-                ],
-              )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: height * 0.2),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                    width: 325,
-                    child: !resetMailSent
-                        ? Column(
-                            children: [
-                              const SizedBox(
-                                height: 40,
-                              ),
-                              SizedBox(
-                                width: 260,
-                                child: Column(
-                                  children: const [
-                                    Text(
-                                      'Reset your password',
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'PPAgrandir'),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      'Get instructions sent to this email that explain how to reset your password',
-                                      style: AppTheme.fontSubTitle,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SafeArea(
+                    child: Row(
+                  children: [
+                    SizedBox(
+                      child: TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          )),
+                    )
+                  ],
+                )),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: height * 0.2),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Colors.white,
+                      ),
+                      width: 325,
+                      child: !resetMailSent
+                          ? Column(
+                              children: [
+                                const SizedBox(
+                                  height: 40,
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Form(
-                                key: _formKey,
-                                child: SizedBox(
+                                SizedBox(
                                   width: 260,
-                                  child: TextFormField(
-                                    enabled: !isLoading,
-                                    onChanged: (value) {
-                                      if (emailError) {
-                                        setState(() {
-                                          emailError = false;
-                                          errorMessage = '';
-                                        });
-                                      }
-                                    },
-                                    controller: email,
-                                    decoration: InputDecoration(
-                                      enabledBorder: emailError
-                                          ? const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                  width: 2.0),
-                                            )
-                                          : null,
-                                      floatingLabelStyle:
-                                          MaterialStateTextStyle.resolveWith(
-                                              (Set<MaterialState> states) {
-                                        Color color = (states.contains(
-                                                    MaterialState.error) ||
-                                                emailError)
-                                            ? Theme.of(context).errorColor
-                                            : AppTheme.primary;
-                                        return TextStyle(color: color);
-                                      }),
-                                      focusedBorder: emailError
-                                          ? const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                  width: 2.0),
-                                            )
-                                          : const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: AppTheme.primary,
-                                                  width: 2.0),
-                                            ),
-                                      labelText: "Email",
-                                      border: const OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(4)),
+                                  child: Column(
+                                    children: const [
+                                      Text(
+                                        'Reset your password',
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: 'PPAgrandir'),
+                                        textAlign: TextAlign.center,
                                       ),
-                                    ),
-                                    validator: emailValidate,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        'Get instructions sent to this email that explain how to reset your password',
+                                        style: AppTheme.fontSubTitle,
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              emailError
-                                  ? Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 5,
-                                          left: 45,
-                                          right: 45,
-                                          bottom: 0),
-                                      child: Center(
-                                          child: Text(
-                                        errorMessage,
-                                        style: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 221, 48, 36),
-                                          fontSize: 12,
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Form(
+                                  key: _formKey,
+                                  child: SizedBox(
+                                    width: 260,
+                                    child: TextFormField(
+                                      enabled: !isLoading,
+                                      onChanged: (value) {
+                                        if (emailError) {
+                                          setState(() {
+                                            emailError = false;
+                                            errorMessage = '';
+                                          });
+                                        }
+                                      },
+                                      controller: email,
+                                      decoration: InputDecoration(
+                                        enabledBorder: emailError
+                                            ? const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 2.0),
+                                              )
+                                            : null,
+                                        floatingLabelStyle:
+                                            MaterialStateTextStyle.resolveWith(
+                                                (Set<MaterialState> states) {
+                                          Color color = (states.contains(
+                                                      MaterialState.error) ||
+                                                  emailError)
+                                              ? Theme.of(context).errorColor
+                                              : AppTheme.primary;
+                                          return TextStyle(color: color);
+                                        }),
+                                        focusedBorder: emailError
+                                            ? const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: Colors.red,
+                                                    width: 2.0),
+                                              )
+                                            : const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppTheme.primary,
+                                                    width: 2.0),
+                                              ),
+                                        labelText: "Email",
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4)),
                                         ),
-                                      )),
-                                    )
-                                  : const Padding(
-                                      padding: EdgeInsets.all(0),
+                                      ),
+                                      validator: emailValidate,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
                                     ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              SizedBox(
-                                width: width * 0.6,
-                                height: 48,
-                                child: ElevatedButton(
-                                  style: AppTheme.mainButton,
-                                  onPressed: isLoading
-                                      ? null
-                                      : () => _formKey.currentState!.validate()
-                                          ? resetPassword()
-                                          : null,
-                                  child: const Text(
-                                    'Reset Password',
-                                    style:
-                                        TextStyle(color: AppTheme.darkPurple),
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                            ],
-                          )
-                        // ignore: dead_code
-                        : ResetPasswordConfirmation(email: emailText),
-                  ),
-                ],
-              ),
-            ],
+                                emailError
+                                    ? Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5,
+                                            left: 45,
+                                            right: 45,
+                                            bottom: 0),
+                                        child: Center(
+                                            child: Text(
+                                          errorMessage,
+                                          style: const TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 221, 48, 36),
+                                            fontSize: 12,
+                                          ),
+                                        )),
+                                      )
+                                    : const Padding(
+                                        padding: EdgeInsets.all(0),
+                                      ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  width: width * 0.6,
+                                  height: 48,
+                                  child: ElevatedButton(
+                                    style: AppTheme.mainButton,
+                                    onPressed: isLoading
+                                        ? null
+                                        : () =>
+                                            _formKey.currentState!.validate()
+                                                ? resetPassword()
+                                                : null,
+                                    child: const Text(
+                                      'Reset Password',
+                                      style:
+                                          TextStyle(color: AppTheme.darkPurple),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                              ],
+                            )
+                          // ignore: dead_code
+                          : ResetPasswordConfirmation(email: emailText),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         )),
         isLoading

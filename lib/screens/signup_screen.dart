@@ -36,251 +36,258 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: height,
                     width: width,
                     decoration: AppTheme.backgroundGradient,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const SizedBox(
-                          width: 200,
-                          child: Image(
-                              image:
-                                  AssetImage('assets/images/signup-image.png')),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Container(
-                          width: 325,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const SizedBox(
+                            width: 200,
+                            child: Image(
+                                image: AssetImage(
+                                    'assets/images/signup-image.png')),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              const Text(
-                                "Sign Up",
-                                style: AppTheme.fontTitle,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const Text(
-                                "Register a new account",
-                                style: AppTheme.fontSubTitle,
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              Form(
-                                key: _formKey,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      width: 260,
-                                      child: TextFormField(
-                                        enabled: !isLoading,
-                                        onChanged: (value) {
-                                          if (registerError) {
-                                            resetCredentials();
-                                          }
-                                        },
-                                        controller: email,
-                                        decoration: InputDecoration(
-                                            floatingLabelStyle:
-                                                MaterialStateTextStyle
-                                                    .resolveWith(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                              final Color color = states
-                                                      .contains(
-                                                          MaterialState.error)
-                                                  ? Theme.of(context).errorColor
-                                                  : AppTheme.primary;
-                                              return TextStyle(color: color);
-                                            }),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: AppTheme.primary,
-                                                  width: 2.0),
-                                            ),
-                                            labelText: "Email",
-                                            border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                            )),
-                                        validator: emailValidate,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                      ),
-                                    ),
-                                    registerError
-                                        ? Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 5,
-                                                left: 45,
-                                                right: 45,
-                                                bottom: 0),
-                                            child: Center(
-                                                child: Text(
-                                              error,
-                                              style: const TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 221, 48, 36),
-                                                fontSize: 12,
-                                              ),
-                                            )),
-                                          )
-                                        : const Padding(
-                                            padding: EdgeInsets.all(0),
-                                          ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    SizedBox(
-                                      width: 260,
-                                      child: TextFormField(
-                                        enabled: !isLoading,
-                                        onChanged: (value) {
-                                          if (registerError) {
-                                            resetCredentials();
-                                          }
-                                        },
-                                        controller: password,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                            floatingLabelStyle:
-                                                MaterialStateTextStyle
-                                                    .resolveWith(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                              final Color color = states
-                                                      .contains(
-                                                          MaterialState.error)
-                                                  ? Theme.of(context).errorColor
-                                                  : AppTheme.primary;
-                                              return TextStyle(color: color);
-                                            }),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: AppTheme.primary,
-                                                  width: 2.0),
-                                            ),
-                                            labelText: "Password",
-                                            border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                            )),
-                                        validator: passwordValidate,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    SizedBox(
-                                      width: 260,
-                                      child: TextFormField(
-                                        enabled: !isLoading,
-                                        onChanged: (value) {
-                                          if (registerError) {
-                                            resetCredentials();
-                                          }
-                                        },
-                                        controller: confirmPassword,
-                                        obscureText: true,
-                                        decoration: InputDecoration(
-                                            floatingLabelStyle:
-                                                MaterialStateTextStyle
-                                                    .resolveWith(
-                                                        (Set<MaterialState>
-                                                            states) {
-                                              final Color color = states
-                                                      .contains(
-                                                          MaterialState.error)
-                                                  ? Theme.of(context).errorColor
-                                                  : AppTheme.primary;
-                                              return TextStyle(color: color);
-                                            }),
-                                            focusedBorder:
-                                                const OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: AppTheme.primary,
-                                                  width: 2.0),
-                                            ),
-                                            labelText: "Confirm Password",
-                                            border: const OutlineInputBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(4)),
-                                            )),
-                                        validator: passwordValidate,
-                                        autovalidateMode:
-                                            AutovalidateMode.onUserInteraction,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 25,
-                                    ),
-                                  ],
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Container(
+                            width: 325,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const SizedBox(
+                                  height: 30,
                                 ),
-                              ),
-                              SizedBox(
-                                width: width * 0.6,
-                                height: 48,
-                                child: ElevatedButton(
-                                  style: ButtonStyle(
-                                      elevation: MaterialStateProperty.all(0),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              AppTheme.tertiary),
-                                      shape: MaterialStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                          const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(30))))),
-                                  onPressed: isLoading
-                                      ? null
-                                      : () => _formKey.currentState!.validate()
-                                          ? signUp()
-                                          : null,
-                                  child: const Text(
-                                    'Register',
-                                    style:
-                                        TextStyle(color: AppTheme.darkPurple),
+                                const Text(
+                                  "Sign Up",
+                                  style: AppTheme.fontTitle,
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text(
+                                  "Register a new account",
+                                  style: AppTheme.fontSubTitle,
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                ),
+                                Form(
+                                  key: _formKey,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width: 260,
+                                        child: TextFormField(
+                                          enabled: !isLoading,
+                                          onChanged: (value) {
+                                            if (registerError) {
+                                              resetCredentials();
+                                            }
+                                          },
+                                          controller: email,
+                                          decoration: InputDecoration(
+                                              floatingLabelStyle:
+                                                  MaterialStateTextStyle
+                                                      .resolveWith(
+                                                          (Set<MaterialState>
+                                                              states) {
+                                                final Color color =
+                                                    states.contains(
+                                                            MaterialState.error)
+                                                        ? Theme.of(context)
+                                                            .errorColor
+                                                        : AppTheme.primary;
+                                                return TextStyle(color: color);
+                                              }),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppTheme.primary,
+                                                    width: 2.0),
+                                              ),
+                                              labelText: "Email",
+                                              border: const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(4)),
+                                              )),
+                                          validator: emailValidate,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                        ),
+                                      ),
+                                      registerError
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 5,
+                                                  left: 45,
+                                                  right: 45,
+                                                  bottom: 0),
+                                              child: Center(
+                                                  child: Text(
+                                                error,
+                                                style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 221, 48, 36),
+                                                  fontSize: 12,
+                                                ),
+                                              )),
+                                            )
+                                          : const Padding(
+                                              padding: EdgeInsets.all(0),
+                                            ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      SizedBox(
+                                        width: 260,
+                                        child: TextFormField(
+                                          enabled: !isLoading,
+                                          onChanged: (value) {
+                                            if (registerError) {
+                                              resetCredentials();
+                                            }
+                                          },
+                                          controller: password,
+                                          obscureText: true,
+                                          decoration: InputDecoration(
+                                              floatingLabelStyle:
+                                                  MaterialStateTextStyle
+                                                      .resolveWith(
+                                                          (Set<MaterialState>
+                                                              states) {
+                                                final Color color =
+                                                    states.contains(
+                                                            MaterialState.error)
+                                                        ? Theme.of(context)
+                                                            .errorColor
+                                                        : AppTheme.primary;
+                                                return TextStyle(color: color);
+                                              }),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppTheme.primary,
+                                                    width: 2.0),
+                                              ),
+                                              labelText: "Password",
+                                              border: const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(4)),
+                                              )),
+                                          validator: passwordValidate,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      SizedBox(
+                                        width: 260,
+                                        child: TextFormField(
+                                          enabled: !isLoading,
+                                          onChanged: (value) {
+                                            if (registerError) {
+                                              resetCredentials();
+                                            }
+                                          },
+                                          controller: confirmPassword,
+                                          obscureText: true,
+                                          decoration: InputDecoration(
+                                              floatingLabelStyle:
+                                                  MaterialStateTextStyle
+                                                      .resolveWith(
+                                                          (Set<MaterialState>
+                                                              states) {
+                                                final Color color =
+                                                    states.contains(
+                                                            MaterialState.error)
+                                                        ? Theme.of(context)
+                                                            .errorColor
+                                                        : AppTheme.primary;
+                                                return TextStyle(color: color);
+                                              }),
+                                              focusedBorder:
+                                                  const OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                    color: AppTheme.primary,
+                                                    width: 2.0),
+                                              ),
+                                              labelText: "Confirm Password",
+                                              border: const OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(4)),
+                                              )),
+                                          validator: passwordValidate,
+                                          autovalidateMode: AutovalidateMode
+                                              .onUserInteraction,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 25,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 30),
-                        TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  'Already have an account? ',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                                SizedBox(
+                                  width: width * 0.6,
+                                  height: 48,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        elevation: MaterialStateProperty.all(0),
+                                        backgroundColor:
+                                            MaterialStateProperty.all<Color>(
+                                                AppTheme.tertiary),
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(30))))),
+                                    onPressed: isLoading
+                                        ? null
+                                        : () =>
+                                            _formKey.currentState!.validate()
+                                                ? signUp()
+                                                : null,
+                                    child: const Text(
+                                      'Register',
+                                      style:
+                                          TextStyle(color: AppTheme.darkPurple),
+                                    ),
+                                  ),
                                 ),
-                                Text(
-                                  'Login',
-                                  style: TextStyle(
-                                      color: AppTheme.tertiary, fontSize: 16),
+                                const SizedBox(
+                                  height: 20,
                                 ),
                               ],
-                            ))
-                      ],
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    'Already have an account? ',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                  Text(
+                                    'Login',
+                                    style: TextStyle(
+                                        color: AppTheme.tertiary, fontSize: 16),
+                                  ),
+                                ],
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                 ),

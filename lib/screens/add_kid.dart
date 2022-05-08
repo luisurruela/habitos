@@ -30,167 +30,169 @@ class _AddKidScreenState extends State<AddKidScreen> {
           height: height,
           width: width,
           decoration: AppTheme.backgroundGradient,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SafeArea(
-                  child: Row(
-                children: [
-                  SizedBox(
-                    child: TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
-                        )),
-                  )
-                ],
-              )),
-              SizedBox(
-                width: width * 0.9,
-                child: Column(
-                  children: [
-                    const Text(
-                      'Setup your child profile',
-                      style: AppTheme.fontTitleWhite,
-                      textAlign: TextAlign.center,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        'Please give us a little more information about your child',
-                        style: AppTheme.fontSubTitleWhite,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  leading: IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      )),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                SizedBox(
+                  width: width * 0.9,
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Setup your child profile',
+                        style: AppTheme.fontTitleWhite,
                         textAlign: TextAlign.center,
                       ),
-                    ),
-                    const SizedBox(height: 40),
-                    // Insert avatar widget
-                    const SizedBox(
-                      child: CircleAvatar(
-                        radius: 60.0,
-                        backgroundColor: Colors.white,
-                        child: CircleAvatar(
-                          backgroundColor: Color(0xFF3220A1),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: CircleAvatar(
-                              backgroundColor: AppTheme.tertiary,
-                              radius: 18.0,
-                              child: Icon(
-                                Icons.camera_alt_outlined,
-                                size: 20.0,
-                                color: AppTheme.darkPurple,
-                              ),
-                            ),
-                          ),
-                          radius: 60.0,
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: Text(
+                          'Please give us a little more information about your child',
+                          style: AppTheme.fontSubTitleWhite,
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SizedBox(
-                      width: width,
-                      child: Form(
-                          key: _formKey,
-                          child: Column(
-                            children: [
-                              TextFormField(
-                                style: const TextStyle(color: Colors.white),
-                                controller: name,
-                                decoration: const InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white24, width: 2.0),
-                                  ),
-                                  floatingLabelStyle:
-                                      TextStyle(color: Colors.white70),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white70, width: 2.0),
-                                  ),
-                                  labelText: "Child's Name",
-                                  labelStyle: TextStyle(color: Colors.white),
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4)),
-                                  ),
+                      const SizedBox(height: 40),
+                      // Insert avatar widget
+                      const SizedBox(
+                        child: CircleAvatar(
+                          radius: 60.0,
+                          backgroundColor: Colors.white,
+                          child: CircleAvatar(
+                            backgroundColor: Color(0xFF3220A1),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: CircleAvatar(
+                                backgroundColor: AppTheme.tertiary,
+                                radius: 18.0,
+                                child: Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 20.0,
+                                  color: AppTheme.darkPurple,
                                 ),
-                                validator: nameValidate,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
                               ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              TextFormField(
-                                keyboardType: TextInputType.datetime,
-                                style: const TextStyle(color: Colors.white),
-                                controller: currentDate,
-                                onTap: () {
-                                  setState(() {
-                                    _presentDatePicker(context);
-                                  });
-                                },
-                                decoration: const InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white24, width: 2.0),
-                                  ),
-                                  floatingLabelStyle:
-                                      TextStyle(color: Colors.white70),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white70, width: 2.0),
-                                  ),
-                                  labelText: "Date of birth",
-                                  labelStyle: TextStyle(color: Colors.white),
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(4)),
-                                  ),
-                                ),
-                                validator: dateValidate,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                              ),
-                            ],
-                          )),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 60,
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.6,
-                height: 48,
-                child: ElevatedButton(
-                    style: buttonEnabled
-                        ? AppTheme.mainButtonDisabled
-                        : AppTheme.mainButton,
-                    onPressed: !buttonEnabled ? () {} : null,
-                    child: SizedBox(
-                      width: 200,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                            child: Text(
-                          'Add Child',
-                          style: TextStyle(
-                              color: buttonEnabled
-                                  ? const Color(0xFF8B7EDF)
-                                  : AppTheme.darkPurple),
-                        )),
+                            ),
+                            radius: 60.0,
+                          ),
+                        ),
                       ),
-                    )),
-              ),
-              const SizedBox(
-                height: 50,
-              )
-            ],
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        width: width,
+                        child: Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  style: const TextStyle(color: Colors.white),
+                                  controller: name,
+                                  decoration: const InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.white24, width: 2.0),
+                                    ),
+                                    floatingLabelStyle:
+                                        TextStyle(color: Colors.white70),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.white70, width: 2.0),
+                                    ),
+                                    labelText: "Child's Name",
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(4)),
+                                    ),
+                                  ),
+                                  validator: nameValidate,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  keyboardType: TextInputType.datetime,
+                                  style: const TextStyle(color: Colors.white),
+                                  controller: currentDate,
+                                  onTap: () {
+                                    setState(() {
+                                      _presentDatePicker(context);
+                                    });
+                                  },
+                                  decoration: const InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.white24, width: 2.0),
+                                    ),
+                                    floatingLabelStyle:
+                                        TextStyle(color: Colors.white70),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.white70, width: 2.0),
+                                    ),
+                                    labelText: "Date of birth",
+                                    labelStyle: TextStyle(color: Colors.white),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(4)),
+                                    ),
+                                  ),
+                                  validator: dateValidate,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                ),
+                              ],
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: 48,
+                  child: ElevatedButton(
+                      style: buttonEnabled
+                          ? AppTheme.mainButtonDisabled
+                          : AppTheme.mainButton,
+                      onPressed: !buttonEnabled ? () {} : null,
+                      child: SizedBox(
+                        width: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Center(
+                              child: Text(
+                            'Add Child',
+                            style: TextStyle(
+                                color: buttonEnabled
+                                    ? const Color(0xFF8B7EDF)
+                                    : AppTheme.darkPurple),
+                          )),
+                        ),
+                      )),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+              ],
+            ),
           ),
         ),
       ),
