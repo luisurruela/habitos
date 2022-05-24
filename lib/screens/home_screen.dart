@@ -145,23 +145,23 @@ class HomeWidget extends StatelessWidget {
                               height: 40,
                             ),
                             Container(
-                              width: 200,
-                              height: 200,
+                              width: 120,
+                              height: 120,
                               child: TextButton(
                                   onPressed: () {
                                     Navigator.pushNamed(context, 'add-kid');
                                   },
                                   child: const Icon(
                                     Icons.add,
-                                    color: Colors.white54,
-                                    size: 80,
+                                    color: Colors.white24,
+                                    size: 60,
                                   )),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
                                 color: AppTheme.primary,
                                 boxShadow: const [
                                   BoxShadow(
-                                      color: Colors.white54, spreadRadius: 3),
+                                      color: Colors.white24, spreadRadius: 3),
                                 ],
                               ),
                             ),

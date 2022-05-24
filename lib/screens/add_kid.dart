@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../theme/theme.dart';
 
 class AddKidScreen extends StatefulWidget {
@@ -13,7 +15,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
   DateTime? selectedDate;
   TextEditingController name = TextEditingController();
   TextEditingController currentDate = TextEditingController();
-  bool buttonEnabled = true;
+  bool buttonEnabled = false;
   final DateTime firstDate = DateTime(1947);
   final DateTime lastDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
@@ -66,27 +68,33 @@ class _AddKidScreenState extends State<AddKidScreen> {
                       ),
                       const SizedBox(height: 40),
                       // Insert avatar widget
-                      const SizedBox(
+                      SizedBox(
                         child: CircleAvatar(
-                          radius: 60.0,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            backgroundColor: Color(0xFF3220A1),
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: CircleAvatar(
-                                backgroundColor: AppTheme.tertiary,
-                                radius: 18.0,
-                                child: Icon(
-                                  Icons.camera_alt_outlined,
-                                  size: 20.0,
-                                  color: AppTheme.darkPurple,
-                                ),
-                              ),
-                            ),
                             radius: 60.0,
-                          ),
-                        ),
+                            backgroundColor: const Color(0xFF3220A1),
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: Image.asset(
+                                      "assets/images/default_avatar.png"),
+                                ),
+                                Positioned(
+                                    right: 0,
+                                    bottom: 0,
+                                    child: CircleAvatar(
+                                      radius: 20,
+                                      backgroundColor: AppTheme.tertiary,
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.camera_alt_outlined,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    )),
+                              ],
+                            )),
                       ),
                       const SizedBox(
                         height: 30,
@@ -118,6 +126,15 @@ class _AddKidScreenState extends State<AddKidScreen> {
                                           BorderRadius.all(Radius.circular(4)),
                                     ),
                                   ),
+                                  onChanged: (value) {
+                                    if (_formKey.currentState!.validate()) {
+                                      buttonEnabled = true;
+                                      setState(() {});
+                                    } else {
+                                      buttonEnabled = false;
+                                      setState(() {});
+                                    }
+                                  },
                                   validator: nameValidate,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -126,6 +143,15 @@ class _AddKidScreenState extends State<AddKidScreen> {
                                   height: 15,
                                 ),
                                 TextFormField(
+                                  onChanged: (value) {
+                                    if (_formKey.currentState!.validate()) {
+                                      buttonEnabled = true;
+                                      setState(() {});
+                                    } else {
+                                      buttonEnabled = false;
+                                      setState(() {});
+                                    }
+                                  },
                                   keyboardType: TextInputType.datetime,
                                   style: const TextStyle(color: Colors.white),
                                   controller: currentDate,
@@ -169,10 +195,10 @@ class _AddKidScreenState extends State<AddKidScreen> {
                   width: MediaQuery.of(context).size.width * 0.6,
                   height: 48,
                   child: ElevatedButton(
-                      style: buttonEnabled
+                      style: !buttonEnabled
                           ? AppTheme.mainButtonDisabled
                           : AppTheme.mainButton,
-                      onPressed: !buttonEnabled ? () {} : null,
+                      onPressed: buttonEnabled ? addChild : null,
                       child: SizedBox(
                         width: 200,
                         child: Padding(
@@ -181,7 +207,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
                               child: Text(
                             'Add Child',
                             style: TextStyle(
-                                color: buttonEnabled
+                                color: !buttonEnabled
                                     ? const Color(0xFF8B7EDF)
                                     : AppTheme.darkPurple),
                           )),
@@ -209,6 +235,10 @@ class _AddKidScreenState extends State<AddKidScreen> {
     }
 
     return null;
+  }
+
+  void addChild() {
+    print('test submit button');
   }
 
   String? dateValidate(String? currentDate) {
@@ -240,5 +270,12 @@ class _AddKidScreenState extends State<AddKidScreen> {
       pickedDate = selectedDate = pickedDate;
       setState(() {});
     });
+    if (_formKey.currentState!.validate()) {
+      buttonEnabled = true;
+      setState(() {});
+    } else {
+      buttonEnabled = false;
+      setState(() {});
+    }
   }
 }
