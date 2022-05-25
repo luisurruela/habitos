@@ -15,7 +15,6 @@ class HomeScreen extends StatelessWidget {
       ? WillPopScope(
           child: Scaffold(
             key: _scaffoldKey,
-            drawer: const sidebar(),
             body: HomeWidget(currentUser: currentUser),
           ),
           onWillPop: () async {
@@ -60,8 +59,7 @@ class HomeWidget extends StatelessWidget {
                                       fontSize: 25,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                onPressed: () =>
-                                    Scaffold.of(context).openDrawer(),
+                                onPressed: () => selectAvatar(context),
                                 style: ElevatedButton.styleFrom(
                                     primary:
                                         const Color.fromRGBO(255, 102, 104, 1),
@@ -188,95 +186,32 @@ class HomeWidget extends StatelessWidget {
       ],
     );
   }
-}
 
-// ignore: camel_case_types
-class sidebar extends StatelessWidget {
-  const sidebar({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: [
-          SizedBox(
-            height: 255,
-            child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Column(
-                children: const <Widget>[
-                  Center(
-                      child: SizedBox(
-                    height: 120,
-                    child: CircleAvatar(
-                      backgroundColor: Color.fromARGB(255, 215, 242, 250),
-                      child: Text(
-                        'JD',
-                        style: TextStyle(
-                            fontSize: 40, fontWeight: FontWeight.bold),
-                      ),
-                      radius: 120,
-                    ),
-                  )),
-                  Padding(
-                    padding: EdgeInsets.all(15.0),
-                    child: Text(
-                      'John Doe',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  )
-                ],
-              ),
+  void selectAvatar(BuildContext context) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (context) {
+        return Wrap(
+          children: [
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              minLeadingWidth: 0,
+              leading: const Icon(Icons.person_add),
+              title: const Text('Add child'),
+              onTap: () {},
             ),
-          ),
-          Column(
-            children: [
-              ListTile(
-                leading: const Icon(Icons.settings_outlined),
-                title: const Text('Settings'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.bug_report_outlined),
-                title: const Text('Report a bug'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: const Text('About Kids Habit'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.exit_to_app_outlined),
-                title: const Text('Sign out'),
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => const Login()));
-                },
-              ),
-            ],
-          ),
-        ],
-      ),
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              minLeadingWidth: 0,
+              leading: const Icon(Icons.person),
+              title: const Text('Profile'),
+              onTap: () {},
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../theme/theme.dart';
 
@@ -20,7 +20,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
   final DateTime lastDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   final _formKey = GlobalKey<FormState>();
-
+  DateTime pickDate = DateTime.now();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -90,7 +90,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
                                           Icons.camera_alt_outlined,
                                           color: Colors.black,
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () => selectAvatar(context),
                                       ),
                                     )),
                               ],
@@ -237,8 +237,62 @@ class _AddKidScreenState extends State<AddKidScreen> {
     return null;
   }
 
-  void addChild() {
-    print('test submit button');
+  void selectAvatar(BuildContext context) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (context) {
+        final theme = Theme.of(context);
+        return Wrap(
+          children: [
+            ListTile(
+              title: Text(
+                'Upload your avatar',
+                style: theme.textTheme.subtitle1
+                    ?.copyWith(color: theme.colorScheme.onPrimary),
+              ),
+              tileColor: AppTheme.primary,
+            ),
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              minLeadingWidth: 0,
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text('Camera'),
+              onTap: () {
+                print('open camera');
+              },
+            ),
+            ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              minLeadingWidth: 0,
+              leading: const Icon(Icons.photo_library_outlined),
+              title: const Text('Gallery'),
+              onTap: () {
+                print('open gallery');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future addChild() async {
+    final userId = FirebaseAuth.instance.currentUser;
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    final json = {
+      "parent_id": userId?.uid,
+      "name": name.text,
+      "birthday": pickDate,
+      "create_date": DateTime.now()
+    };
+
+    return users
+        .add(json)
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
   }
 
   String? dateValidate(String? currentDate) {
@@ -257,17 +311,32 @@ class _AddKidScreenState extends State<AddKidScreen> {
 
   _presentDatePicker(BuildContext context) async {
     await showDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: firstDate,
-            lastDate: lastDate)
-        .then((pickedDate) {
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: firstDate,
+        lastDate: lastDate,
+        builder: (context, child) {
+          return Theme(
+              data: Theme.of(context).copyWith(
+                  colorScheme: const ColorScheme.light(
+                    primary: AppTheme.primary,
+                    onPrimary: Colors.white,
+                    onSurface: AppTheme.darkPurple,
+                  ),
+                  textButtonTheme: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                      primary: AppTheme.primary, // button text color
+                    ),
+                  )),
+              child: child!);
+        }).then((pickedDate) {
       if (pickedDate == null) {
         return;
       }
       currentDate.text =
           "${pickedDate.toLocal().day}/${pickedDate.toLocal().month}/${pickedDate.toLocal().year}";
       pickedDate = selectedDate = pickedDate;
+      pickDate = pickedDate;
       setState(() {});
     });
     if (_formKey.currentState!.validate()) {
