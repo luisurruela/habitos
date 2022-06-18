@@ -279,11 +279,14 @@ class _AddKidScreenState extends State<AddKidScreen> {
   }
 
   Future addChild() async {
-    final userId = FirebaseAuth.instance.currentUser;
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    final currentUser = FirebaseAuth.instance.currentUser;
+    CollectionReference users = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.uid)
+        .collection('children');
 
     final json = {
-      "parent_id": userId?.uid,
+      "parent_id": currentUser.uid,
       "name": name.text,
       "birthday": pickDate,
       "create_date": DateTime.now()
@@ -291,8 +294,20 @@ class _AddKidScreenState extends State<AddKidScreen> {
 
     return users
         .add(json)
-        .then((value) => print("User Added"))
+        .then((value) => {changeHasKids(true)})
         .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future changeHasKids(bool hasKids) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final user =
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
+
+    Map<String, dynamic> data = <String, dynamic>{
+      'hasKids': hasKids,
+    };
+
+    await user.update(data).whenComplete(() => print('record updated'));
   }
 
   String? dateValidate(String? currentDate) {

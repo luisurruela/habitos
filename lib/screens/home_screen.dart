@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/signin_screen.dart';
 
@@ -11,16 +13,35 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => currentUser!.emailVerified
-      ? WillPopScope(
-          child: Scaffold(
-            key: _scaffoldKey,
-            body: HomeWidget(currentUser: currentUser),
-          ),
-          onWillPop: () async {
-            return true;
-          })
-      : const EmailVerificationScreen();
+  Widget build(BuildContext context) {
+    final userData = FirebaseFirestore.instance.collection('users');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: userData.doc(currentUser!.uid).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        final user = snapshot.data?.data();
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          print(data['hasKids']);
+        }
+        return currentUser!.emailVerified
+            ? WillPopScope(
+                child: Scaffold(
+                  key: _scaffoldKey,
+                  drawer: const sidebar(),
+                  body: snapshot.hasData
+                      ? HomeWidget(currentUser: currentUser)
+                      : const AddKidScreen(),
+                ),
+                onWillPop: () async {
+                  return true;
+                })
+            : const EmailVerificationScreen();
+      },
+    );
+  }
 }
 
 class HomeWidget extends StatelessWidget {
@@ -49,43 +70,54 @@ class HomeWidget extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 15, top: 10),
                       child: Column(
                         children: [
-                          AppBar(
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              leading: ElevatedButton(
-                                child: const Text(
-                                  'M',
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
+                          SafeArea(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: ElevatedButton(
+                                    child: const Text(
+                                      'M',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () => showBottomModal(context),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: const Color.fromRGBO(
+                                          255, 102, 104, 1),
+                                      side: const BorderSide(
+                                          width: 2, color: Colors.white),
+                                      elevation: 3,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                    ),
+                                  ),
                                 ),
-                                onPressed: () => selectAvatar(context),
-                                style: ElevatedButton.styleFrom(
-                                    primary:
-                                        const Color.fromRGBO(255, 102, 104, 1),
-                                    side: const BorderSide(
-                                        width: 2, color: Colors.white),
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    padding: const EdgeInsets.all(10)),
-                              ),
-                              title: const Text('Habity'),
-                              actions: <Widget>[
+                                const Text(
+                                  'Habity',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: 'PPAgrandir'),
+                                ),
                                 Container(
-                                  margin: const EdgeInsets.only(right: 15),
+                                  margin: const EdgeInsets.only(right: 5),
                                   child: Padding(
                                       child: IconButton(
+                                        color: Colors.white,
                                         onPressed: () {},
                                         icon: const Icon(Icons.notifications),
-                                        iconSize: 35,
+                                        iconSize: 30,
                                       ),
                                       padding: const EdgeInsets.all(0)),
                                 )
-                              ]),
-                          const SizedBox(
-                            height: 40,
+                              ],
+                            ),
                           ),
                           Row(
                             children: const [
@@ -93,80 +125,54 @@ class HomeWidget extends StatelessWidget {
                                 'Hi there,',
                                 style: TextStyle(
                                     color: Color.fromARGB(228, 255, 255, 255),
-                                    fontSize: 25),
+                                    fontSize: 18),
                               ),
-                              Text('👋', style: TextStyle(fontSize: 25))
+                              Text('👋', style: TextStyle(fontSize: 18)),
                             ],
                           ),
                           Row(
                             children: [
-                              RichText(
-                                  text: const TextSpan(
-                                      text: 'Melissa ',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 30),
-                                      children: <TextSpan>[
-                                    TextSpan(
-                                        text: 'has',
+                              Flexible(
+                                child: RichText(
+                                    text: const TextSpan(
+                                        text: 'Melissa ',
                                         style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500)),
-                                    TextSpan(
-                                        text: ' 0 points',
-                                        style: TextStyle(
-                                          color: AppTheme.tertiary,
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 30,
-                                        )),
-                                    TextSpan(
-                                        text: ' in total',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500))
-                                  ])),
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 24),
+                                        children: <TextSpan>[
+                                      TextSpan(
+                                          text: 'has',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500)),
+                                      TextSpan(
+                                          text: ' 0 points',
+                                          style: TextStyle(
+                                            color: AppTheme.tertiary,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 24,
+                                          )),
+                                      TextSpan(
+                                          text: ' in total',
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500))
+                                    ])),
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ),
                     const SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Expanded(
                       child: Container(
                         child: Center(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Container(
-                              width: 120,
-                              height: 120,
-                              child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pushNamed(context, 'add-kid');
-                                  },
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white24,
-                                    size: 60,
-                                  )),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                color: AppTheme.primary,
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.white24, spreadRadius: 3),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                          ],
+                          children: const [],
                         )),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -187,31 +193,165 @@ class HomeWidget extends StatelessWidget {
     );
   }
 
-  void selectAvatar(BuildContext context) async {
+  void showBottomModal(BuildContext context) async {
     await showModalBottomSheet<void>(
+      backgroundColor: AppTheme.darkPurple,
       context: context,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       builder: (context) {
         return Wrap(
           children: [
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              minLeadingWidth: 0,
-              leading: const Icon(Icons.person_add),
-              title: const Text('Add child'),
-              onTap: () {},
-            ),
-            ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              minLeadingWidth: 0,
-              leading: const Icon(Icons.person),
-              title: const Text('Profile'),
-              onTap: () {},
-            ),
+            Padding(
+                child: Column(
+                  children: [
+                    ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
+                      minLeadingWidth: 0,
+                      leading: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: ElevatedButton(
+                          child: const Text(
+                            'M',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.bold),
+                          ),
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              primary: const Color.fromRGBO(255, 102, 104, 1),
+                              side: const BorderSide(
+                                  width: 2, color: Colors.white),
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.all(10)),
+                        ),
+                      ),
+                      title: const Text(
+                        'Melissa',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 20),
+                      minLeadingWidth: 0,
+                      leading: const SizedBox(
+                        width: 40,
+                        child: Icon(
+                          Icons.person_add,
+                          color: Colors.white,
+                        ),
+                      ),
+                      title: const Text(
+                        'Add new child',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.pushNamed(context, 'add-kid');
+                      },
+                    ),
+                  ],
+                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 30)),
           ],
         );
       },
+    );
+  }
+}
+
+// ignore: camel_case_types
+class sidebar extends StatelessWidget {
+  const sidebar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          SizedBox(
+            height: 255,
+            child: DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Column(
+                children: const <Widget>[
+                  Center(
+                      child: SizedBox(
+                    height: 120,
+                    child: CircleAvatar(
+                      backgroundColor: Color.fromARGB(255, 215, 242, 250),
+                      child: Text(
+                        'JD',
+                        style: TextStyle(
+                            fontSize: 40, fontWeight: FontWeight.bold),
+                      ),
+                      radius: 120,
+                    ),
+                  )),
+                  Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Text(
+                      'John Doe',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+          Column(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.settings_outlined),
+                title: const Text('Settings'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.bug_report_outlined),
+                title: const Text('Report a bug'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline),
+                title: const Text('About Kids Habit'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app_outlined),
+                title: const Text('Sign out'),
+                onTap: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => const Login()));
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
