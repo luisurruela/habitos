@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:habitos/screens/home_screen.dart';
 import '../theme/theme.dart';
 
 class AddKidScreen extends StatefulWidget {
-  const AddKidScreen({Key? key}) : super(key: key);
+  const AddKidScreen({Key? key, required this.backButton}) : super(key: key);
+
+  final bool backButton;
 
   @override
   State<AddKidScreen> createState() => _AddKidScreenState();
@@ -21,6 +24,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   final _formKey = GlobalKey<FormState>();
   DateTime pickDate = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -39,12 +43,14 @@ class _AddKidScreenState extends State<AddKidScreen> {
                 AppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  leading: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
-                      )),
+                  leading: widget.backButton
+                      ? IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ))
+                      : null,
                 ),
                 const SizedBox(
                   height: 50,
@@ -258,9 +264,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
               minLeadingWidth: 0,
               leading: const Icon(Icons.camera_alt_outlined),
               title: const Text('Camera'),
-              onTap: () {
-                print('open camera');
-              },
+              onTap: () {},
             ),
             ListTile(
               contentPadding:
@@ -268,9 +272,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
               minLeadingWidth: 0,
               leading: const Icon(Icons.photo_library_outlined),
               title: const Text('Gallery'),
-              onTap: () {
-                print('open gallery');
-              },
+              onTap: () {},
             ),
           ],
         );
@@ -289,13 +291,17 @@ class _AddKidScreenState extends State<AddKidScreen> {
       "parent_id": currentUser.uid,
       "name": name.text,
       "birthday": pickDate,
-      "create_date": DateTime.now()
+      "create_date": DateTime.now(),
+      "points": 0
     };
 
-    return users
-        .add(json)
-        .then((value) => {changeHasKids(true)})
-        .catchError((error) => print("Failed to add user: $error"));
+    changeHasKids(true);
+
+    return users.add(json).then((value) {
+      changeHasKids(true);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    }).catchError((error) {});
   }
 
   Future changeHasKids(bool hasKids) async {
@@ -307,7 +313,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
       'hasKids': hasKids,
     };
 
-    await user.update(data).whenComplete(() => print('record updated'));
+    await user.update(data).whenComplete(() {});
   }
 
   String? dateValidate(String? currentDate) {

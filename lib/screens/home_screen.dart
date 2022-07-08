@@ -20,20 +20,32 @@ class HomeScreen extends StatelessWidget {
       future: userData.doc(currentUser!.uid).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        final user = snapshot.data?.data();
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data =
-              snapshot.data!.data() as Map<String, dynamic>;
-          print(data['hasKids']);
+        bool userHasKids = false;
+
+        if (snapshot.hasError) {
+          return const Text("Something went wrong");
         }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return const Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> user =
+              snapshot.data?.data() as Map<String, dynamic>;
+          userHasKids = user['hasKids'];
+        }
+
         return currentUser!.emailVerified
             ? WillPopScope(
                 child: Scaffold(
                   key: _scaffoldKey,
                   drawer: const sidebar(),
-                  body: snapshot.hasData
+                  body: userHasKids && snapshot.hasData
                       ? HomeWidget(currentUser: currentUser)
-                      : const AddKidScreen(),
+                      : const AddKidScreen(
+                          backButton: false,
+                        ),
                 ),
                 onWillPop: () async {
                   return true;
@@ -135,13 +147,13 @@ class HomeWidget extends StatelessWidget {
                               Flexible(
                                 child: RichText(
                                     text: const TextSpan(
-                                        text: 'Melissa ',
+                                        text: 'Luis Alejandro',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w800,
                                             fontSize: 24),
                                         children: <TextSpan>[
                                       TextSpan(
-                                          text: 'has',
+                                          text: ' has',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500)),
@@ -250,8 +262,12 @@ class HomeWidget extends StatelessWidget {
                         style: TextStyle(color: Colors.white),
                       ),
                       onTap: () {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, 'add-kid');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AddKidScreen(
+                                      backButton: true,
+                                    )));
                       },
                     ),
                   ],
@@ -262,6 +278,21 @@ class HomeWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<List> getChildren() async {
+    var items = <dynamic>[];
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.uid)
+        .collection('children')
+        .get()
+        .then((QuerySnapshot snapshot) {
+      snapshot.docs.map((e) => items.add(e));
+    });
+
+    return items;
   }
 }
 
