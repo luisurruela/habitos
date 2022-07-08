@@ -1,3 +1,3 @@
-# Habitos
+# Habity
 
-A new Flutter project.
+Habit tracker for kids
