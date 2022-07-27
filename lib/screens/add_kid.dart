@@ -53,7 +53,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
                       : null,
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 SizedBox(
                   width: width * 0.9,
