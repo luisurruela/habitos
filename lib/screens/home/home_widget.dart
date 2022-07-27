@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:habitos/screens/home/calendar_widget.dart';
 
 import '../../theme/theme.dart';
 import '../add_kid.dart';
@@ -156,7 +157,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 20,
+                    ),
+                    Calendar(),
+                    const SizedBox(
+                      height: 20,
                     ),
                     Expanded(
                       child: Container(
