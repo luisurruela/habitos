@@ -37,23 +37,11 @@ class _LoginState extends State<Login> {
                   width: width,
                   decoration: AppTheme.backgroundGradient,
                   child: SafeArea(
-                    child: SingleChildScrollView(
+                    child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          const SizedBox(
-                            height: 50,
-                          ),
-                          const SizedBox(
-                            width: 200,
-                            child: Image(
-                                image: AssetImage(
-                                    'assets/images/signing-image.png')),
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
                           Container(
                             width: 325,
                             decoration: const BoxDecoration(

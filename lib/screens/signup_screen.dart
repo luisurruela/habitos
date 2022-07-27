@@ -39,23 +39,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: width,
                     decoration: AppTheme.backgroundGradient,
                     child: SafeArea(
-                      child: SingleChildScrollView(
+                      child: Center(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const SizedBox(
-                              width: 200,
-                              child: Image(
-                                  image: AssetImage(
-                                      'assets/images/signup-image.png')),
-                            ),
-                            const SizedBox(
-                              height: 30,
-                            ),
                             Container(
                               width: 325,
                               decoration: const BoxDecoration(
