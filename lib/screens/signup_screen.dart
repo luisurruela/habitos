@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:habitos/models/user_model.dart' as model;
 import 'package:habitos/theme/theme.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -346,21 +347,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() {});
 
       final user = FirebaseAuth.instance.currentUser;
+
       if (user != null) {
-        final json = {
-          'displayName': user.displayName,
-          'email': user.email,
-          'creationTime': DateTime.now(),
-          'phoneNumber': user.phoneNumber,
-          'photoURL': user.photoURL,
-          'uid': user.uid,
-          'hasKids': false
-        };
+        model.User newUser = model.User(
+            displayName: user.displayName,
+            email: user.email!,
+            creationTime: DateTime.now(),
+            phoneNumber: user.phoneNumber,
+            photoURL: user.photoURL,
+            uid: user.uid,
+            hasKids: false);
 
         await FirebaseFirestore.instance
             .collection('users')
             .doc(user.uid)
-            .set(json);
+            .set(newUser.toJson());
 
         Navigator.pop(context);
         Navigator.pushReplacementNamed(context, 'home');

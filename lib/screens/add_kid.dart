@@ -282,17 +282,15 @@ class _AddKidScreenState extends State<AddKidScreen> {
 
   Future addChild() async {
     final currentUser = FirebaseAuth.instance.currentUser;
-    CollectionReference users = FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser!.uid)
-        .collection('children');
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('children');
 
     final json = {
-      "parent_id": currentUser.uid,
-      "name": name.text,
-      "birthday": pickDate,
-      "create_date": DateTime.now(),
-      "points": 0
+      'uid': currentUser!.uid,
+      'name': name.text,
+      'birthday': pickDate,
+      'create_date': DateTime.now(),
+      'points': 0
     };
 
     changeHasKids(true);

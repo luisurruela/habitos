@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primary = Color.fromRGBO(62, 40, 201, 1);
+  static const Color primary = Color.fromRGBO(42, 27, 137, 1);
   static const Color secondary = Color.fromRGBO(255, 130, 205, 1);
   static const Color tertiary = Color.fromRGBO(218, 240, 75, 1);
   static const Color darkGrey = Color.fromARGB(255, 120, 120, 120);
@@ -47,7 +47,7 @@ class AppTheme {
   static BoxDecoration backgroundGradient = const BoxDecoration(
       gradient:
           RadialGradient(center: Alignment(-0.3, -0.95), radius: 0.8, colors: [
-    AppTheme.secondary,
+    AppTheme.primary,
     AppTheme.primary,
   ]));
 }
