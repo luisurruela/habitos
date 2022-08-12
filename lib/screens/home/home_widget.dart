@@ -47,12 +47,12 @@ class _HomeWidgetState extends State<HomeWidget> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    return Stack(
-      children: [
-        Column(
-          children: [
-            SingleChildScrollView(
-              child: Container(
+    return SingleChildScrollView(
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
                 height: height,
                 width: width,
                 decoration: AppTheme.backgroundGradient,
@@ -165,10 +165,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                   ],
                 ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+        ],
+      ),
     );
   }
 

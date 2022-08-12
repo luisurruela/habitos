@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:habitos/screens/home/navigation_menu.dart';
 import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/loading_screen.dart';
@@ -40,13 +41,16 @@ class HomeScreen extends StatelessWidget {
         return currentUser!.emailVerified
             ? WillPopScope(
                 child: Scaffold(
-                    key: _scaffoldKey,
-                    drawer: const Sidebar(),
-                    body: snapshot.hasData
-                        ? userHasKids
-                            ? const HomeWidget()
-                            : const AddKidScreen(backButton: false)
-                        : const LoadingScreen()),
+                  key: _scaffoldKey,
+                  drawer: const Sidebar(),
+                  body: snapshot.hasData
+                      ? userHasKids
+                          ? const HomeWidget()
+                          : const AddKidScreen(backButton: false)
+                      : const LoadingScreen(),
+                  bottomNavigationBar: const NavigationMenu(),
+                  resizeToAvoidBottomInset: false,
+                ),
                 onWillPop: () async {
                   return true;
                 })
