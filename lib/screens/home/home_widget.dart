@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:habitos/screens/home/calendar_widget.dart';
+import 'package:habitos/screens/home/habits_widget.dart';
 
 import '../../theme/theme.dart';
 import '../add_kid.dart';
@@ -160,25 +161,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       height: 20,
                     ),
                     Calendar(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                      child: Container(
-                        child: Center(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [],
-                        )),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(40),
-                                topRight: Radius.circular(40)),
-                            color: AppTheme.primary),
-                        width: width,
-                        height: height,
-                      ),
-                    )
+                    const Expanded(child: Habtis())
                   ],
                 ),
               ),
