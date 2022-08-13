@@ -5,6 +5,7 @@ import 'package:habitos/screens/home/navigation_menu.dart';
 import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/loading_screen.dart';
+import 'package:habitos/theme/theme.dart';
 
 import 'home/home_widget.dart';
 import 'home/sidebar_widget.dart';
@@ -41,16 +42,16 @@ class HomeScreen extends StatelessWidget {
         return currentUser!.emailVerified
             ? WillPopScope(
                 child: Scaffold(
-                  key: _scaffoldKey,
-                  drawer: const Sidebar(),
-                  body: snapshot.hasData
-                      ? userHasKids
-                          ? const HomeWidget()
-                          : const AddKidScreen(backButton: false)
-                      : const LoadingScreen(),
-                  bottomNavigationBar: const NavigationMenu(),
-                  resizeToAvoidBottomInset: false,
-                ),
+                    backgroundColor: AppTheme.primary,
+                    key: _scaffoldKey,
+                    drawer: const Sidebar(),
+                    extendBodyBehindAppBar: true,
+                    body: snapshot.hasData
+                        ? userHasKids
+                            ? const HomeWidget()
+                            : const AddKidScreen(backButton: false)
+                        : const LoadingScreen(),
+                    bottomNavigationBar: const NavigationMenu()),
                 onWillPop: () async {
                   return true;
                 })

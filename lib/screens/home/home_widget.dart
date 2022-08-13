@@ -32,143 +32,83 @@ class _HomeWidgetState extends State<HomeWidget> {
         .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
 
-    final data = query.docs.map((doc) => doc.data()).toList();
+    children = query.docs.map((doc) => doc.data()).toList();
+    setState(() {});
+    setChild(0);
+  }
 
-    setState(() {
-      childName = data[0]['name'].toString();
-      childPoints = data[0]['points'].toString();
-      childInitial = data[0]['name'].toString().substring(0, 1).toUpperCase();
-      children = data;
-    });
+  void setChild(index) {
+    childName = children[index]['name'].toString();
+    childPoints = children[index]['points'].toString();
+    childInitial =
+        children[index]['name'].toString().substring(0, 1).toUpperCase();
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
-    return SingleChildScrollView(
-      child: Stack(
-        children: [
-          Column(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Container(
-                height: height,
-                width: width,
-                decoration: AppTheme.backgroundGradient,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 10),
-                      child: Column(
-                        children: [
-                          SafeArea(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: ElevatedButton(
-                                    child: Text(
-                                      childInitial,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    onPressed: () => showBottomModal(context),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: const Color.fromRGBO(
-                                          255, 102, 104, 1),
-                                      side: const BorderSide(
-                                          width: 2, color: Colors.white),
-                                      elevation: 3,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                    ),
-                                  ),
-                                ),
-                                const Text(
-                                  'Habity',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'PPAgrandir'),
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(right: 5),
-                                  child: Padding(
-                                      child: IconButton(
-                                        color: Colors.white,
-                                        onPressed: () {},
-                                        icon: const Icon(Icons.notifications),
-                                        iconSize: 30,
-                                      ),
-                                      padding: const EdgeInsets.all(0)),
-                                )
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: const [
-                              Text(
-                                'Hi there,',
-                                style: TextStyle(
-                                    color: Color.fromARGB(228, 255, 255, 255),
-                                    fontSize: 18),
-                              ),
-                              Text('👋', style: TextStyle(fontSize: 18)),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Flexible(
-                                child: RichText(
-                                    text: TextSpan(
-                                        text: childName,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 24),
-                                        children: <TextSpan>[
-                                      const TextSpan(
-                                          text: ' has ',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500)),
-                                      TextSpan(
-                                          text: childPoints,
-                                          style: const TextStyle(
-                                            color: AppTheme.tertiary,
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 24,
-                                          )),
-                                      const TextSpan(
-                                          text: ' points in total',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500))
-                                    ])),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Calendar(),
-                    const Expanded(child: Habtis())
-                  ],
-                ),
+              header(),
+              PointsBar(childName: childName, childPoints: childPoints),
+              const SizedBox(
+                height: 20,
               ),
+              const Calendar(),
+              const Habtis()
             ],
           ),
-        ],
+        ),
       ),
+    );
+  }
+
+  Widget header() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        SizedBox(
+          height: 50,
+          width: 50,
+          child: ElevatedButton(
+            child: Text(
+              childInitial,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            onPressed: () => showBottomModal(context),
+            style: ElevatedButton.styleFrom(
+              primary: const Color.fromRGBO(255, 102, 104, 1),
+              side: const BorderSide(width: 2, color: Colors.white),
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+            ),
+          ),
+        ),
+        const Text(
+          'Habity',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'PPAgrandir'),
+        ),
+        Container(
+          margin: const EdgeInsets.only(right: 5),
+          child: Padding(
+              child: IconButton(
+                color: Colors.white,
+                onPressed: () {},
+                icon: const Icon(Icons.notifications),
+                iconSize: 30,
+              ),
+              padding: const EdgeInsets.all(0)),
+        )
+      ],
     );
   }
 
@@ -218,7 +158,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   child['name'].toString(),
                                   style: const TextStyle(color: Colors.white),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  setChild(index);
+                                },
                               );
                             },
                             scrollDirection: Axis.vertical,
@@ -241,6 +184,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onTap: () {
+                        Navigator.pop(context);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -256,6 +200,66 @@ class _HomeWidgetState extends State<HomeWidget> {
           ],
         );
       },
+    );
+  }
+}
+
+class PointsBar extends StatelessWidget {
+  const PointsBar({
+    Key? key,
+    required this.childName,
+    required this.childPoints,
+  }) : super(key: key);
+
+  final String childName;
+  final String childPoints;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SizedBox(
+          height: 30,
+        ),
+        Row(
+          children: const [
+            Text(
+              'Hi there,',
+              style: TextStyle(
+                  color: Color.fromARGB(228, 255, 255, 255), fontSize: 18),
+            ),
+            Text('👋', style: TextStyle(fontSize: 18)),
+          ],
+        ),
+        Row(
+          children: [
+            Flexible(
+              child: RichText(
+                  text: TextSpan(
+                      text: childName,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w800, fontSize: 24),
+                      children: <TextSpan>[
+                    const TextSpan(
+                        text: ' has ',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500)),
+                    TextSpan(
+                        text: childPoints,
+                        style: const TextStyle(
+                          color: AppTheme.tertiary,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 24,
+                        )),
+                    const TextSpan(
+                        text: ' points in total',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500))
+                  ])),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
