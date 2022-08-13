@@ -3,7 +3,7 @@ import 'package:weekly_date_picker/weekly_date_picker.dart';
 import 'package:habitos/theme/theme.dart';
 
 class Calendar extends StatefulWidget {
-  Calendar({Key? key}) : super(key: key);
+  const Calendar({Key? key}) : super(key: key);
 
   @override
   State<Calendar> createState() => _CalendarState();
