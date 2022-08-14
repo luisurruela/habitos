@@ -29,10 +29,10 @@ class _LoginState extends State<Login> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: [
-              SingleChildScrollView(
-                child: Container(
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
                   height: height,
                   width: width,
                   decoration: AppTheme.backgroundGradient,
@@ -292,26 +292,16 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          TextButton(
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignUpScreen())),
-                              child: const Text(
-                                'Register a new account',
-                                style: TextStyle(
-                                    color: AppTheme.tertiary, fontSize: 16),
-                              ))
+                          const NewAccountButton()
                         ],
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          isLoading ? const loader() : const SizedBox(height: 0)
+          isLoading ? const Loader() : const SizedBox(height: 0)
         ],
       ),
     );
@@ -392,9 +382,26 @@ class _LoginState extends State<Login> {
   }
 }
 
+class NewAccountButton extends StatelessWidget {
+  const NewAccountButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: () => Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const SignUpScreen())),
+        child: const Text(
+          'Register a new account',
+          style: TextStyle(color: AppTheme.tertiary, fontSize: 16),
+        ));
+  }
+}
+
 // ignore: camel_case_types
-class loader extends StatelessWidget {
-  const loader({
+class Loader extends StatelessWidget {
+  const Loader({
     Key? key,
   }) : super(key: key);
 

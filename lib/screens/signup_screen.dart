@@ -30,10 +30,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Column(
-            children: [
-              SingleChildScrollView(
-                child: Center(
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Center(
                   child: Container(
                     height: height,
                     width: width,
@@ -302,8 +302,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           isLoading ? const loader() : const SizedBox(height: 0)
         ],
