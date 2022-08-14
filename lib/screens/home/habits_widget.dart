@@ -59,9 +59,12 @@ class HabityComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         Container(
+          width: width,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -70,25 +73,31 @@ class HabityComponent extends StatelessWidget {
                 color: AppTheme.tertiary,
                 size: 30,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Following Bedtimes Routines',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        color: Colors.white,
-                        fontSize: 18),
-                    overflow: TextOverflow.ellipsis,
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Following Bedtimes Routines',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            fontSize: 18),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        'Go for it!',
+                        style:
+                            TextStyle(color: AppTheme.tertiary, fontSize: 18),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Go for it!',
-                    style: TextStyle(color: AppTheme.tertiary, fontSize: 18),
-                  ),
-                ],
+                ),
               ),
               Row(children: const [
                 Icon(
