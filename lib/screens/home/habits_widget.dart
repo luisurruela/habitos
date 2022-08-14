@@ -79,6 +79,7 @@ class HabityComponent extends StatelessWidget {
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                         fontSize: 18),
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(
                     height: 5,
