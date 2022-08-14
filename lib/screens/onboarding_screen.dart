@@ -12,10 +12,10 @@ class IntroScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            child: Container(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               decoration: AppTheme.backgroundGradient,
@@ -96,8 +96,8 @@ class IntroScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

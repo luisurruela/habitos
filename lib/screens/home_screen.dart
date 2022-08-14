@@ -30,7 +30,8 @@ class HomeScreen extends StatelessWidget {
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return const Text("Document does not exist");
+          FirebaseAuth.instance.signOut();
+          Navigator.pushReplacementNamed(context, 'login');
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
