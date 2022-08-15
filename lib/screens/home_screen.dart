@@ -43,16 +43,25 @@ class HomeScreen extends StatelessWidget {
         return currentUser!.emailVerified
             ? WillPopScope(
                 child: Scaffold(
-                    backgroundColor: AppTheme.primary,
-                    key: _scaffoldKey,
-                    drawer: const Sidebar(),
-                    extendBodyBehindAppBar: true,
-                    body: snapshot.hasData
-                        ? userHasKids
-                            ? const HomeWidget()
-                            : const AddKidScreen(backButton: false)
-                        : const LoadingScreen(),
-                    bottomNavigationBar: const NavigationMenu()),
+                  backgroundColor: AppTheme.primary,
+                  key: _scaffoldKey,
+                  drawer: const Sidebar(),
+                  extendBodyBehindAppBar: true,
+                  body: snapshot.hasData
+                      ? userHasKids
+                          ? const HomeWidget()
+                          : const AddKidScreen(backButton: false)
+                      : const LoadingScreen(),
+                  bottomNavigationBar: const NavigationMenu(),
+                  floatingActionButton: FloatingActionButton(
+                    backgroundColor: AppTheme.tertiary,
+                    child: const Icon(
+                      Icons.add,
+                      color: AppTheme.darkPurple,
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
                 onWillPop: () async {
                   return true;
                 })
