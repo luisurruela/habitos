@@ -47,20 +47,23 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              header(),
-              PointsBar(childName: childName, childPoints: childPoints),
-              const SizedBox(
-                height: 20,
-              ),
-              const Calendar(),
-              const Habtis()
-            ],
+    return Container(
+      decoration: AppTheme.backgroundGradient,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                header(),
+                PointsBar(childName: childName, childPoints: childPoints),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Calendar(),
+                const Habtis()
+              ],
+            ),
           ),
         ),
       ),
@@ -72,12 +75,12 @@ class _HomeWidgetState extends State<HomeWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          height: 50,
-          width: 50,
+          height: 42,
+          width: 42,
           child: ElevatedButton(
             child: Text(
               childInitial,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             onPressed: () => showBottomModal(context),
             style: ElevatedButton.styleFrom(
@@ -103,7 +106,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               child: IconButton(
                 color: Colors.white,
                 onPressed: () {},
-                icon: const Icon(Icons.notifications),
+                icon: const Icon(Icons.notifications_outlined),
                 iconSize: 30,
               ),
               padding: const EdgeInsets.all(0)),
@@ -222,6 +225,7 @@ class PointsBar extends StatelessWidget {
           height: 30,
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
               'Hi there,',
@@ -232,6 +236,7 @@ class PointsBar extends StatelessWidget {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Flexible(
               child: RichText(

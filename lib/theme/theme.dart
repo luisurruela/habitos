@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const Color primary = Color(0xFF2A1B89);
+  static const Color primary = Color(0xFF191050);
   static const Color primaryLight = Color(0xFF3E28C9);
-  static const Color secondary = Color.fromRGBO(255, 130, 205, 1);
+  static const Color secondary = Color(0xFFFF6668);
   static const Color tertiary = Color.fromRGBO(218, 240, 75, 1);
   static const Color darkGrey = Color.fromARGB(255, 120, 120, 120);
-  static const Color darkPurple = Color.fromRGBO(12, 8, 40, 1);
+  static const Color darkPurple = Color(0xFF191050);
 
   static const TextStyle fontTitle = TextStyle(
       fontSize: 32, fontWeight: FontWeight.w700, fontFamily: 'PPAgrandir');
@@ -47,8 +47,8 @@ class AppTheme {
 
   static BoxDecoration backgroundGradient = const BoxDecoration(
       gradient:
-          RadialGradient(center: Alignment(-0.3, -0.95), radius: 0.8, colors: [
-    AppTheme.primary,
+          RadialGradient(radius: 1.2, center: Alignment(-0.3, -0.95), colors: [
+    AppTheme.primaryLight,
     AppTheme.primary,
   ]));
 }

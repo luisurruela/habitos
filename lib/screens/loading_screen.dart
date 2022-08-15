@@ -31,7 +31,7 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SpinKitRing(
-      color: Colors.white,
+      color: AppTheme.secondary,
       size: 50.0,
     );
   }

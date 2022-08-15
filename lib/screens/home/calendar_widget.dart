@@ -15,7 +15,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return WeeklyDatePicker(
-      backgroundColor: AppTheme.primary,
+      backgroundColor: AppTheme.primary.withOpacity(0),
       enableWeeknumberText: false,
       digitsColor: Colors.white,
       selectedDigitColor: Colors.black,
