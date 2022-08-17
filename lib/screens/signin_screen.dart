@@ -19,6 +19,7 @@ class _LoginState extends State<Login> {
   bool isLoading = false;
   bool emailError = false;
   bool passwordError = false;
+  bool passwordVisible = false;
   String error = '';
   final _formKey = GlobalKey<FormState>();
 
@@ -165,8 +166,23 @@ class _LoginState extends State<Login> {
                                             }
                                           },
                                           controller: password,
-                                          obscureText: true,
+                                          obscureText:
+                                              passwordVisible ? false : true,
                                           decoration: InputDecoration(
+                                              suffixIcon: IconButton(
+                                                icon: Icon(
+                                                  passwordVisible
+                                                      ? Icons.visibility_off
+                                                      : Icons.visibility,
+                                                  color: AppTheme.primary,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    passwordVisible =
+                                                        !passwordVisible;
+                                                  });
+                                                },
+                                              ),
                                               enabledBorder: passwordError
                                                   ? const OutlineInputBorder(
                                                       borderSide: BorderSide(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/theme/theme.dart';
+import 'package:habitos/theme/habity_icons_icons.dart';
 
 class Habtis extends StatelessWidget {
   const Habtis({Key? key}) : super(key: key);
@@ -15,22 +16,26 @@ class Habtis extends StatelessWidget {
         const Text(
           'MORNING',
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+              color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14),
         ),
         const SizedBox(
           height: 10,
         ),
         Column(
-          children: const [HabityComponent()],
+          children: const [
+            HabityComponent(
+              icon: HabityIcons.clean_hands,
+            )
+          ],
         ),
         const SizedBox(
-          height: 20,
+          height: 40,
         ),
         const Text('AFTERNOON',
             style: TextStyle(
-                color: Colors.white,
+                color: Colors.white70,
                 fontWeight: FontWeight.bold,
-                fontSize: 16)),
+                fontSize: 14)),
         const SizedBox(
           height: 10,
         ),
@@ -38,12 +43,13 @@ class Habtis extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 0),
           child: Column(
             children: const [
-              HabityComponent(),
-              HabityComponent(),
-              HabityComponent(),
-              HabityComponent(),
-              HabityComponent(),
-              HabityComponent(),
+              HabityComponent(icon: HabityIcons.breakfast_dining),
+              HabityComponent(
+                icon: HabityIcons.face_retouching_natural,
+              ),
+              HabityComponent(
+                icon: HabityIcons.settings,
+              ),
             ],
           ),
         ),
@@ -53,9 +59,8 @@ class Habtis extends StatelessWidget {
 }
 
 class HabityComponent extends StatelessWidget {
-  const HabityComponent({
-    Key? key,
-  }) : super(key: key);
+  const HabityComponent({Key? key, required this.icon}) : super(key: key);
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +73,8 @@ class HabityComponent extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(
-                Icons.bed_rounded,
+              Icon(
+                icon,
                 color: AppTheme.tertiary,
                 size: 30,
               ),
@@ -103,11 +108,11 @@ class HabityComponent extends StatelessWidget {
                 Icon(
                   Icons.star,
                   color: AppTheme.secondary,
-                  size: 30,
+                  size: 20,
                 ),
                 Text(
                   '+5',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 )
               ])
             ],

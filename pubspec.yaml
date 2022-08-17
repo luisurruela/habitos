@@ -101,6 +101,9 @@ flutter:
   - family: PPAgrandir
     fonts: 
         - asset: assets/fonts/PPAgrandir-Bold.ttf
+  - family: HabityIcons
+    fonts: 
+        - asset: assets/fonts/HabityIcons.ttf
 
   # To add assets to your application, add an assets section, like this:
   assets:

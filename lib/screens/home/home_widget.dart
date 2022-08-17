@@ -6,6 +6,7 @@ import 'package:habitos/screens/home/habits_widget.dart';
 
 import '../../theme/theme.dart';
 import '../add_kid.dart';
+import '../signin_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -105,7 +106,11 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: Padding(
               child: IconButton(
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => const Login()));
+                },
                 icon: const Icon(Icons.notifications_outlined),
                 iconSize: 30,
               ),
@@ -191,9 +196,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AddKidScreen(
-                                      backButton: true,
-                                    )));
+                                builder: (context) => const AddKidScreen()));
                       },
                     ),
                   ],
@@ -231,6 +234,9 @@ class PointsBar extends StatelessWidget {
               'Hi there,',
               style: TextStyle(
                   color: Color.fromARGB(228, 255, 255, 255), fontSize: 18),
+            ),
+            SizedBox(
+              height: 9,
             ),
             Text('👋', style: TextStyle(fontSize: 18)),
           ],

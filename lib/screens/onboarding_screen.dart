@@ -29,20 +29,15 @@ class IntroScreen extends StatelessWidget {
                 onDone: () {},
                 imageWidth: width * 0.85,
                 onBoardData: onBoardData,
-                titleStyles: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 0.15,
-                ),
+                titleStyles: AppTheme.fontTitleWhite,
                 descriptionStyles: const TextStyle(
                   fontSize: 18,
                   color: Colors.white,
                 ),
                 pageIndicatorStyle: const PageIndicatorStyle(
                   width: 100,
-                  inactiveColor: Color.fromRGBO(255, 205, 235, 1),
-                  activeColor: AppTheme.secondary,
+                  inactiveColor: Color(0xFFFFCDEB),
+                  activeColor: AppTheme.lightPink,
                   inactiveSize: Size(8, 8),
                   activeSize: Size(12, 12),
                 ),
@@ -75,19 +70,22 @@ class IntroScreen extends StatelessWidget {
                                           const AccountType()));
                         }
                       },
-                      child: Container(
-                        width: 230,
-                        height: 50,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: AppTheme.tertiary,
-                        ),
-                        child: Text(
-                          state.isLastPage ? "Get Started" : "Next",
-                          style: const TextStyle(
-                            color: AppTheme.darkPurple,
-                            fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Container(
+                          width: width,
+                          height: 50,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: AppTheme.tertiary,
+                          ),
+                          child: Text(
+                            state.isLastPage ? "Get Started" : "Next",
+                            style: const TextStyle(
+                              color: AppTheme.darkPurple,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

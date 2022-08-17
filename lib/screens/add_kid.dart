@@ -6,9 +6,7 @@ import 'package:habitos/screens/home_screen.dart';
 import '../theme/theme.dart';
 
 class AddKidScreen extends StatefulWidget {
-  const AddKidScreen({Key? key, required this.backButton}) : super(key: key);
-
-  final bool backButton;
+  const AddKidScreen({Key? key}) : super(key: key);
 
   @override
   State<AddKidScreen> createState() => _AddKidScreenState();
@@ -43,14 +41,12 @@ class _AddKidScreenState extends State<AddKidScreen> {
                 AppBar(
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  leading: widget.backButton
-                      ? IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.white,
-                          ))
-                      : null,
+                  leading: IconButton(
+                      onPressed: () => Navigator.of(context).maybePop(),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      )),
                 ),
                 const SizedBox(
                   height: 20,
@@ -236,7 +232,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
       return 'Please enter your kid name';
     }
 
-    if (name.length < 5 || name.length > 50) {
+    if (name.length < 2 || name.length > 50) {
       return 'Name must be between 2 and 50 characters';
     }
 

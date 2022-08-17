@@ -8,9 +8,7 @@ import 'package:habitos/screens/loading_screen.dart';
 import 'package:habitos/screens/rewards.dart';
 import 'package:habitos/screens/settings.dart';
 import 'package:habitos/theme/theme.dart';
-
 import 'home/home_widget.dart';
-import 'home/sidebar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -63,55 +61,74 @@ class _HomeScreenState extends State<HomeScreen> {
 
         return currentUser!.emailVerified
             ? WillPopScope(
-                child: Scaffold(
-                  backgroundColor: AppTheme.primary,
-                  key: _scaffoldKey,
-                  drawer: const Sidebar(),
-                  extendBodyBehindAppBar: true,
-                  body: snapshot.hasData
-                      ? userHasKids
-                          ? IndexedStack(
-                              index: _selectedIndex,
-                              children: screens,
-                            )
-                          : const AddKidScreen(backButton: false)
-                      : const LoadingScreen(),
-                  bottomNavigationBar: BottomNavigationBar(
-                    backgroundColor: AppTheme.primary,
-                    elevation: 0,
-                    items: const <BottomNavigationBarItem>[
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.check_circle_outline),
-                        label: 'Habits',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.emoji_events_outlined),
-                        label: 'Rewards',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.settings_outlined),
-                        label: 'Settings',
-                      ),
-                    ],
-                    currentIndex: _selectedIndex,
-                    selectedItemColor: Colors.white,
-                    unselectedItemColor: Colors.white.withOpacity(0.8),
-                    onTap: _onItemTapped,
-                  ),
-                  floatingActionButton: FloatingActionButton(
-                    backgroundColor: AppTheme.tertiary,
-                    child: const Icon(
-                      Icons.add,
-                      color: AppTheme.darkPurple,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
+                child: snapshot.hasData
+                    ? userHasKids
+                        ? Home(scaffoldKey: _scaffoldKey)
+                        : const AddKidScreen()
+                    : const LoadingScreen(),
                 onWillPop: () async {
                   return true;
                 })
             : const EmailVerificationScreen();
       },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({
+    Key? key,
+    required GlobalKey<ScaffoldState> scaffoldKey,
+  })  : _scaffoldKey = scaffoldKey,
+        super(key: key);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppTheme.primary,
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      body: const HomeWidget(),
+      bottomNavigationBar: const NavigationMenu(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppTheme.tertiary,
+        child: const Icon(
+          Icons.add,
+          color: AppTheme.darkPurple,
+        ),
+        onPressed: () {},
+      ),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({
+    Key? key,
+    required GlobalKey<ScaffoldState> scaffoldKey,
+  })  : _scaffoldKey = scaffoldKey,
+        super(key: key);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppTheme.primary,
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      body: const HomeWidget(),
+      bottomNavigationBar: const NavigationMenu(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppTheme.tertiary,
+        child: const Icon(
+          Icons.add,
+          color: AppTheme.darkPurple,
+        ),
+        onPressed: () {},
+      ),
     );
   }
 }
