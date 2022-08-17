@@ -16,9 +16,7 @@ class AppRouters {
     'type': (BuildContext context) => const AccountType(),
     'intro': (BuildContext context) => IntroScreen(),
     'forget-password': (BuildContext context) => const ForgetPassword(),
-    'add-kid': (BuildContext context) => const AddKidScreen(
-          backButton: false,
-        ),
+    'add-kid': (BuildContext context) => const AddKidScreen(),
     'email-verification': (_) => const EmailVerificationScreen()
   };
 }

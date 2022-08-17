@@ -6,9 +6,7 @@ import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/loading_screen.dart';
 import 'package:habitos/theme/theme.dart';
-
 import 'home/home_widget.dart';
-import 'home/sidebar_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   final currentUser = FirebaseAuth.instance.currentUser;
@@ -42,31 +40,45 @@ class HomeScreen extends StatelessWidget {
 
         return currentUser!.emailVerified
             ? WillPopScope(
-                child: Scaffold(
-                  backgroundColor: AppTheme.primary,
-                  key: _scaffoldKey,
-                  drawer: const Sidebar(),
-                  extendBodyBehindAppBar: true,
-                  body: snapshot.hasData
-                      ? userHasKids
-                          ? const HomeWidget()
-                          : const AddKidScreen(backButton: false)
-                      : const LoadingScreen(),
-                  bottomNavigationBar: const NavigationMenu(),
-                  floatingActionButton: FloatingActionButton(
-                    backgroundColor: AppTheme.tertiary,
-                    child: const Icon(
-                      Icons.add,
-                      color: AppTheme.darkPurple,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
+                child: snapshot.hasData
+                    ? userHasKids
+                        ? Home(scaffoldKey: _scaffoldKey)
+                        : const AddKidScreen()
+                    : const LoadingScreen(),
                 onWillPop: () async {
                   return true;
                 })
             : const EmailVerificationScreen();
       },
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({
+    Key? key,
+    required GlobalKey<ScaffoldState> scaffoldKey,
+  })  : _scaffoldKey = scaffoldKey,
+        super(key: key);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppTheme.primary,
+      key: _scaffoldKey,
+      extendBodyBehindAppBar: true,
+      body: const HomeWidget(),
+      bottomNavigationBar: const NavigationMenu(),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppTheme.tertiary,
+        child: const Icon(
+          Icons.add,
+          color: AppTheme.darkPurple,
+        ),
+        onPressed: () {},
+      ),
     );
   }
 }
