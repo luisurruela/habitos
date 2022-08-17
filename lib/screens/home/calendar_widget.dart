@@ -18,7 +18,7 @@ class _CalendarState extends State<Calendar> {
       backgroundColor: AppTheme.primary.withOpacity(0),
       enableWeeknumberText: false,
       digitsColor: Colors.white,
-      selectedDigitColor: Colors.black,
+      selectedDigitColor: Colors.white,
       weekdayTextColor: Colors.white,
       selectedBackgroundColor: AppTheme.secondary,
       weekdays: const ["M", "T", "W", "T", "F", "S", "S"],

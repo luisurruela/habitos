@@ -83,7 +83,7 @@ class AccountType extends StatelessWidget {
                     ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: const Color.fromRGBO(50, 32, 161, 1),
+                      color: AppTheme.primary,
                     ),
                   ),
                   const SizedBox(
