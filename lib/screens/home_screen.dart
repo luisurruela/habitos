@@ -5,15 +5,36 @@ import 'package:habitos/screens/home/navigation_menu.dart';
 import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/loading_screen.dart';
+import 'package:habitos/screens/rewards.dart';
+import 'package:habitos/screens/settings.dart';
 import 'package:habitos/theme/theme.dart';
 
 import 'home/home_widget.dart';
 import 'home/sidebar_widget.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final currentUser = FirebaseAuth.instance.currentUser;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  HomeScreen({Key? key}) : super(key: key);
+  int _selectedIndex = 0;
+  final screens = [
+    const HomeWidget(),
+    const RewardsScreen(),
+    const SettingsScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +70,34 @@ class HomeScreen extends StatelessWidget {
                   extendBodyBehindAppBar: true,
                   body: snapshot.hasData
                       ? userHasKids
-                          ? const HomeWidget()
+                          ? IndexedStack(
+                              index: _selectedIndex,
+                              children: screens,
+                            )
                           : const AddKidScreen(backButton: false)
                       : const LoadingScreen(),
-                  bottomNavigationBar: const NavigationMenu(),
+                  bottomNavigationBar: BottomNavigationBar(
+                    backgroundColor: AppTheme.primary,
+                    elevation: 0,
+                    items: const <BottomNavigationBarItem>[
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.check_circle_outline),
+                        label: 'Habits',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.emoji_events_outlined),
+                        label: 'Rewards',
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.settings_outlined),
+                        label: 'Settings',
+                      ),
+                    ],
+                    currentIndex: _selectedIndex,
+                    selectedItemColor: Colors.white,
+                    unselectedItemColor: Colors.white.withOpacity(0.8),
+                    onTap: _onItemTapped,
+                  ),
                   floatingActionButton: FloatingActionButton(
                     backgroundColor: AppTheme.tertiary,
                     child: const Icon(
