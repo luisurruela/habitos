@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
           userHasKids = user['hasKids'];
         }
 
-        return currentUser!.emailVerified
+        return currentUser.emailVerified
             ? WillPopScope(
                 child: snapshot.hasData
                     ? userHasKids

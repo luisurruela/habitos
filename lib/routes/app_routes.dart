@@ -10,7 +10,7 @@ import 'package:habitos/screens/signup_screen.dart';
 
 class AppRouters {
   static Map<String, Widget Function(BuildContext)> routes = {
-    'home': (BuildContext context) => HomeScreen(),
+    'home': (BuildContext context) => const HomeScreen(),
     'login': (BuildContext context) => const Login(),
     'register': (BuildContext context) => const SignUpScreen(),
     'type': (BuildContext context) => const AccountType(),

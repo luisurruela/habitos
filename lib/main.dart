@@ -29,7 +29,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Roboto'),
-      home: user != null ? HomeScreen() : IntroScreen(),
+      home: user != null ? const HomeScreen() : IntroScreen(),
       routes: AppRouters.routes,
     );
   }

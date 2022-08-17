@@ -45,7 +45,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
     final user = FirebaseAuth.instance.currentUser;
 
     if (isEmailVerified) {
-      return HomeScreen();
+      return const HomeScreen();
     } else {
       return Scaffold(
         body: Column(
