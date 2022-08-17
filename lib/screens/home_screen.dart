@@ -1,21 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:habitos/screens/home/navigation_menu.dart';
 import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/loading_screen.dart';
+import 'package:habitos/screens/rewards.dart';
+import 'package:habitos/screens/settings.dart';
 import 'package:habitos/theme/theme.dart';
 import 'home/home_widget.dart';
 
 class HomeScreen extends StatelessWidget {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
     final userData = FirebaseFirestore.instance.collection('users');
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return FutureBuilder<DocumentSnapshot>(
       future: userData.doc(currentUser!.uid).get(),
@@ -42,7 +43,7 @@ class HomeScreen extends StatelessWidget {
             ? WillPopScope(
                 child: snapshot.hasData
                     ? userHasKids
-                        ? Home(scaffoldKey: _scaffoldKey)
+                        ? HomePage(scaffoldKey: _scaffoldKey)
                         : const AddKidScreen()
                     : const LoadingScreen(),
                 onWillPop: () async {
@@ -54,8 +55,8 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({
+class HomePage extends StatefulWidget {
+  const HomePage({
     Key? key,
     required GlobalKey<ScaffoldState> scaffoldKey,
   })  : _scaffoldKey = scaffoldKey,
@@ -64,13 +65,55 @@ class Home extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey;
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+  final screens = [
+    const HomeWidget(),
+    const RewardsScreen(),
+    const SettingsScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.primary,
-      key: _scaffoldKey,
+      key: widget._scaffoldKey,
       extendBodyBehindAppBar: true,
-      body: const HomeWidget(),
-      bottomNavigationBar: const NavigationMenu(),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppTheme.primary,
+        elevation: 0,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check_circle_outline),
+            label: 'Habits',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.emoji_events_outlined),
+            label: 'Rewards',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings_outlined),
+            label: 'Settings',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white.withOpacity(0.8),
+        onTap: _onItemTapped,
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppTheme.tertiary,
         child: const Icon(
