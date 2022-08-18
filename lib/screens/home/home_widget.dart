@@ -16,6 +16,7 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  int selectedChild = 0;
   List children = [];
   String childName = '';
   String childPoints = '0';
@@ -39,6 +40,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   void setChild(index) {
+    selectedChild = index;
     childName = children[index]['name'].toString();
     childPoints = children[index]['points'].toString();
     childInitial =
@@ -76,8 +78,8 @@ class _HomeWidgetState extends State<HomeWidget> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          height: 42,
-          width: 42,
+          height: 40,
+          width: 40,
           child: ElevatedButton(
             child: Text(
               childInitial,
@@ -85,11 +87,11 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
             onPressed: () => showBottomModal(context),
             style: ElevatedButton.styleFrom(
-              primary: const Color.fromRGBO(255, 102, 104, 1),
+              primary: AppTheme.secondary,
               side: const BorderSide(width: 2, color: Colors.white),
               elevation: 3,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(50)),
             ),
           ),
         ),
@@ -112,7 +114,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       builder: (BuildContext context) => const Login()));
                 },
                 icon: const Icon(Icons.notifications_outlined),
-                iconSize: 30,
+                iconSize: 26,
               ),
               padding: const EdgeInsets.all(0)),
         )
@@ -155,16 +157,48 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 5, horizontal: 20),
                                 minLeadingWidth: 0,
-                                leading: const SizedBox(
+                                leading: SizedBox(
+                                  height: 40,
                                   width: 40,
-                                  child: Icon(
-                                    Icons.person_add,
-                                    color: Colors.white,
+                                  child: ElevatedButton(
+                                    child: Text(
+                                      child['name']
+                                          .toString()
+                                          .substring(0, 1)
+                                          .toUpperCase(),
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    onPressed: () => showBottomModal(context),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: AppTheme.secondary,
+                                      side: const BorderSide(
+                                          width: 2, color: Colors.white),
+                                      elevation: 3,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                    ),
                                   ),
                                 ),
-                                title: Text(
-                                  child['name'].toString(),
-                                  style: const TextStyle(color: Colors.white),
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      child['name'].toString(),
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    selectedChild == index
+                                        ? const Icon(
+                                            Icons.done,
+                                            color: AppTheme.secondary,
+                                            size: 32,
+                                          )
+                                        : const Text(''),
+                                  ],
                                 ),
                                 onTap: () {
                                   Navigator.pop(context);
@@ -183,7 +217,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       leading: const SizedBox(
                         width: 40,
                         child: Icon(
-                          Icons.person_add,
+                          Icons.person_add_alt,
                           color: Colors.white,
                         ),
                       ),

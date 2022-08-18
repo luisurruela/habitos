@@ -294,7 +294,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
     return users.add(json).then((value) {
       changeHasKids(true);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => const HomeScreen()));
     }).catchError((error) {});
   }
 

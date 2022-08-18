@@ -342,8 +342,8 @@ class _LoginState extends State<Login> {
       setState(() {});
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => const HomeScreen()));
       }
     } on FirebaseAuthException catch (e) {
       if (e.code.toString() == "user-not-found" ||
