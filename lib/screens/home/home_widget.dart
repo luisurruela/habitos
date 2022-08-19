@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:habitos/models/preference_model.dart';
 import 'package:habitos/screens/home/calendar_widget.dart';
 import 'package:habitos/screens/home/habits_widget.dart';
+import 'package:habitos/services/shared_preferences.dart';
 
 import '../../theme/theme.dart';
 import '../add_kid.dart';
@@ -36,11 +38,28 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     children = query.docs.map((doc) => doc.data()).toList();
     setState(() {});
-    setChild(0);
+
+    if (await SharedPref().contains('selectedChild')) {
+      // await SharedPref().remove('selectedChild');
+      final preferences = await SharedPref().read('selectedChild');
+      if (preferences.uid != FirebaseAuth.instance.currentUser!.uid) {
+        setChild(0);
+      } else {
+        setChild(int.parse(preferences.selectedChild));
+      }
+    } else {
+      setChild(0);
+    }
   }
 
-  void setChild(index) {
+  void setChild(index) async {
     selectedChild = index;
+    final PreferenceModel data = PreferenceModel.fromJson({
+      'uid': FirebaseAuth.instance.currentUser!.uid,
+      'selectedChild': selectedChild.toString()
+    });
+    SharedPref().save('selectedChild', data);
+
     childName = children[index]['name'].toString();
     childPoints = children[index]['points'].toString();
     childInitial =
@@ -83,7 +102,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: ElevatedButton(
             child: Text(
               childInitial,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             onPressed: () => showBottomModal(context),
             style: ElevatedButton.styleFrom(
