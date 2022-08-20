@@ -9,15 +9,15 @@ class Habtis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _currentDate = DateFormat.MMMd().format(DateTime.parse(currentDate));
+    final _selectedDate = DateFormat.MMMd().format(DateTime.parse(currentDate));
     final _today = DateFormat.MMMd().format(DateTime.now());
-    final _selectedDay = _currentDate == _today ? 'Today' : _currentDate;
+    final _date = _selectedDate == _today ? 'Today' : _selectedDate;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          _selectedDay,
+          _date,
           style: const TextStyle(
               color: Colors.white,
               fontSize: 22,
