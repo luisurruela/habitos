@@ -7,11 +7,14 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Settings Page',
-        style: AppTheme.fontTitleWhite,
-      ),
-    );
+    return Container(
+        decoration: AppTheme.backgroundGradient,
+        child: const SafeArea(
+            child: Center(
+          child: Text(
+            'Settings Page',
+            style: AppTheme.fontTitleWhite,
+          ),
+        )));
   }
 }

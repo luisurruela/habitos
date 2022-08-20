@@ -32,6 +32,33 @@ class _HomeWidgetState extends State<HomeWidget> {
     getChildren();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: AppTheme.backgroundGradient,
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                header(),
+                PointsBar(childName: childName, childPoints: childPoints),
+                const SizedBox(height: 20),
+                Calendar(function: updateSelectedDate),
+                const SizedBox(height: 30),
+                // Habtis(
+                //   currentDate: _currentDate.toString(),
+                // )
+                _noHabits()
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void updateSelectedDate(DateTime date) {
     _currentDate = date;
     setState(() {});
@@ -71,33 +98,6 @@ class _HomeWidgetState extends State<HomeWidget> {
     childInitial =
         children[index]['name'].toString().substring(0, 1).toUpperCase();
     setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: AppTheme.backgroundGradient,
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                header(),
-                PointsBar(childName: childName, childPoints: childPoints),
-                const SizedBox(height: 20),
-                Calendar(function: updateSelectedDate),
-                const SizedBox(height: 30),
-                // Habtis(
-                //   currentDate: _currentDate.toString(),
-                // )
-                _noHabits()
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 
   Widget header() {
