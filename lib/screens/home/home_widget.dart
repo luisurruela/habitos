@@ -88,9 +88,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                 const SizedBox(height: 20),
                 Calendar(function: updateSelectedDate),
                 const SizedBox(height: 30),
-                Habtis(
-                  currentDate: _currentDate.toString(),
-                )
+                // Habtis(
+                //   currentDate: _currentDate.toString(),
+                // )
+                _noHabits()
               ],
             ),
           ),
@@ -145,6 +146,35 @@ class _HomeWidgetState extends State<HomeWidget> {
               padding: const EdgeInsets.all(0)),
         )
       ],
+    );
+  }
+
+  Widget _noHabits() {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/no_habits.png"),
+          const SizedBox(
+            height: 30,
+          ),
+          const Text(
+            "Looks like you haven't created any habits yet.",
+            style: TextStyle(
+                fontFamily: 'PPAgrandir', color: Colors.white, fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const Text(
+            'Tap + to add habits',
+            style: TextStyle(
+                fontFamily: 'Roboto', fontSize: 16, color: Colors.white54),
+          )
+        ],
+      ),
     );
   }
 
