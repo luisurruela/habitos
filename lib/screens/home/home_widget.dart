@@ -5,6 +5,7 @@ import 'package:habitos/models/preference_model.dart';
 import 'package:habitos/screens/home/calendar_widget.dart';
 import 'package:habitos/screens/home/habits_widget.dart';
 import 'package:habitos/services/shared_preferences.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../theme/theme.dart';
 import '../add_kid.dart';
@@ -137,8 +138,16 @@ class _HomeWidgetState extends State<HomeWidget> {
                 color: Colors.white,
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => const Login()));
+                  Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return const Login();
+                      },
+                    ),
+                    (_) => false,
+                  );
+                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  //     builder: (BuildContext context) => const Login()));
                 },
                 icon: const Icon(Icons.notifications_outlined),
                 iconSize: 26,
@@ -283,10 +292,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ),
                       onTap: () {
                         Navigator.pop(context);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const AddKidScreen()));
+                        pushNewScreen(
+                          context,
+                          screen: const AddKidScreen(),
+                          withNavBar: false, // OPTIONAL VALUE. True by default.
+                          pageTransitionAnimation:
+                              PageTransitionAnimation.cupertino,
+                        );
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const AddKidScreen()),);
                       },
                     ),
                   ],

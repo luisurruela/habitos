@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
@@ -81,48 +80,60 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppTheme.primary,
       key: widget._scaffoldKey,
-      extendBodyBehindAppBar: true,
-      body: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: AppTheme.primary, // Default is Colors.white.
-        handleAndroidBackButtonPress: true, // Default is true.
-        resizeToAvoidBottomInset:
-            true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
-        hideNavigationBarWhenKeyboardShows:
-            true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.white,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle:
-            NavBarStyle.style1, // Choose the nav bar style with this property.
+      extendBodyBehindAppBar: false,
+      body: _bottomNavBar(),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            bottom: 70,
+            child: FloatingActionButton(
+              backgroundColor: AppTheme.tertiary,
+              child: const Icon(
+                Icons.add,
+                color: AppTheme.darkPurple,
+              ),
+              onPressed: () {},
+            ),
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppTheme.tertiary,
-        child: const Icon(
-          Icons.add,
-          color: AppTheme.darkPurple,
-        ),
-        onPressed: () {},
+    );
+  }
+
+  Widget _bottomNavBar() {
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: AppTheme.primary, // Default is Colors.white.
+      handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset:
+          true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true, // Default is true.
+      hideNavigationBarWhenKeyboardShows:
+          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.white,
       ),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: const ItemAnimationProperties(
+        // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: const ScreenTransitionAnimation(
+        // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle:
+          NavBarStyle.style1, // Choose the nav bar style with this property.
     );
   }
 
@@ -136,19 +147,19 @@ class _HomePageState extends State<HomePage> {
         icon: const Icon(HabityIcons.taskAlt),
         title: ("Habits"),
         activeColorPrimary: Colors.white,
-        inactiveColorPrimary: Colors.white70,
+        inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(HabityIcons.emojiEvents),
         title: ("Rewards"),
         activeColorPrimary: Colors.white,
-        inactiveColorPrimary: Colors.white70,
+        inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(HabityIcons.settings),
         title: ("Settings"),
         activeColorPrimary: Colors.white,
-        inactiveColorPrimary: Colors.white70,
+        inactiveColorPrimary: Colors.white,
       ),
     ];
   }
