@@ -6,11 +6,14 @@ class RewardsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Rewards Page',
-        style: AppTheme.fontTitleWhite,
-      ),
-    );
+    return Container(
+        decoration: AppTheme.backgroundGradient,
+        child: const SafeArea(
+            child: Center(
+          child: Text(
+            'Rewards Page',
+            style: AppTheme.fontTitleWhite,
+          ),
+        )));
   }
 }

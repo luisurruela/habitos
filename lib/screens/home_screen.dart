@@ -3,11 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:habitos/screens/add_kid.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
+import 'package:habitos/screens/home/home_widget.dart';
 import 'package:habitos/screens/loading_screen.dart';
 import 'package:habitos/screens/rewards.dart';
 import 'package:habitos/screens/settings.dart';
 import 'package:habitos/theme/theme.dart';
-import 'home/home_widget.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+
+import '../theme/habity_icons_icons.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -69,59 +72,95 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  final screens = [
-    const HomeWidget(),
-    const RewardsScreen(),
-    const SettingsScreen(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.primary,
       key: widget._scaffoldKey,
-      extendBodyBehindAppBar: true,
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: screens,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppTheme.primary,
-        elevation: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle_outline),
-            label: 'Habits',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events_outlined),
-            label: 'Rewards',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_outlined),
-            label: 'Settings',
-          ),
+      extendBodyBehindAppBar: false,
+      body: _bottomNavBar(),
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            right: 0,
+            bottom: 70,
+            child: FloatingActionButton(
+              backgroundColor: AppTheme.tertiary,
+              child: const Icon(
+                Icons.add,
+                color: AppTheme.darkPurple,
+              ),
+              onPressed: () {},
+            ),
+          )
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white.withOpacity(0.8),
-        onTap: _onItemTapped,
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppTheme.tertiary,
-        child: const Icon(
-          Icons.add,
-          color: AppTheme.darkPurple,
-        ),
-        onPressed: () {},
       ),
     );
+  }
+
+  Widget _bottomNavBar() {
+    return PersistentTabView(
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: AppTheme.primary, // Default is Colors.white.
+      handleAndroidBackButtonPress: true, // Default is true.
+      resizeToAvoidBottomInset:
+          true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true, // Default is true.
+      hideNavigationBarWhenKeyboardShows:
+          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Colors.white,
+      ),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: const ItemAnimationProperties(
+        // Navigation Bar's items animation properties.
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: const ScreenTransitionAnimation(
+        // Screen transition animation on change of selected tab.
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle:
+          NavBarStyle.style1, // Choose the nav bar style with this property.
+    );
+  }
+
+  List<Widget> _buildScreens() {
+    return [const HomeWidget(), const RewardsScreen(), const SettingsScreen()];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return [
+      PersistentBottomNavBarItem(
+        icon: const Icon(HabityIcons.taskAlt),
+        title: ("Habits"),
+        activeColorPrimary: Colors.white,
+        inactiveColorPrimary: Colors.white,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(HabityIcons.emojiEvents),
+        title: ("Rewards"),
+        activeColorPrimary: Colors.white,
+        inactiveColorPrimary: Colors.white,
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(HabityIcons.settings),
+        title: ("Settings"),
+        activeColorPrimary: Colors.white,
+        inactiveColorPrimary: Colors.white,
+      ),
+    ];
   }
 }

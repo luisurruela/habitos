@@ -71,13 +71,13 @@ class IntroScreen extends StatelessWidget {
                         }
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 40.0),
                         child: Container(
                           width: width,
                           height: 50,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(40),
                             color: AppTheme.tertiary,
                           ),
                           child: Text(
