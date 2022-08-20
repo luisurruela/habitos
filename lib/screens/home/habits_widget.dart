@@ -1,15 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:habitos/theme/habity_icons_icons.dart';
+import 'package:intl/intl.dart';
 
 class Habtis extends StatelessWidget {
-  const Habtis({Key? key}) : super(key: key);
+  const Habtis({Key? key, required this.currentDate}) : super(key: key);
+  final String currentDate;
 
   @override
   Widget build(BuildContext context) {
+    final _currentDate = DateFormat.MMMd().format(DateTime.parse(currentDate));
+    final _today = DateFormat.MMMd().format(DateTime.now());
+    final _selectedDay = _currentDate == _today ? 'Today' : _currentDate;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          _selectedDay,
+          style: const TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              fontFamily: 'PPAgrandir'),
+        ),
         const SizedBox(
           height: 25,
         ),

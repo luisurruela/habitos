@@ -23,12 +23,18 @@ class _HomeWidgetState extends State<HomeWidget> {
   String childName = '';
   String childPoints = '0';
   String childInitial = '';
+  DateTime _currentDate = DateTime.now();
   final _collectionRef = FirebaseFirestore.instance.collection('children');
 
   @override
   void initState() {
     super.initState();
     getChildren();
+  }
+
+  void updateSelectedDate(DateTime date) {
+    _currentDate = date;
+    setState(() {});
   }
 
   void getChildren() async {
@@ -79,11 +85,12 @@ class _HomeWidgetState extends State<HomeWidget> {
               children: [
                 header(),
                 PointsBar(childName: childName, childPoints: childPoints),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Calendar(),
-                const Habtis()
+                const SizedBox(height: 20),
+                Calendar(function: updateSelectedDate),
+                const SizedBox(height: 30),
+                Habtis(
+                  currentDate: _currentDate.toString(),
+                )
               ],
             ),
           ),
