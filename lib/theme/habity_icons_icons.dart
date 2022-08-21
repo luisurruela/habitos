@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/HabityIcons.ttf
 ///
-///
+/// 
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,20 +21,13 @@ class HabityIcons {
   static const _kFontFam = 'HabityIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData breakfastDining =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData cleanHands =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData faceRetouchingNatural =
-      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData emojiEvents =
-      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData settings =
-      IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData taskAlt =
-      IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData kingBed =
-      IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData waterDrop =
-      IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData breakfast_dining = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData clean_hands = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData face_retouching_natural = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData emoji_events = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData settings = IconData(0xe804, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData task_alt = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData king_bed = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData water_drop = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData ic_round_add_task = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
