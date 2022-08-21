@@ -96,13 +96,13 @@ class _HomePageState extends State<HomePage> {
                 foregroundColor: Colors.black,
                 children: [
                   SpeedDialChild(
-                    child: const Icon(HabityIcons.taskAlt),
+                    child: const Icon(HabityIcons.ic_round_add_task),
                     label: 'Add habit',
                     backgroundColor: AppTheme.tertiary,
                     onTap: () {/* Do something */},
                   ),
                   SpeedDialChild(
-                    child: const Icon(HabityIcons.emojiEvents),
+                    child: const Icon(HabityIcons.emoji_events),
                     label: 'Add reward',
                     backgroundColor: AppTheme.tertiary,
                     onTap: () {/* Do someting */},
@@ -157,13 +157,13 @@ class _HomePageState extends State<HomePage> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(HabityIcons.taskAlt),
+        icon: const Icon(HabityIcons.task_alt),
         title: ("Habits"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(HabityIcons.emojiEvents),
+        icon: const Icon(HabityIcons.emoji_events),
         title: ("Rewards"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
