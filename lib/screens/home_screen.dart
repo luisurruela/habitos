@@ -9,6 +9,7 @@ import 'package:habitos/screens/rewards.dart';
 import 'package:habitos/screens/settings.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../theme/habity_icons_icons.dart';
 
@@ -87,15 +88,27 @@ class _HomePageState extends State<HomePage> {
           Positioned(
             right: 0,
             bottom: 70,
-            child: FloatingActionButton(
-              backgroundColor: AppTheme.tertiary,
-              child: const Icon(
-                Icons.add,
-                color: AppTheme.darkPurple,
-              ),
-              onPressed: () {},
-            ),
-          )
+            child: SpeedDial(
+                icon: Icons.add,
+                overlayColor: Colors.transparent,
+                overlayOpacity: 0,
+                backgroundColor: AppTheme.tertiary,
+                foregroundColor: Colors.black,
+                children: [
+                  SpeedDialChild(
+                    child: const Icon(HabityIcons.taskAlt),
+                    label: 'Add habit',
+                    backgroundColor: AppTheme.tertiary,
+                    onTap: () {/* Do something */},
+                  ),
+                  SpeedDialChild(
+                    child: const Icon(HabityIcons.emojiEvents),
+                    label: 'Add reward',
+                    backgroundColor: AppTheme.tertiary,
+                    onTap: () {/* Do someting */},
+                  ),
+                ]),
+          ),
         ],
       ),
     );
