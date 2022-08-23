@@ -10,6 +10,7 @@ class AppTheme {
   static const Color darkPurple = Color(0xFF191050);
   static const Color lightPurple = Color(0xFFB2A9E9);
   static const Color darkBlue = Color(0xFF251879);
+  static const Color starYellow = Color(0xFFFEB701);
 
   static const TextStyle fontTitle = TextStyle(
       fontSize: 32, fontWeight: FontWeight.w700, fontFamily: 'PPAgrandir');

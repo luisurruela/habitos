@@ -13,7 +13,6 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    double _value = 1;
 
     return Scaffold(
       body: Container(
@@ -41,30 +40,128 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                 height: 30,
               ),
               const _sliderWidget(),
+              const SizedBox(
+                height: 30,
+              ),
               _secondaryTitle('Frequency'),
               const SizedBox(
                 height: 10,
               ),
               _normalText('How often would you like to do it?'),
-              _normalText('On these days'),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _secondaryButton(context, 'Daily'),
+                    _secondaryButton(context, 'Weekly'),
+                    _secondaryButton(context, 'Monthly'),
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 30,
+              ),
+              _normalText('On these days'),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _circleButton(context, 'S'),
+                    _circleButton(context, 'M'),
+                    _circleButton(context, 'T'),
+                    _circleButton(context, 'W'),
+                    _circleButton(context, 'T'),
+                    _circleButton(context, 'F'),
+                    _circleButton(context, 'S'),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 80,
               ),
               _secondaryTitle('Time'),
               _normalText('In wich time of the day would you like to do it?'),
               const SizedBox(
-                height: 30,
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _secondaryButton(context, 'Morning'),
+                    _secondaryButton(context, 'Afternoon'),
+                    _secondaryButton(context, 'Night'),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 60,
               ),
               _secondaryTitle('Assign to'),
               _normalText('To whom do we assign the habit?'),
               const SizedBox(
-                height: 50,
+                height: 80,
               ),
               _submitButton(context),
+              const SizedBox(
+                height: 50,
+              )
             ])),
       ),
     );
   }
+}
+
+Widget _circleButton(BuildContext context, String title) {
+  return SizedBox(
+    width: 45,
+    height: 45,
+    child: ElevatedButton(
+      onPressed: () {},
+      child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+          )),
+      style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            EdgeInsets.zero, // <-- had to set padding to zero
+          ),
+          elevation: MaterialStateProperty.all(0),
+          backgroundColor: MaterialStateProperty.all<Color>(AppTheme.secondary),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30))))),
+    ),
+  );
+}
+
+Widget _secondaryButton(BuildContext context, String title) {
+  final width = MediaQuery.of(context).size.width;
+
+  return SizedBox(
+    width: width * .28,
+    child: ElevatedButton(
+      onPressed: () {},
+      child: Text(title),
+      style: ButtonStyle(
+          elevation: MaterialStateProperty.all(0),
+          backgroundColor: MaterialStateProperty.all<Color>(AppTheme.secondary),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30))))),
+    ),
+  );
 }
 
 class _sliderWidget extends StatefulWidget {
@@ -80,25 +177,21 @@ class __sliderWidgetState extends State<_sliderWidget> {
   Widget build(BuildContext context) {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
-        trackHeight: 10.0,
+        trackHeight: 4.0,
         trackShape: const RoundedRectSliderTrackShape(),
-        activeTrackColor: Colors.purple.shade800,
-        inactiveTrackColor: Colors.purple.shade100,
+        activeTrackColor: AppTheme.lightPurple,
+        inactiveTrackColor: AppTheme.lightPurple,
         thumbShape: const RoundSliderThumbShape(
-          enabledThumbRadius: 14.0,
-          pressedElevation: 8.0,
+          enabledThumbRadius: 12.0,
+          pressedElevation: 0,
         ),
-        thumbColor: Colors.pinkAccent,
-        overlayColor: Colors.pink.withOpacity(0.2),
-        overlayShape: const RoundSliderOverlayShape(overlayRadius: 32.0),
+        thumbColor: AppTheme.starYellow,
         tickMarkShape: const RoundSliderTickMarkShape(),
-        activeTickMarkColor: Colors.pinkAccent,
-        inactiveTickMarkColor: Colors.white,
-        valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
-        valueIndicatorColor: Colors.black,
+        inactiveTickMarkColor: AppTheme.starYellow,
+        valueIndicatorColor: AppTheme.lightPurple,
         valueIndicatorTextStyle: const TextStyle(
           color: Colors.white,
-          fontSize: 20.0,
+          fontSize: 16.0,
         ),
       ),
       child: Slider(
