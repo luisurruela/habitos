@@ -83,34 +83,7 @@ class _HomePageState extends State<HomePage> {
       key: widget._scaffoldKey,
       extendBodyBehindAppBar: false,
       body: _bottomNavBar(),
-      floatingActionButton: Stack(
-        children: [
-          Positioned(
-            right: 0,
-            bottom: 70,
-            child: SpeedDial(
-                icon: Icons.add,
-                overlayColor: Colors.transparent,
-                overlayOpacity: 0,
-                backgroundColor: AppTheme.tertiary,
-                foregroundColor: Colors.black,
-                children: [
-                  SpeedDialChild(
-                    child: const Icon(HabityIcons.ic_round_add_task),
-                    label: 'Add habit',
-                    backgroundColor: AppTheme.tertiary,
-                    onTap: () {/* Do something */},
-                  ),
-                  SpeedDialChild(
-                    child: const Icon(HabityIcons.emoji_events),
-                    label: 'Add reward',
-                    backgroundColor: AppTheme.tertiary,
-                    onTap: () {/* Do someting */},
-                  ),
-                ]),
-          ),
-        ],
-      ),
+      floatingActionButton: const FloatingButtonWidget(),
     );
   }
 
@@ -175,5 +148,44 @@ class _HomePageState extends State<HomePage> {
         inactiveColorPrimary: Colors.white,
       ),
     ];
+  }
+}
+
+class FloatingButtonWidget extends StatelessWidget {
+  const FloatingButtonWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned(
+          right: 0,
+          bottom: 70,
+          child: SpeedDial(
+              icon: Icons.add,
+              activeIcon: Icons.close,
+              overlayColor: Colors.transparent,
+              overlayOpacity: 0,
+              backgroundColor: AppTheme.tertiary,
+              foregroundColor: Colors.black,
+              children: [
+                SpeedDialChild(
+                  child: const Icon(HabityIcons.ic_round_add_task),
+                  label: 'Add habit',
+                  backgroundColor: AppTheme.tertiary,
+                  onTap: () {/* Do something */},
+                ),
+                SpeedDialChild(
+                  child: const Icon(HabityIcons.emoji_events),
+                  label: 'Add reward',
+                  backgroundColor: AppTheme.tertiary,
+                  onTap: () {/* Do someting */},
+                ),
+              ]),
+        ),
+      ],
+    );
   }
 }
