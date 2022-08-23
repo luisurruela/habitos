@@ -299,10 +299,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                           pageTransitionAnimation:
                               PageTransitionAnimation.cupertino,
                         );
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const AddKidScreen()),);
                       },
                     ),
                   ],

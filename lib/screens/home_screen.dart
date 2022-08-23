@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:habitos/screens/add_kid.dart';
+import 'package:habitos/screens/create_habit_screen.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/home/home_widget.dart';
 import 'package:habitos/screens/loading_screen.dart';
@@ -175,7 +176,12 @@ class FloatingButtonWidget extends StatelessWidget {
                   child: const Icon(HabityIcons.ic_round_add_task),
                   label: 'Add habit',
                   backgroundColor: AppTheme.tertiary,
-                  onTap: () {/* Do something */},
+                  onTap: () => pushNewScreen(
+                    context,
+                    screen: const CreateHabitScreen(),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  ),
                 ),
                 SpeedDialChild(
                   child: const Icon(HabityIcons.emoji_events),

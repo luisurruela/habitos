@@ -8,6 +8,8 @@ class AppTheme {
   static const Color lightPink = Color(0xFFFF82CD);
   static const Color darkGrey = Color.fromARGB(255, 120, 120, 120);
   static const Color darkPurple = Color(0xFF191050);
+  static const Color lightPurple = Color(0xFFB2A9E9);
+  static const Color darkBlue = Color(0xFF251879);
 
   static const TextStyle fontTitle = TextStyle(
       fontSize: 32, fontWeight: FontWeight.w700, fontFamily: 'PPAgrandir');
@@ -17,6 +19,18 @@ class AppTheme {
       fontSize: 32,
       fontWeight: FontWeight.w700,
       fontFamily: 'PPAgrandir');
+
+  static const TextStyle h1 = TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.w700,
+      fontFamily: 'PPAgrandir',
+      color: Colors.white);
+
+  static const TextStyle h2 = TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.w700,
+      fontFamily: 'PPAgrandir',
+      color: Colors.white);
 
   static const TextStyle fontSubTitle = TextStyle(
     color: Color.fromARGB(255, 103, 103, 103),
