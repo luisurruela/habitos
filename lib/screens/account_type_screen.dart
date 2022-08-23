@@ -19,114 +19,121 @@ class AccountType extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: const Text(
-                      'Select your user type',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'PPAgrandir'),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                  Title(context),
                   const SizedBox(
                     height: 30,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    child: const Text(
-                      'Your permissions will be created based on this selection',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                  const Subtitle(),
                   const SizedBox(
                     height: 50,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 130,
-                    child: TextButton(
-                      onPressed: () => Navigator.pushNamed(context, 'login'),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            "I'm a parent",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 24,
-                                color: Colors.white,
-                                fontFamily: 'PPAgrandir'),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            "I’ll be managing the account",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: AppTheme.primary,
-                    ),
+                  const TypeCard(
+                    title: "I'm a Parent",
+                    body: "I'll be managing the account",
+                    route: 'login',
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 130,
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "I'm a Kid",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontFamily: 'PPAgrandir'),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              "You will win points by completing tasks",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
-                        )),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: const Color.fromRGBO(50, 32, 161, 1),
-                    ),
+                  const TypeCard(
+                    title: "I'm a Kid",
+                    body: "You will win points by completing tasks",
+                    route: '',
                   ),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget Title(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: const Text(
+        'Select your user type',
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'PPAgrandir'),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class Subtitle extends StatelessWidget {
+  const Subtitle({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.8,
+      child: const Text(
+        'Your permissions will be created based on this selection',
+        style: TextStyle(
+            color: Colors.white, fontSize: 20, fontWeight: FontWeight.w300),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class TypeCard extends StatelessWidget {
+  const TypeCard({
+    Key? key,
+    required this.title,
+    required this.body,
+    this.route,
+  }) : super(key: key);
+  final String title;
+  final String body;
+  final String? route;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.9,
+      height: 130,
+      child: TextButton(
+        onPressed: () => route != null
+            ? route!.isNotEmpty
+                ? Navigator.pushNamed(context, route!)
+                : null
+            : null,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  fontSize: 24,
+                  color: Colors.white,
+                  fontFamily: 'PPAgrandir'),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              body,
+              style: const TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(25),
+        color: AppTheme.primary,
       ),
     );
   }
