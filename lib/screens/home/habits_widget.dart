@@ -38,7 +38,7 @@ class Habtis extends StatelessWidget {
         Column(
           children: const [
             HabityComponent(
-              icon: HabityIcons.clean_hands,
+              icon: HabityIcons.cleanHands,
             )
           ],
         ),
@@ -57,9 +57,9 @@ class Habtis extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 0),
           child: Column(
             children: const [
-              HabityComponent(icon: HabityIcons.breakfast_dining),
+              HabityComponent(icon: HabityIcons.breakfastDining),
               HabityComponent(
-                icon: HabityIcons.face_retouching_natural,
+                icon: HabityIcons.faceRetouchingNatural,
               ),
               HabityComponent(
                 icon: HabityIcons.settings,

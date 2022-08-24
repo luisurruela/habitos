@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:habitos/theme/theme.dart';
 
@@ -9,6 +11,22 @@ class CreateHabitScreen extends StatefulWidget {
 }
 
 class _CreateHabitScreenState extends State<CreateHabitScreen> {
+  Map<String, dynamic> frecuency = {
+    'daily': true,
+    'weekly': false,
+    'monthly': false,
+  };
+
+  Map<String, dynamic> time = {
+    'morning': true,
+    'afternoon': false,
+    'night': false,
+  };
+
+  bool morning = true;
+  bool afternoon = false;
+  bool night = false;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -39,7 +57,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
               const SizedBox(
                 height: 30,
               ),
-              const _sliderWidget(),
+              const _SliderWidget(),
               const SizedBox(
                 height: 30,
               ),
@@ -56,39 +74,53 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _secondaryButton(context, 'Daily'),
-                    _secondaryButton(context, 'Weekly'),
-                    _secondaryButton(context, 'Monthly'),
+                    _SecondaryButton(
+                      title: 'Daily',
+                      isActive: frecuency['daily'],
+                      onPress: activeDailyButton,
+                    ),
+                    _SecondaryButton(
+                      title: 'Weekly',
+                      isActive: frecuency['weekly'],
+                      onPress: activeWeeklyButton,
+                    ),
+                    _SecondaryButton(
+                      title: 'Monthly',
+                      isActive: frecuency['monthly'],
+                      onPress: activeMonthlyButton,
+                    ),
                   ],
                 ),
               ),
               const SizedBox(
                 height: 30,
               ),
-              _normalText('On these days'),
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _circleButton(context, 'S'),
-                    _circleButton(context, 'M'),
-                    _circleButton(context, 'T'),
-                    _circleButton(context, 'W'),
-                    _circleButton(context, 'T'),
-                    _circleButton(context, 'F'),
-                    _circleButton(context, 'S'),
-                  ],
+              if (frecuency['daily']) ...[
+                _normalText('On these days'),
+                const SizedBox(
+                  height: 20,
                 ),
-              ),
+                const _DaysWidget(),
+              ],
+              if (frecuency['weekly']) ...[
+                _normalText('Repeat 1 day a week'),
+                const SizedBox(
+                  height: 20,
+                ),
+                const _WeekWidget(),
+              ],
+              if (frecuency['monthly']) ...[
+                _normalText('Repeat 1 day a month'),
+                const SizedBox(
+                  height: 20,
+                ),
+                _monthsWidget(context),
+              ],
               const SizedBox(
-                height: 80,
+                height: 50,
               ),
               _secondaryTitle('Time'),
-              _normalText('In wich time of the day would you like to do it?'),
+              _normalText('In which time of the day would you like to do it?'),
               const SizedBox(
                 height: 20,
               ),
@@ -97,9 +129,21 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _secondaryButton(context, 'Morning'),
-                    _secondaryButton(context, 'Afternoon'),
-                    _secondaryButton(context, 'Night'),
+                    _SecondaryButton(
+                      title: 'Morning',
+                      isActive: time['morning'],
+                      onPress: activeMorningButton,
+                    ),
+                    _SecondaryButton(
+                      title: 'Afternoon',
+                      isActive: time['afternoon'],
+                      onPress: activeAfternoonButton,
+                    ),
+                    _SecondaryButton(
+                      title: 'Night',
+                      isActive: time['night'],
+                      onPress: activeNightButton,
+                    ),
                   ],
                 ),
               ),
@@ -119,91 +163,399 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
       ),
     );
   }
+
+  void activeDailyButton() {
+    frecuency = {
+      'daily': true,
+      'weekly': false,
+      'monthly': false,
+    };
+    setState(() {});
+  }
+
+  void activeWeeklyButton() {
+    frecuency = {
+      'daily': false,
+      'weekly': true,
+      'monthly': false,
+    };
+    setState(() {});
+  }
+
+  void activeMonthlyButton() {
+    frecuency = {
+      'daily': false,
+      'weekly': false,
+      'monthly': true,
+    };
+    setState(() {});
+  }
+
+  void activeMorningButton() {
+    time = {
+      'morning': true,
+      'afternoon': false,
+      'night': false,
+    };
+    setState(() {});
+  }
+
+  void activeAfternoonButton() {
+    time = {
+      'morning': false,
+      'afternoon': true,
+      'night': false,
+    };
+    setState(() {});
+  }
+
+  void activeNightButton() {
+    time = {
+      'morning': false,
+      'afternoon': false,
+      'night': true,
+    };
+    setState(() {});
+  }
 }
 
-Widget _circleButton(BuildContext context, String title) {
-  return SizedBox(
-    width: 45,
-    height: 45,
-    child: ElevatedButton(
-      onPressed: () {},
-      child: Align(
-          alignment: Alignment.center,
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-          )),
-      style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-            EdgeInsets.zero, // <-- had to set padding to zero
-          ),
-          elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all<Color>(AppTheme.secondary),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30))))),
-    ),
-  );
-}
-
-Widget _secondaryButton(BuildContext context, String title) {
-  final width = MediaQuery.of(context).size.width;
-
-  return SizedBox(
-    width: width * .28,
-    child: ElevatedButton(
-      onPressed: () {},
-      child: Text(title),
-      style: ButtonStyle(
-          elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all<Color>(AppTheme.secondary),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(30))))),
-    ),
-  );
-}
-
-class _sliderWidget extends StatefulWidget {
-  const _sliderWidget({Key? key}) : super(key: key);
+class _DaysWidget extends StatefulWidget {
+  const _DaysWidget({Key? key}) : super(key: key);
 
   @override
-  State<_sliderWidget> createState() => __sliderWidgetState();
+  State<_DaysWidget> createState() => __DaysWidgetState();
 }
 
-class __sliderWidgetState extends State<_sliderWidget> {
+class __DaysWidgetState extends State<_DaysWidget> {
+  Map<String, dynamic> days = {
+    'sunday': true,
+    'monday': true,
+    'tuesday': true,
+    'wednesday': true,
+    'thursday': true,
+    'friday': true,
+    'saturday': true,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _CircleButton(
+            title: 'S',
+            isActive: days['sunday'],
+            onPress: toggleSunday,
+          ),
+          _CircleButton(
+            title: 'M',
+            isActive: days['monday'],
+            onPress: toggleMonday,
+          ),
+          _CircleButton(
+            title: 'T',
+            isActive: days['tuesday'],
+            onPress: toggleTuesday,
+          ),
+          _CircleButton(
+            title: 'W',
+            isActive: days['wednesday'],
+            onPress: toggleWednesday,
+          ),
+          _CircleButton(
+            title: 'T',
+            isActive: days['thursday'],
+            onPress: toggleThursday,
+          ),
+          _CircleButton(
+            title: 'F',
+            isActive: days['friday'],
+            onPress: toggleFriday,
+          ),
+          _CircleButton(
+            title: 'S',
+            isActive: days['saturday'],
+            onPress: toggleSaturday,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void toggleSunday() {
+    days['sunday'] = !days['sunday'];
+    setState(() {});
+  }
+
+  void toggleMonday() {
+    days['monday'] = !days['monday'];
+    setState(() {});
+  }
+
+  void toggleTuesday() {
+    days['tuesday'] = !days['tuesday'];
+    setState(() {});
+  }
+
+  void toggleWednesday() {
+    days['wednesday'] = !days['wednesday'];
+    setState(() {});
+  }
+
+  void toggleThursday() {
+    days['thursday'] = !days['thursday'];
+    setState(() {});
+  }
+
+  void toggleFriday() {
+    days['friday'] = !days['friday'];
+    setState(() {});
+  }
+
+  void toggleSaturday() {
+    days['saturday'] = !days['saturday'];
+    setState(() {});
+  }
+}
+
+class _WeekWidget extends StatefulWidget {
+  const _WeekWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_WeekWidget> createState() => __WeekWidgetState();
+}
+
+class __WeekWidgetState extends State<_WeekWidget> {
+  Map<int, dynamic> days = {
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _CircleButton(
+            title: '1',
+            isActive: days[1],
+            onPress: toggleOne,
+          ),
+          _CircleButton(
+            title: '2',
+            isActive: days[2],
+            onPress: toggleTwo,
+          ),
+          _CircleButton(
+            title: '3',
+            isActive: days[3],
+            onPress: toggleThree,
+          ),
+          _CircleButton(
+            title: '4',
+            isActive: days[4],
+            onPress: toggleFour,
+          ),
+          _CircleButton(
+            title: '5',
+            isActive: days[5],
+            onPress: toggleFive,
+          ),
+          _CircleButton(
+            title: '6',
+            isActive: days[6],
+            onPress: toggleSix,
+          ),
+          _CircleButton(
+            title: '7',
+            isActive: days[7],
+            onPress: toggleSeven,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void toggleOne() {
+    days[1] = !days[1];
+    setState(() {});
+  }
+
+  void toggleTwo() {
+    days[2] = !days[2];
+    setState(() {});
+  }
+
+  void toggleThree() {
+    days[3] = !days[3];
+    setState(() {});
+  }
+
+  void toggleFour() {
+    days[4] = !days[4];
+    setState(() {});
+  }
+
+  void toggleFive() {
+    days[5] = !days[5];
+    setState(() {});
+  }
+
+  void toggleSix() {
+    days[6] = !days[6];
+    setState(() {});
+  }
+
+  void toggleSeven() {
+    days[7] = !days[7];
+    setState(() {});
+  }
+}
+
+Widget _monthsWidget(BuildContext context) {
+  void monthlySelection() {}
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _SecondaryButton(
+          title: '1',
+          isActive: true,
+          onPress: monthlySelection,
+        ),
+        _SecondaryButton(
+          title: '2',
+          isActive: false,
+          onPress: monthlySelection,
+        ),
+        _SecondaryButton(
+          title: '3',
+          isActive: false,
+          onPress: monthlySelection,
+        ),
+      ],
+    ),
+  );
+}
+
+class _CircleButton extends StatelessWidget {
+  _CircleButton(
+      {Key? key, required this.title, required this.isActive, this.onPress})
+      : super(key: key);
+  final String title;
+  final bool isActive;
+  Function()? onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 45,
+      height: 45,
+      child: ElevatedButton(
+        onPressed: onPress,
+        child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+            )),
+        style: ButtonStyle(
+            padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+              EdgeInsets.zero, // <-- had to set padding to zero
+            ),
+            elevation: MaterialStateProperty.all(0),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                isActive ? AppTheme.secondary : AppTheme.darkBlue),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))))),
+      ),
+    );
+  }
+}
+
+class _SecondaryButton extends StatelessWidget {
+  _SecondaryButton(
+      {Key? key, required this.title, required this.isActive, this.onPress})
+      : super(key: key);
+  final String title;
+  final bool isActive;
+  void Function()? onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      width: width * .28,
+      child: ElevatedButton(
+        onPressed: onPress,
+        child: Text(title),
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
+            backgroundColor: MaterialStateProperty.all<Color>(
+                isActive ? AppTheme.secondary : AppTheme.darkBlue),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30))))),
+      ),
+    );
+  }
+}
+
+class _SliderWidget extends StatefulWidget {
+  const _SliderWidget({Key? key}) : super(key: key);
+
+  @override
+  State<_SliderWidget> createState() => __SliderWidgetState();
+}
+
+class __SliderWidgetState extends State<_SliderWidget> {
   double _value = 1;
   @override
   Widget build(BuildContext context) {
-    return SliderTheme(
-      data: SliderTheme.of(context).copyWith(
-        trackHeight: 4.0,
-        trackShape: const RoundedRectSliderTrackShape(),
-        activeTrackColor: AppTheme.lightPurple,
-        inactiveTrackColor: AppTheme.lightPurple,
-        thumbShape: const RoundSliderThumbShape(
-          enabledThumbRadius: 12.0,
-          pressedElevation: 0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 5),
+      child: SliderTheme(
+        data: SliderTheme.of(context).copyWith(
+          trackHeight: 4.0,
+          trackShape: const RoundedRectSliderTrackShape(),
+          activeTrackColor: AppTheme.lightPurple,
+          inactiveTrackColor: AppTheme.lightPurple,
+          thumbShape: const RoundSliderThumbShape(
+            enabledThumbRadius: 12.0,
+            pressedElevation: 0,
+          ),
+          thumbColor: AppTheme.starYellow,
+          tickMarkShape: const RoundSliderTickMarkShape(),
+          inactiveTickMarkColor: AppTheme.starYellow,
+          valueIndicatorColor: AppTheme.lightPurple,
+          valueIndicatorTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 16.0,
+          ),
         ),
-        thumbColor: AppTheme.starYellow,
-        tickMarkShape: const RoundSliderTickMarkShape(),
-        inactiveTickMarkColor: AppTheme.starYellow,
-        valueIndicatorColor: AppTheme.lightPurple,
-        valueIndicatorTextStyle: const TextStyle(
-          color: Colors.white,
-          fontSize: 16.0,
-        ),
+        child: Slider(
+            divisions: 100,
+            value: _value,
+            label: _value.round().toString(),
+            min: 0.0,
+            max: 100.0,
+            onChanged: (value) {
+              _value = value;
+              setState(() {});
+            }),
       ),
-      child: Slider(
-          divisions: 100,
-          value: _value,
-          label: _value.round().toString(),
-          min: 0.0,
-          max: 100.0,
-          onChanged: (value) {
-            _value = value;
-            setState(() {});
-          }),
     );
   }
 }

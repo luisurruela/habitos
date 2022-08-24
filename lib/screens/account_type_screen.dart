@@ -19,7 +19,7 @@ class AccountType extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Title(context),
+                  title(context),
                   const SizedBox(
                     height: 30,
                   ),
@@ -49,7 +49,7 @@ class AccountType extends StatelessWidget {
     );
   }
 
-  Widget Title(BuildContext context) {
+  Widget title(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: const Text(

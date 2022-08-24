@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_onboard/flutter_onboard.dart';
-import 'package:habitos/routes/app_routes.dart';
 import 'package:habitos/theme/theme.dart';
 
 class IntroScreen extends StatelessWidget {

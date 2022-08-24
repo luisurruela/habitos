@@ -131,13 +131,13 @@ class _HomePageState extends State<HomePage> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(HabityIcons.task_alt),
+        icon: const Icon(HabityIcons.taskAlt),
         title: ("Habits"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(HabityIcons.emoji_events),
+        icon: const Icon(HabityIcons.emojiEvents),
         title: ("Rewards"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
@@ -173,7 +173,7 @@ class FloatingButtonWidget extends StatelessWidget {
               foregroundColor: Colors.black,
               children: [
                 SpeedDialChild(
-                  child: const Icon(HabityIcons.ic_round_add_task),
+                  child: const Icon(HabityIcons.icRoundAddTask),
                   label: 'Add habit',
                   backgroundColor: AppTheme.tertiary,
                   onTap: () => pushNewScreen(
@@ -184,7 +184,7 @@ class FloatingButtonWidget extends StatelessWidget {
                   ),
                 ),
                 SpeedDialChild(
-                  child: const Icon(HabityIcons.emoji_events),
+                  child: const Icon(HabityIcons.emojiEvents),
                   label: 'Add reward',
                   backgroundColor: AppTheme.tertiary,
                   onTap: () {/* Do someting */},
