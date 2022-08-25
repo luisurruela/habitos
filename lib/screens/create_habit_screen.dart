@@ -17,15 +17,33 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     'monthly': false,
   };
 
-  Map<String, dynamic> time = {
+  Map<String, dynamic> group = {
     'morning': true,
     'afternoon': false,
     'night': false,
   };
 
-  bool morning = true;
-  bool afternoon = false;
-  bool night = false;
+  Map<String, dynamic> days = {
+    'sunday': true,
+    'monday': true,
+    'tuesday': true,
+    'wednesday': true,
+    'thursday': true,
+    'friday': true,
+    'saturday': true,
+  };
+
+  Map<int, bool> week = {
+    1: true,
+    2: false,
+    3: false,
+    4: false,
+    5: false,
+    6: false,
+    7: false,
+  };
+
+  Map<int, bool> month = {1: true, 2: false, 3: false};
 
   @override
   Widget build(BuildContext context) {
@@ -77,17 +95,20 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                     _SecondaryButton(
                       title: 'Daily',
                       isActive: frecuency['daily'],
-                      onPress: activeDailyButton,
+                      callback: updateFrecuency,
+                      value: 'daily',
                     ),
                     _SecondaryButton(
                       title: 'Weekly',
                       isActive: frecuency['weekly'],
-                      onPress: activeWeeklyButton,
+                      callback: updateFrecuency,
+                      value: 'weekly',
                     ),
                     _SecondaryButton(
                       title: 'Monthly',
                       isActive: frecuency['monthly'],
-                      onPress: activeMonthlyButton,
+                      callback: updateFrecuency,
+                      value: 'monthly',
                     ),
                   ],
                 ),
@@ -100,21 +121,27 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                const _DaysWidget(),
+                _DaysWidget(callback: updateDailyDays, data: days),
               ],
               if (frecuency['weekly']) ...[
                 _normalText('Repeat 1 day a week'),
                 const SizedBox(
                   height: 20,
                 ),
-                const _WeekWidget(),
+                _WeekWidget(
+                  callback: updateWeeklyDays,
+                  data: week,
+                ),
               ],
               if (frecuency['monthly']) ...[
                 _normalText('Repeat 1 day a month'),
                 const SizedBox(
                   height: 20,
                 ),
-                _monthsWidget(context),
+                _MonthsWidget(
+                  data: month,
+                  callback: updateMonthlyDays,
+                ),
               ],
               const SizedBox(
                 height: 50,
@@ -131,18 +158,21 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                   children: [
                     _SecondaryButton(
                       title: 'Morning',
-                      isActive: time['morning'],
-                      onPress: activeMorningButton,
+                      isActive: group['morning'],
+                      callback: updateGroup,
+                      value: 'morning',
                     ),
                     _SecondaryButton(
                       title: 'Afternoon',
-                      isActive: time['afternoon'],
-                      onPress: activeAfternoonButton,
+                      isActive: group['afternoon'],
+                      callback: updateGroup,
+                      value: 'afternoon',
                     ),
                     _SecondaryButton(
                       title: 'Night',
-                      isActive: time['night'],
-                      onPress: activeNightButton,
+                      isActive: group['night'],
+                      callback: updateGroup,
+                      value: 'night',
                     ),
                   ],
                 ),
@@ -164,78 +194,81 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     );
   }
 
-  void activeDailyButton() {
-    frecuency = {
-      'daily': true,
-      'weekly': false,
-      'monthly': false,
-    };
+  updateFrecuency(String index) {
+    resetFrecuency();
+    frecuency[index] = true;
     setState(() {});
   }
 
-  void activeWeeklyButton() {
-    frecuency = {
-      'daily': false,
-      'weekly': true,
-      'monthly': false,
-    };
+  updateGroup(String index) {
+    resetGroup();
+    group[index] = true;
     setState(() {});
   }
 
-  void activeMonthlyButton() {
-    frecuency = {
-      'daily': false,
-      'weekly': false,
-      'monthly': true,
-    };
-    setState(() {});
-  }
-
-  void activeMorningButton() {
-    time = {
-      'morning': true,
+  resetGroup() {
+    group = {
+      'morning': false,
       'afternoon': false,
       'night': false,
     };
     setState(() {});
   }
 
-  void activeAfternoonButton() {
-    time = {
-      'morning': false,
-      'afternoon': true,
-      'night': false,
+  resetFrecuency() {
+    frecuency = {
+      'daily': false,
+      'weekly': false,
+      'monthly': false,
+    };
+  }
+
+  updateDailyDays(String day) {
+    days[day] = !days[day];
+    setState(() {});
+  }
+
+  updateWeeklyDays(String days) {
+    final day = int.parse(days);
+    resetWeeklyDays();
+    week.update(day, (value) => true);
+    setState(() {});
+  }
+
+  updateMonthlyDays(String days) {
+    final day = int.parse(days);
+    resetMonthlyDays();
+    month.update(day, (value) => true);
+    setState(() {});
+  }
+
+  resetMonthlyDays() {
+    month = {
+      1: false,
+      2: false,
+      3: false,
     };
     setState(() {});
   }
 
-  void activeNightButton() {
-    time = {
-      'morning': false,
-      'afternoon': false,
-      'night': true,
+  resetWeeklyDays() {
+    week = {
+      1: false,
+      2: false,
+      3: false,
+      4: false,
+      5: false,
+      6: false,
+      7: false,
     };
-    setState(() {});
   }
 }
 
-class _DaysWidget extends StatefulWidget {
-  const _DaysWidget({Key? key}) : super(key: key);
-
-  @override
-  State<_DaysWidget> createState() => __DaysWidgetState();
-}
-
-class __DaysWidgetState extends State<_DaysWidget> {
-  Map<String, dynamic> days = {
-    'sunday': true,
-    'monday': true,
-    'tuesday': true,
-    'wednesday': true,
-    'thursday': true,
-    'friday': true,
-    'saturday': true,
-  };
+class _DaysWidget extends StatelessWidget {
+  final Function callback;
+  Map data;
+  _DaysWidget({Key? key, required this.callback, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -246,97 +279,64 @@ class __DaysWidgetState extends State<_DaysWidget> {
         children: [
           _CircleButton(
             title: 'S',
-            isActive: days['sunday'],
-            onPress: toggleSunday,
+            isActive: data['sunday'],
+            callback: callback,
+            data: data,
+            value: 'sunday',
           ),
           _CircleButton(
             title: 'M',
-            isActive: days['monday'],
-            onPress: toggleMonday,
+            isActive: data['monday'],
+            callback: callback,
+            data: data,
+            value: 'monday',
           ),
           _CircleButton(
             title: 'T',
-            isActive: days['tuesday'],
-            onPress: toggleTuesday,
+            isActive: data['tuesday'],
+            callback: callback,
+            data: data,
+            value: 'tuesday',
           ),
           _CircleButton(
             title: 'W',
-            isActive: days['wednesday'],
-            onPress: toggleWednesday,
+            isActive: data['wednesday'],
+            callback: callback,
+            data: data,
+            value: 'wednesday',
           ),
           _CircleButton(
             title: 'T',
-            isActive: days['thursday'],
-            onPress: toggleThursday,
+            isActive: data['thursday'],
+            callback: callback,
+            data: data,
+            value: 'thursday',
           ),
           _CircleButton(
             title: 'F',
-            isActive: days['friday'],
-            onPress: toggleFriday,
+            isActive: data['friday'],
+            callback: callback,
+            data: data,
+            value: 'friday',
           ),
           _CircleButton(
             title: 'S',
-            isActive: days['saturday'],
-            onPress: toggleSaturday,
+            isActive: data['saturday'],
+            callback: callback,
+            data: data,
+            value: 'saturday',
           ),
         ],
       ),
     );
   }
-
-  void toggleSunday() {
-    days['sunday'] = !days['sunday'];
-    setState(() {});
-  }
-
-  void toggleMonday() {
-    days['monday'] = !days['monday'];
-    setState(() {});
-  }
-
-  void toggleTuesday() {
-    days['tuesday'] = !days['tuesday'];
-    setState(() {});
-  }
-
-  void toggleWednesday() {
-    days['wednesday'] = !days['wednesday'];
-    setState(() {});
-  }
-
-  void toggleThursday() {
-    days['thursday'] = !days['thursday'];
-    setState(() {});
-  }
-
-  void toggleFriday() {
-    days['friday'] = !days['friday'];
-    setState(() {});
-  }
-
-  void toggleSaturday() {
-    days['saturday'] = !days['saturday'];
-    setState(() {});
-  }
 }
 
-class _WeekWidget extends StatefulWidget {
-  const _WeekWidget({Key? key}) : super(key: key);
-
-  @override
-  State<_WeekWidget> createState() => __WeekWidgetState();
-}
-
-class __WeekWidgetState extends State<_WeekWidget> {
-  Map<int, dynamic> days = {
-    1: true,
-    2: true,
-    3: true,
-    4: true,
-    5: true,
-    6: true,
-    7: true,
-  };
+class _WeekWidget extends StatelessWidget {
+  final Function callback;
+  final Map data;
+  const _WeekWidget({Key? key, required this.callback, required this.data})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -347,114 +347,110 @@ class __WeekWidgetState extends State<_WeekWidget> {
         children: [
           _CircleButton(
             title: '1',
-            isActive: days[1],
-            onPress: toggleOne,
+            isActive: data[1],
+            value: '1',
+            callback: callback,
+            data: data,
           ),
           _CircleButton(
             title: '2',
-            isActive: days[2],
-            onPress: toggleTwo,
+            isActive: data[2],
+            value: '2',
+            callback: callback,
+            data: data,
           ),
           _CircleButton(
             title: '3',
-            isActive: days[3],
-            onPress: toggleThree,
+            isActive: data[3],
+            value: '3',
+            callback: callback,
+            data: data,
           ),
           _CircleButton(
             title: '4',
-            isActive: days[4],
-            onPress: toggleFour,
+            isActive: data[4],
+            value: '4',
+            callback: callback,
+            data: data,
           ),
           _CircleButton(
             title: '5',
-            isActive: days[5],
-            onPress: toggleFive,
+            isActive: data[5],
+            value: '5',
+            callback: callback,
+            data: data,
           ),
           _CircleButton(
             title: '6',
-            isActive: days[6],
-            onPress: toggleSix,
+            isActive: data[6],
+            value: '6',
+            callback: callback,
+            data: data,
           ),
           _CircleButton(
             title: '7',
-            isActive: days[7],
-            onPress: toggleSeven,
+            isActive: data[7],
+            value: '7',
+            callback: callback,
+            data: data,
           ),
         ],
       ),
     );
   }
-
-  void toggleOne() {
-    days[1] = !days[1];
-    setState(() {});
-  }
-
-  void toggleTwo() {
-    days[2] = !days[2];
-    setState(() {});
-  }
-
-  void toggleThree() {
-    days[3] = !days[3];
-    setState(() {});
-  }
-
-  void toggleFour() {
-    days[4] = !days[4];
-    setState(() {});
-  }
-
-  void toggleFive() {
-    days[5] = !days[5];
-    setState(() {});
-  }
-
-  void toggleSix() {
-    days[6] = !days[6];
-    setState(() {});
-  }
-
-  void toggleSeven() {
-    days[7] = !days[7];
-    setState(() {});
-  }
 }
 
-Widget _monthsWidget(BuildContext context) {
-  void monthlySelection() {}
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _SecondaryButton(
-          title: '1',
-          isActive: true,
-          onPress: monthlySelection,
-        ),
-        _SecondaryButton(
-          title: '2',
-          isActive: false,
-          onPress: monthlySelection,
-        ),
-        _SecondaryButton(
-          title: '3',
-          isActive: false,
-          onPress: monthlySelection,
-        ),
-      ],
-    ),
-  );
+class _MonthsWidget extends StatelessWidget {
+  final Map data;
+  final Function callback;
+  const _MonthsWidget({Key? key, required this.data, required this.callback})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _SecondaryButton(
+            title: '1',
+            isActive: data[1],
+            callback: callback,
+            value: '1',
+          ),
+          _SecondaryButton(
+            title: '2',
+            isActive: data[2],
+            callback: callback,
+            value: '2',
+          ),
+          _SecondaryButton(
+            title: '3',
+            isActive: data[3],
+            callback: callback,
+            value: '3',
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _CircleButton extends StatelessWidget {
-  _CircleButton(
-      {Key? key, required this.title, required this.isActive, this.onPress})
+  const _CircleButton(
+      {Key? key,
+      required this.title,
+      required this.isActive,
+      required this.callback,
+      required this.data,
+      required this.value})
       : super(key: key);
   final String title;
   final bool isActive;
-  Function()? onPress;
+  final Function callback;
+  final Map data;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -462,7 +458,7 @@ class _CircleButton extends StatelessWidget {
       width: 45,
       height: 45,
       child: ElevatedButton(
-        onPressed: onPress,
+        onPressed: () => callback(value),
         child: Align(
             alignment: Alignment.center,
             child: Text(
@@ -485,12 +481,17 @@ class _CircleButton extends StatelessWidget {
 }
 
 class _SecondaryButton extends StatelessWidget {
-  _SecondaryButton(
-      {Key? key, required this.title, required this.isActive, this.onPress})
-      : super(key: key);
   final String title;
   final bool isActive;
-  void Function()? onPress;
+  final Function callback;
+  final String value;
+  const _SecondaryButton(
+      {Key? key,
+      required this.title,
+      required this.isActive,
+      required this.callback,
+      required this.value})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -499,7 +500,7 @@ class _SecondaryButton extends StatelessWidget {
     return SizedBox(
       width: width * .28,
       child: ElevatedButton(
-        onPressed: onPress,
+        onPressed: () => callback(value),
         child: Text(title),
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
