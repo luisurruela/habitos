@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:habitos/theme/theme.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+
+import '../widgets/star_shape.dart';
 
 class CreateHabitScreen extends StatefulWidget {
   const CreateHabitScreen({Key? key}) : super(key: key);
@@ -526,38 +529,27 @@ class __SliderWidgetState extends State<_SliderWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      child: SliderTheme(
-        data: SliderTheme.of(context).copyWith(
-          trackHeight: 4.0,
-          trackShape: const RoundedRectSliderTrackShape(),
-          activeTrackColor: AppTheme.lightPurple,
-          inactiveTrackColor: AppTheme.lightPurple,
-          thumbShape: const RoundSliderThumbShape(
-            enabledThumbRadius: 12.0,
-            pressedElevation: 0,
-          ),
-          thumbColor: AppTheme.starYellow,
-          tickMarkShape: const RoundSliderTickMarkShape(),
-          inactiveTickMarkColor: AppTheme.starYellow,
-          valueIndicatorColor: AppTheme.lightPurple,
-          valueIndicatorTextStyle: const TextStyle(
-            color: Colors.white,
-            fontSize: 16.0,
-          ),
-        ),
-        child: Slider(
-            divisions: 100,
-            value: _value,
-            label: _value.round().toString(),
-            min: 0.0,
-            max: 100.0,
-            onChanged: (value) {
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: SfSlider(
+          min: 1,
+          max: 100,
+          value: _value.ceil(),
+          activeColor: AppTheme.secondary,
+          inactiveColor: const Color(0xFF6553D4),
+          thumbShape: StarShape(),
+          enableTooltip: true,
+          tooltipTextFormatterCallback:
+              (dynamic actualValue, String formattedText) {
+            return '+$formattedText';
+          },
+          tooltipShape: const SfRectangularTooltipShape(),
+          interval: 1,
+          onChanged: (value) {
+            setState(() {
               _value = value;
-              setState(() {});
-            }),
-      ),
-    );
+            });
+          },
+        ));
   }
 }
 
