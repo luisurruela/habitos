@@ -171,6 +171,9 @@ class FloatingButtonWidget extends StatelessWidget {
               overlayOpacity: 0,
               backgroundColor: AppTheme.tertiary,
               foregroundColor: Colors.black,
+              spaceBetweenChildren: 15,
+              spacing: 5,
+              animationDuration: const Duration(milliseconds: 100),
               children: [
                 SpeedDialChild(
                   child: const Icon(HabityIcons.icRoundAddTask),

@@ -36,17 +36,12 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     'saturday': true,
   };
 
-  Map<int, bool> week = {
-    1: true,
-    2: false,
-    3: false,
-    4: false,
-    5: false,
-    6: false,
-    7: false,
-  };
+  Map<int, bool> week = {1: true, 2: false, 3: false, 4: false, 5: false};
 
   Map<int, bool> month = {1: true, 2: false, 3: false};
+
+  String weeklyDaysSelected = '1';
+  String monthlyDaysSelected = '1';
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +60,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
               _appBar(context),
               _primaryTitle('Add new habbit'),
               _primaryInput(context, 'Habit title'),
-              _iconsColorsButtons(),
+              const _IconsColorsButtons(),
               const SizedBox(
                 height: 30,
               ),
@@ -127,7 +122,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                 _DaysWidget(callback: updateDailyDays, data: days),
               ],
               if (frecuency['weekly']) ...[
-                _normalText('Repeat 1 day a week'),
+                _normalText('Repeat $weeklyDaysSelected day a week'),
                 const SizedBox(
                   height: 20,
                 ),
@@ -137,7 +132,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
                 ),
               ],
               if (frecuency['monthly']) ...[
-                _normalText('Repeat 1 day a month'),
+                _normalText('Repeat $monthlyDaysSelected day a month'),
                 const SizedBox(
                   height: 20,
                 ),
@@ -232,6 +227,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   updateWeeklyDays(String days) {
+    weeklyDaysSelected = days;
     final day = int.parse(days);
     resetWeeklyDays();
     week.update(day, (value) => true);
@@ -239,6 +235,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   updateMonthlyDays(String days) {
+    monthlyDaysSelected = days;
     final day = int.parse(days);
     resetMonthlyDays();
     month.update(day, (value) => true);
@@ -255,15 +252,7 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   resetWeeklyDays() {
-    week = {
-      1: false,
-      2: false,
-      3: false,
-      4: false,
-      5: false,
-      6: false,
-      7: false,
-    };
+    week = {1: false, 2: false, 3: false, 4: false, 5: false};
   }
 }
 
@@ -382,21 +371,7 @@ class _WeekWidget extends StatelessWidget {
             value: '5',
             callback: callback,
             data: data,
-          ),
-          _CircleButton(
-            title: '6',
-            isActive: data[6],
-            value: '6',
-            callback: callback,
-            data: data,
-          ),
-          _CircleButton(
-            title: '7',
-            isActive: data[7],
-            value: '7',
-            callback: callback,
-            data: data,
-          ),
+          )
         ],
       ),
     );
@@ -573,50 +548,193 @@ Widget _submitButton(BuildContext context) {
   );
 }
 
-Widget _iconsColorsButtons() {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-    child: Row(
-      children: [
-        _roundedButton(
-            Icons.import_contacts_rounded, 'Icon', const Color(0xFFB2A9E9)),
-        const SizedBox(
-          width: 10,
-        ),
-        _roundedButton(Icons.circle, 'Color', const Color(0xFF8BE763)),
-      ],
-    ),
-  );
+class _IconsColorsButtons extends StatelessWidget {
+  const _IconsColorsButtons({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        children: [
+          _roundedButton(
+            icon: Icons.import_contacts_rounded,
+            text: 'Icon',
+            color: const Color(0xFFB2A9E9),
+            callback: showIconPopup,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          _roundedButton(
+            icon: Icons.circle,
+            text: 'Color',
+            color: const Color(0xFF8BE763),
+            callback: showColorPopup,
+          ),
+        ],
+      ),
+    );
+  }
+
+  showIconPopup(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          backgroundColor: AppTheme.darkPurple,
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    const Text(
+                      'Choose an icon',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                    Icon(Icons.person, color: Colors.white),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  showColorPopup(context) {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose a color...'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: const <Widget>[
+                Text('This is a demo alert dialog.'),
+                Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Save'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-Widget _roundedButton(IconData icon, String text, Color color) {
-  return SizedBox(
-    height: 40,
-    width: 100,
-    child: ElevatedButton(
-      onPressed: () {},
-      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Icon(
-          icon,
-          color: color,
+class _roundedButton extends StatelessWidget {
+  final IconData icon;
+  final String text;
+  final Color color;
+  final Function callback;
+  const _roundedButton(
+      {Key? key,
+      required this.icon,
+      required this.text,
+      required this.color,
+      required this.callback})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      width: 100,
+      child: ElevatedButton(
+        onPressed: () => callback(context),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Icon(
+            icon,
+            color: color,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            text,
+            style: const TextStyle(color: Colors.white),
+          )
+        ]),
+        style: ButtonStyle(
+          elevation: MaterialStateProperty.all(0),
+          backgroundColor: MaterialStateProperty.all<Color>(AppTheme.darkBlue),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(30)))),
         ),
-        const SizedBox(
-          width: 5,
-        ),
-        Text(
-          text,
-          style: const TextStyle(color: Colors.white),
-        )
-      ]),
-      style: ButtonStyle(
-        elevation: MaterialStateProperty.all(0),
-        backgroundColor: MaterialStateProperty.all<Color>(AppTheme.darkBlue),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(30)))),
       ),
-    ),
-  );
+    );
+  }
 }
 
 Widget _primaryInput(BuildContext context, String label) {
