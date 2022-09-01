@@ -176,7 +176,7 @@ class FloatingButtonWidget extends StatelessWidget {
               animationDuration: const Duration(milliseconds: 100),
               children: [
                 SpeedDialChild(
-                  child: const Icon(HabityIcons.icRoundAddTask),
+                  child: const Icon(HabityIcons.icRroundAddTask),
                   label: 'Add habit',
                   backgroundColor: AppTheme.tertiary,
                   onTap: () => pushNewScreen(
