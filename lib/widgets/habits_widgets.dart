@@ -249,15 +249,13 @@ class SecondaryButton extends StatelessWidget {
   }
 }
 
-class SliderWidget extends StatefulWidget {
-  const SliderWidget({Key? key}) : super(key: key);
+class SliderWidget extends StatelessWidget {
+  final double currentValue;
+  final Function callback;
+  const SliderWidget(
+      {Key? key, required this.currentValue, required this.callback})
+      : super(key: key);
 
-  @override
-  State<SliderWidget> createState() => SliderWidgetState();
-}
-
-class SliderWidgetState extends State<SliderWidget> {
-  double value = 1;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -265,7 +263,7 @@ class SliderWidgetState extends State<SliderWidget> {
         child: SfSlider(
           min: 1,
           max: 100,
-          value: value.ceil(),
+          value: currentValue.ceil(),
           activeColor: AppTheme.secondary,
           inactiveColor: const Color(0xFF6553D4),
           thumbShape: StarShape(),
@@ -276,11 +274,7 @@ class SliderWidgetState extends State<SliderWidget> {
           },
           tooltipShape: const SfRectangularTooltipShape(),
           interval: 1,
-          onChanged: (value) {
-            setState(() {
-              value = value;
-            });
-          },
+          onChanged: (value) => callback(value),
         ));
   }
 }
@@ -379,7 +373,8 @@ class IconsColorsButtons extends StatelessWidget {
                       crossAxisSpacing: 4.0,
                       children: iconsList
                           .map((element) => IconButton(
-                              onPressed: () => callback(element['name']),
+                              onPressed: () =>
+                                  callback(element['name'], 'icon'),
                               icon: Icon(
                                 element['icon'],
                                 color: Colors.white,
@@ -435,7 +430,7 @@ class IconsColorsButtons extends StatelessWidget {
                       crossAxisSpacing: 70.0,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () => callback('0xFF21D5DF', 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -444,41 +439,46 @@ class IconsColorsButtons extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          highlightColor: const Color(0xFF8BE763),
-                          splashColor: const Color(0xFF8BE763),
+                          onPressed: () => callback('0xFF8BE763', 'color'),
+                          highlightColor:
+                              const Color(0xFF3220A1).withOpacity(0.9),
+                          splashColor: const Color(0xFF3220A1).withOpacity(1),
                           icon: const CircleAvatar(
                             backgroundColor: Color(0xFF8BE763),
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          highlightColor: const Color(0xFFFF6668),
-                          splashColor: const Color(0xFFFF6668),
+                          onPressed: () => callback('0xFFFF6668', 'color'),
+                          highlightColor:
+                              const Color(0xFF3220A1).withOpacity(0.9),
+                          splashColor: const Color(0xFF3220A1).withOpacity(1),
                           icon: const CircleAvatar(
                             backgroundColor: Color(0xFFFF6668),
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          highlightColor: const Color(0xFFFF82CD),
-                          splashColor: const Color(0xFFFF82CD),
+                          onPressed: () => callback('0xFFFF82CD', 'color'),
+                          highlightColor:
+                              const Color(0xFF3220A1).withOpacity(0.9),
+                          splashColor: const Color(0xFF3220A1).withOpacity(1),
                           icon: const CircleAvatar(
                             backgroundColor: Color(0xFFFF82CD),
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          highlightColor: const Color(0xFFFEB701),
-                          splashColor: const Color(0xFFFEB701),
+                          onPressed: () => callback('0xFFFEB701', 'color'),
+                          highlightColor:
+                              const Color(0xFF3220A1).withOpacity(0.9),
+                          splashColor: const Color(0xFF3220A1).withOpacity(1),
                           icon: const CircleAvatar(
                             backgroundColor: Color(0xFFFEB701),
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
-                          highlightColor: const Color(0xFFFF8552),
-                          splashColor: const Color(0xFFFF8552),
+                          onPressed: () => callback('0xFFFF8552', 'color'),
+                          highlightColor:
+                              const Color(0xFF3220A1).withOpacity(0.9),
+                          splashColor: const Color(0xFF3220A1).withOpacity(1),
                           icon: const CircleAvatar(
                             backgroundColor: Color(0xFFFF8552),
                           ),
@@ -539,29 +539,44 @@ class RoundedButton extends StatelessWidget {
   }
 }
 
-Widget primaryInput(BuildContext context, String label) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: Form(
-        child: TextFormField(
-      style: const TextStyle(color: Colors.white, fontSize: 18),
-      decoration: InputDecoration(
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: Color(0xFF8B7EDF), width: 2.0),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: AppTheme.tertiary, width: 2.0),
-          ),
-          labelText: label,
-          labelStyle: TextStyle(
-            color: Colors.white.withOpacity(0.7),
-          ),
-          floatingLabelStyle: const TextStyle(
-              color: AppTheme.tertiary, fontWeight: FontWeight.bold),
-          filled: true,
-          fillColor: AppTheme.primary),
-    )),
-  );
+class PrimaryInput extends StatelessWidget {
+  final String label;
+  final TextEditingController controller;
+  final Function callback;
+  const PrimaryInput(
+      {Key? key,
+      required this.label,
+      required this.controller,
+      required this.callback})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Form(
+          child: TextFormField(
+        onChanged: (value) => callback(),
+        controller: controller,
+        style: const TextStyle(color: Colors.white, fontSize: 18),
+        decoration: InputDecoration(
+            enabledBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFF8B7EDF), width: 2.0),
+            ),
+            focusedBorder: const UnderlineInputBorder(
+              borderSide: BorderSide(color: AppTheme.tertiary, width: 2.0),
+            ),
+            labelText: label,
+            labelStyle: TextStyle(
+              color: Colors.white.withOpacity(0.7),
+            ),
+            floatingLabelStyle: const TextStyle(
+                color: AppTheme.tertiary, fontWeight: FontWeight.bold),
+            filled: true,
+            fillColor: AppTheme.primary),
+      )),
+    );
+  }
 }
 
 Widget primaryTitle(String text) {

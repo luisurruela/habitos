@@ -73,16 +73,29 @@ class _HomeWidgetState extends State<HomeWidget> {
     children = query.docs.map((doc) => doc.data()).toList();
     setState(() {});
 
-    if (await SharedPref().contains('selectedChild')) {
-      // await SharedPref().remove('selectedChild');
-      final preferences = await SharedPref().read('selectedChild');
-      if (preferences.uid != FirebaseAuth.instance.currentUser!.uid) {
-        setChild(0);
-      } else {
-        setChild(int.parse(preferences.selectedChild));
-      }
+    if (children.isEmpty) {
+      await SharedPref().remove('selectedChild');
+      Navigator.pop(context);
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return const AddKidScreen();
+          },
+        ),
+        (_) => false,
+      );
     } else {
-      setChild(0);
+      if (await SharedPref().contains('selectedChild')) {
+        // await SharedPref().remove('selectedChild');
+        final preferences = await SharedPref().read('selectedChild');
+        if (preferences.uid != FirebaseAuth.instance.currentUser!.uid) {
+          setChild(0);
+        } else {
+          setChild(int.parse(preferences.selectedChild));
+        }
+      } else {
+        setChild(0);
+      }
     }
   }
 
@@ -146,8 +159,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ),
                     (_) => false,
                   );
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (BuildContext context) => const Login()));
                 },
                 icon: const Icon(Icons.notifications_outlined),
                 iconSize: 26,

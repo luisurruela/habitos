@@ -415,7 +415,6 @@ class NewAccountButton extends StatelessWidget {
   }
 }
 
-// ignore: camel_case_types
 class Loader extends StatelessWidget {
   const Loader({
     Key? key,
