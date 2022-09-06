@@ -279,29 +279,47 @@ class SliderWidget extends StatelessWidget {
   }
 }
 
-Widget submitButton(BuildContext context) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.85,
-    height: 48,
-    child: ElevatedButton(
-        style: ButtonStyle(
-            elevation: MaterialStateProperty.all(0),
-            backgroundColor: MaterialStateProperty.all<Color>(
-                const Color.fromRGBO(218, 240, 75, 1)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30))))),
-        onPressed: null,
-        child: const Text(
-          'Login',
-          style: TextStyle(color: Color.fromRGBO(12, 8, 40, 1)),
-        )),
-  );
+class SubmitButton extends StatelessWidget {
+  final bool validation;
+  const SubmitButton({Key? key, required this.validation}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+
+    return SizedBox(
+      width: width * 0.85,
+      height: 48,
+      child: ElevatedButton(
+          style: ButtonStyle(
+              elevation: MaterialStateProperty.all(0),
+              backgroundColor: validation
+                  ? MaterialStateProperty.all<Color>(
+                      const Color.fromRGBO(218, 240, 75, 1))
+                  : MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(255, 168, 168, 168)),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(30))))),
+          onPressed: null,
+          child: Text('Login',
+              style: TextStyle(
+                  color: validation
+                      ? const Color.fromRGBO(12, 8, 40, 1)
+                      : const Color.fromARGB(255, 96, 96, 96)))),
+    );
+  }
 }
 
 class IconsColorsButtons extends StatelessWidget {
   final Function callback;
-  const IconsColorsButtons({Key? key, required this.callback})
+  final dynamic icon;
+  final int color;
+  const IconsColorsButtons(
+      {Key? key,
+      required this.callback,
+      required this.icon,
+      required this.color})
       : super(key: key);
 
   @override
@@ -311,18 +329,18 @@ class IconsColorsButtons extends StatelessWidget {
       child: Row(
         children: [
           RoundedButton(
-            icon: Icons.import_contacts_rounded,
+            icon: icon,
             text: 'Icon',
             color: const Color(0xFFB2A9E9),
             callback: showIconPopup,
           ),
           const SizedBox(
-            width: 10,
+            width: 20,
           ),
           RoundedButton(
             icon: Icons.circle,
             text: 'Color',
-            color: const Color(0xFF8BE763),
+            color: Color(color),
             callback: showColorPopup,
           ),
         ],
@@ -374,7 +392,7 @@ class IconsColorsButtons extends StatelessWidget {
                       children: iconsList
                           .map((element) => IconButton(
                               onPressed: () =>
-                                  callback(element['name'], 'icon'),
+                                  callback(element['icon'], 'icon'),
                               icon: Icon(
                                 element['icon'],
                                 color: Colors.white,
@@ -430,7 +448,7 @@ class IconsColorsButtons extends StatelessWidget {
                       crossAxisSpacing: 70.0,
                       children: [
                         IconButton(
-                          onPressed: () => callback('0xFF21D5DF', 'color'),
+                          onPressed: () => callback(0xFF21D5DF, 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -439,7 +457,7 @@ class IconsColorsButtons extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => callback('0xFF8BE763', 'color'),
+                          onPressed: () => callback(0xFF8BE763, 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -448,7 +466,7 @@ class IconsColorsButtons extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => callback('0xFFFF6668', 'color'),
+                          onPressed: () => callback(0xFFFF6668, 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -457,7 +475,7 @@ class IconsColorsButtons extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => callback('0xFFFF82CD', 'color'),
+                          onPressed: () => callback(0xFFFF82CD, 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -466,7 +484,7 @@ class IconsColorsButtons extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => callback('0xFFFEB701', 'color'),
+                          onPressed: () => callback(0xFFFEB701, 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -475,7 +493,7 @@ class IconsColorsButtons extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => callback('0xFFFF8552', 'color'),
+                          onPressed: () => callback(0xFFFF8552, 'color'),
                           highlightColor:
                               const Color(0xFF3220A1).withOpacity(0.9),
                           splashColor: const Color(0xFF3220A1).withOpacity(1),
@@ -518,6 +536,7 @@ class RoundedButton extends StatelessWidget {
           Icon(
             icon,
             color: color,
+            size: 17,
           ),
           const SizedBox(
             width: 5,

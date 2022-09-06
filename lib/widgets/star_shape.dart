@@ -16,17 +16,17 @@ class StarShape extends SfThumbShape {
       required TextDirection textDirection,
       required SfThumb? thumb}) {
     const int points = 5;
-    double _degreeToRadian(double deg) => deg * (math.pi / 180.0);
+    double _degreeToRadian(double deg) => deg * (math.pi / 45.0);
     final Path path = Path();
 
-    double max = 3 * math.pi;
-    double width = 45.0;
+    double max = 6 * math.pi;
+    double width = 35.0;
     double halfWidth = width / 2;
 
     double wingRadius = halfWidth;
     double radius = halfWidth / 2;
 
-    double degreesPerStep = _degreeToRadian(360 / points);
+    double degreesPerStep = _degreeToRadian(90 / points);
     double halfDegreesPerStep = degreesPerStep / 2;
 
     path.moveTo(center.dx, center.dy);

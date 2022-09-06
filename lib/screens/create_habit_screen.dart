@@ -43,10 +43,11 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
   double rateValue = 1;
   String weeklyDaysSelected = '1';
   String monthlyDaysSelected = '1';
-  String iconSelected = '';
-  String colorSelected = '';
+  IconData iconSelected = Icons.import_contacts_rounded;
+  int colorSelected = 0xFF8BE763;
   List childrenSelected = [];
   TextEditingController title = TextEditingController();
+  bool validation = false;
 
   @override
   void initState() {
@@ -69,219 +70,248 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
               height: height,
               width: width,
               decoration: AppTheme.backgroundGradient,
-              child: SingleChildScrollView(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                    appBar(context),
-                    primaryTitle('Add new habbit'),
-                    PrimaryInput(
-                      label: 'Habit title',
-                      controller: title,
-                      callback: showTitle,
-                    ),
-                    IconsColorsButtons(callback: updateIconColorSelected),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    secondaryTitle('Stars'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    normalText(
-                        'Define how many points your child will earn by completing this habit.'),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    SliderWidget(
-                        callback: updateRateValue, currentValue: rateValue),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    secondaryTitle('Frequency'),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    normalText('How often would you like to do it?'),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SecondaryButton(
-                            title: 'Daily',
-                            isActive: frecuency['daily'],
-                            callback: updateFrecuency,
-                            value: 'daily',
-                            elementsCount: frecuency.length,
+                          appBar(context),
+                          primaryTitle('Add new habbit'),
+                          const SizedBox(
+                            height: 15,
                           ),
-                          SecondaryButton(
-                            title: 'Weekly',
-                            isActive: frecuency['weekly'],
-                            callback: updateFrecuency,
-                            value: 'weekly',
-                            elementsCount: frecuency.length,
+                          PrimaryInput(
+                            label: 'Habit title',
+                            controller: title,
+                            callback: updateValidation,
                           ),
-                          SecondaryButton(
-                            title: 'Monthly',
-                            isActive: frecuency['monthly'],
-                            callback: updateFrecuency,
-                            value: 'monthly',
-                            elementsCount: frecuency.length,
+                          const SizedBox(
+                            height: 5,
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    if (frecuency['daily']) ...[
-                      normalText('On these days'),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      DaysWidget(callback: updateDailyDays, data: days),
-                    ],
-                    if (frecuency['weekly']) ...[
-                      normalText('Repeat $weeklyDaysSelected day a week'),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      WeekWidget(
-                        callback: updateWeeklyDays,
-                        data: week,
-                      ),
-                    ],
-                    if (frecuency['monthly']) ...[
-                      normalText('Repeat $monthlyDaysSelected day a month'),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      MonthsWidget(
-                        data: month,
-                        callback: updateMonthlyDays,
-                      ),
-                    ],
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    secondaryTitle('Time'),
-                    normalText(
-                        'In which time of the day would you like to do it?'),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SecondaryButton(
-                            title: 'Morning',
-                            isActive: group['morning'],
-                            callback: updateGroup,
-                            value: 'morning',
-                            elementsCount: group.length,
+                          IconsColorsButtons(
+                              callback: updateIconColorSelected,
+                              icon: iconSelected,
+                              color: colorSelected),
+                          const SizedBox(
+                            height: 40,
                           ),
-                          SecondaryButton(
-                            title: 'Afternoon',
-                            isActive: group['afternoon'],
-                            callback: updateGroup,
-                            value: 'afternoon',
-                            elementsCount: group.length,
+                          secondaryTitle('Stars'),
+                          const SizedBox(
+                            height: 10,
                           ),
-                          SecondaryButton(
-                            title: 'Night',
-                            isActive: group['night'],
-                            callback: updateGroup,
-                            value: 'night',
-                            elementsCount: group.length,
+                          normalText(
+                              'Define how many points your child will earn by completing this habit.'),
+                          const SizedBox(
+                            height: 20,
                           ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    secondaryTitle('Assign to'),
-                    normalText('To whom do we assign the habit?'),
-                    SizedBox(
-                      height: 155,
-                      child: GridView.count(
-                          crossAxisCount: 5,
-                          padding: const EdgeInsets.all(15.0),
-                          mainAxisSpacing: 10.0,
-                          crossAxisSpacing: 15.0,
-                          children: childrenList
-                              .map(
-                                (element) => Stack(
-                                  children: [
-                                    SizedBox(
-                                      height: 80,
-                                      child: ElevatedButton(
-                                        child: Text(
-                                          element['name']
-                                              .toString()
-                                              .substring(0, 1)
-                                              .toUpperCase(),
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        onPressed: () => updateChildrenSelected(
-                                            element['childId']),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: AppTheme.darkPurple,
-                                          side: BorderSide(
-                                              width: 2,
-                                              color: childrenSelected.contains(
-                                                      element['childId'])
-                                                  ? const Color(0xFFFF6668)
-                                                  : Colors.white),
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                        ),
-                                      ),
-                                    ),
-                                    if (childrenSelected
-                                        .contains(element['childId'])) ...[
-                                      Positioned(
-                                          right: 0,
-                                          top: 0,
-                                          child: CircleAvatar(
-                                            radius: 13,
-                                            backgroundColor:
-                                                const Color(0xFFFF6668),
-                                            child: IconButton(
-                                              iconSize: 11,
-                                              icon: const Icon(
-                                                Icons.check,
-                                                color: Colors.white,
+                          SliderWidget(
+                              callback: updateRateValue,
+                              currentValue: rateValue),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          secondaryTitle('Frequency'),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          normalText('How often would you like to do it?'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SecondaryButton(
+                                  title: 'Daily',
+                                  isActive: frecuency['daily'],
+                                  callback: updateFrecuency,
+                                  value: 'daily',
+                                  elementsCount: frecuency.length,
+                                ),
+                                SecondaryButton(
+                                  title: 'Weekly',
+                                  isActive: frecuency['weekly'],
+                                  callback: updateFrecuency,
+                                  value: 'weekly',
+                                  elementsCount: frecuency.length,
+                                ),
+                                SecondaryButton(
+                                  title: 'Monthly',
+                                  isActive: frecuency['monthly'],
+                                  callback: updateFrecuency,
+                                  value: 'monthly',
+                                  elementsCount: frecuency.length,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          if (frecuency['daily']) ...[
+                            normalText('On these days'),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            DaysWidget(callback: updateDailyDays, data: days),
+                          ],
+                          if (frecuency['weekly']) ...[
+                            normalText('Repeat $weeklyDaysSelected day a week'),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            WeekWidget(
+                              callback: updateWeeklyDays,
+                              data: week,
+                            ),
+                          ],
+                          if (frecuency['monthly']) ...[
+                            normalText(
+                                'Repeat $monthlyDaysSelected day a month'),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            MonthsWidget(
+                              data: month,
+                              callback: updateMonthlyDays,
+                            ),
+                          ],
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          secondaryTitle('Time'),
+                          normalText(
+                              'In which time of the day would you like to do it?'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SecondaryButton(
+                                  title: 'Morning',
+                                  isActive: group['morning'],
+                                  callback: updateGroup,
+                                  value: 'morning',
+                                  elementsCount: group.length,
+                                ),
+                                SecondaryButton(
+                                  title: 'Afternoon',
+                                  isActive: group['afternoon'],
+                                  callback: updateGroup,
+                                  value: 'afternoon',
+                                  elementsCount: group.length,
+                                ),
+                                SecondaryButton(
+                                  title: 'Night',
+                                  isActive: group['night'],
+                                  callback: updateGroup,
+                                  value: 'night',
+                                  elementsCount: group.length,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          secondaryTitle('Assign to'),
+                          normalText('To whom do we assign the habit?'),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Wrap(
+                              alignment: WrapAlignment.start,
+                              crossAxisAlignment: WrapCrossAlignment.start,
+                              children: childrenList
+                                  .map(
+                                    (element) => Stack(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: SizedBox(
+                                            width: 60,
+                                            height: 60,
+                                            child: ElevatedButton(
+                                              child: Text(
+                                                element['name']
+                                                    .toString()
+                                                    .substring(0, 1)
+                                                    .toUpperCase(),
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
                                               ),
                                               onPressed: () =>
                                                   updateChildrenSelected(
                                                       element['childId']),
+                                              style: ElevatedButton.styleFrom(
+                                                primary: AppTheme.darkPurple,
+                                                side: BorderSide(
+                                                    width: 2,
+                                                    color: childrenSelected
+                                                            .contains(element[
+                                                                'childId'])
+                                                        ? const Color(
+                                                            0xFFFF6668)
+                                                        : Colors.white),
+                                                elevation: 0,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            50)),
+                                              ),
                                             ),
-                                          )),
-                                    ],
-                                  ],
-                                ),
-                              )
-                              .toList()),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    submitButton(context),
-                    const SizedBox(
-                      height: 50,
-                    )
-                  ])),
+                                          ),
+                                        ),
+                                        if (childrenSelected
+                                            .contains(element['childId'])) ...[
+                                          Positioned(
+                                              right: 0,
+                                              top: 0,
+                                              child: CircleAvatar(
+                                                radius: 13,
+                                                backgroundColor:
+                                                    const Color(0xFFFF6668),
+                                                child: IconButton(
+                                                  iconSize: 11,
+                                                  icon: const Icon(
+                                                    Icons.check,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onPressed: () =>
+                                                      updateChildrenSelected(
+                                                          element['childId']),
+                                                ),
+                                              )),
+                                        ],
+                                      ],
+                                    ),
+                                  )
+                                  .toList()),
+                          const SizedBox(
+                            height: 150,
+                          ),
+                        ]),
+                  ),
+                  Positioned(
+                    bottom: 50,
+                    left: 0,
+                    right: 0,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: SubmitButton(
+                          validation: validation,
+                        )),
+                  )
+                ],
+              ),
             );
           }),
     );
@@ -294,17 +324,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   updateGroup(String index) {
-    resetGroup();
-    group[index] = true;
-    setState(() {});
-  }
-
-  resetGroup() {
-    group = {
-      'morning': false,
-      'afternoon': false,
-      'night': false,
-    };
+    group[index] = !group[index];
     setState(() {});
   }
 
@@ -350,7 +370,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     week = {1: false, 2: false, 3: false, 4: false, 5: false};
   }
 
-  updateIconColorSelected(String value, String type) {
+  updateIconColorSelected(dynamic value, String type) {
     if (type == 'icon') {
       iconSelected = value;
     } else {
@@ -367,6 +387,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     } else {
       childrenSelected.add(id);
     }
+    updateValidation();
     setState(() {});
   }
 
@@ -375,7 +396,13 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     setState(() {});
   }
 
-  showTitle() {
-    print(title.text);
+  updateValidation() {
+    if (title.text != '' && childrenSelected.isNotEmpty) {
+      validation = true;
+    } else {
+      validation = false;
+    }
+
+    setState(() {});
   }
 }
