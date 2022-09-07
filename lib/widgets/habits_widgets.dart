@@ -89,35 +89,35 @@ class WeekWidget extends StatelessWidget {
         children: [
           SecondaryButton(
             title: '1',
-            isActive: data[1],
+            isActive: data['1'],
             value: '1',
             callback: callback,
             elementsCount: data.length,
           ),
           SecondaryButton(
             title: '2',
-            isActive: data[2],
+            isActive: data['2'],
             value: '2',
             callback: callback,
             elementsCount: data.length,
           ),
           SecondaryButton(
             title: '3',
-            isActive: data[3],
+            isActive: data['3'],
             value: '3',
             callback: callback,
             elementsCount: data.length,
           ),
           SecondaryButton(
             title: '4',
-            isActive: data[4],
+            isActive: data['4'],
             value: '4',
             callback: callback,
             elementsCount: data.length,
           ),
           SecondaryButton(
             title: '5',
-            isActive: data[5],
+            isActive: data['5'],
             value: '5',
             callback: callback,
             elementsCount: data.length,
@@ -143,21 +143,21 @@ class MonthsWidget extends StatelessWidget {
         children: [
           SecondaryButton(
             title: '1',
-            isActive: data[1],
+            isActive: data['1'],
             callback: callback,
             value: '1',
             elementsCount: data.length,
           ),
           SecondaryButton(
             title: '2',
-            isActive: data[2],
+            isActive: data['2'],
             callback: callback,
             value: '2',
             elementsCount: data.length,
           ),
           SecondaryButton(
             title: '3',
-            isActive: data[3],
+            isActive: data['3'],
             callback: callback,
             value: '3',
             elementsCount: data.length,
@@ -250,7 +250,7 @@ class SecondaryButton extends StatelessWidget {
 }
 
 class SliderWidget extends StatelessWidget {
-  final double currentValue;
+  final int currentValue;
   final Function callback;
   const SliderWidget(
       {Key? key, required this.currentValue, required this.callback})
@@ -280,8 +280,11 @@ class SliderWidget extends StatelessWidget {
 }
 
 class SubmitButton extends StatelessWidget {
+  final Function callback;
   final bool validation;
-  const SubmitButton({Key? key, required this.validation}) : super(key: key);
+  const SubmitButton(
+      {Key? key, required this.validation, required this.callback})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -296,17 +299,16 @@ class SubmitButton extends StatelessWidget {
               backgroundColor: validation
                   ? MaterialStateProperty.all<Color>(
                       const Color.fromRGBO(218, 240, 75, 1))
-                  : MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(255, 168, 168, 168)),
+                  : MaterialStateProperty.all<Color>(const Color(0xFFF4EFF4)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30))))),
-          onPressed: null,
+          onPressed: validation ? () => callback() : null,
           child: Text('Login',
               style: TextStyle(
                   color: validation
                       ? const Color.fromRGBO(12, 8, 40, 1)
-                      : const Color.fromARGB(255, 96, 96, 96)))),
+                      : const Color(0xFF79767A)))),
     );
   }
 }

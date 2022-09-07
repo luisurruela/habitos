@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/services/firebase.dart';
 import 'package:habitos/theme/theme.dart';
+import 'package:habitos/models/habit_model.dart' as model;
 
 import '../widgets/habits_widgets.dart';
 
@@ -37,10 +38,16 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     'saturday': true,
   };
 
-  Map<int, bool> week = {1: true, 2: false, 3: false, 4: false, 5: false};
-  Map<int, bool> month = {1: true, 2: false, 3: false};
+  Map<dynamic, bool> week = {
+    '1': true,
+    '2': false,
+    '3': false,
+    '4': false,
+    '5': false
+  };
+  Map<dynamic, bool> month = {'1': true, '2': false, '3': false};
 
-  double rateValue = 1;
+  int points = 1;
   String weeklyDaysSelected = '1';
   String monthlyDaysSelected = '1';
   IconData iconSelected = Icons.import_contacts_rounded;
@@ -106,8 +113,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
                             height: 20,
                           ),
                           SliderWidget(
-                              callback: updateRateValue,
-                              currentValue: rateValue),
+                              callback: updatepoints, currentValue: points),
                           const SizedBox(
                             height: 40,
                           ),
@@ -308,6 +314,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
                         alignment: Alignment.center,
                         child: SubmitButton(
                           validation: validation,
+                          callback: submit,
                         )),
                   )
                 ],
@@ -343,7 +350,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
 
   updateWeeklyDays(String days) {
     weeklyDaysSelected = days;
-    final day = int.parse(days);
+    final day = days;
     resetWeeklyDays();
     week.update(day, (value) => true);
     setState(() {});
@@ -351,7 +358,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
 
   updateMonthlyDays(String days) {
     monthlyDaysSelected = days;
-    final day = int.parse(days);
+    final day = days;
     resetMonthlyDays();
     month.update(day, (value) => true);
     setState(() {});
@@ -359,15 +366,15 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
 
   resetMonthlyDays() {
     month = {
-      1: false,
-      2: false,
-      3: false,
+      '1': false,
+      '2': false,
+      '3': false,
     };
     setState(() {});
   }
 
   resetWeeklyDays() {
-    week = {1: false, 2: false, 3: false, 4: false, 5: false};
+    week = {'1': false, '2': false, '3': false, '4': false, '5': false};
   }
 
   updateIconColorSelected(dynamic value, String type) {
@@ -391,8 +398,8 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     setState(() {});
   }
 
-  updateRateValue(double value) {
-    rateValue = value;
+  updatepoints(double value) {
+    points = value.ceil();
     setState(() {});
   }
 
@@ -404,5 +411,43 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     }
 
     setState(() {});
+  }
+
+  submit() async {
+    for (var i = 0; i < childrenSelected.length; i++) {
+      model.Habit newHabit = model.Habit(
+          title: title.text,
+          icon: iconSelected.codePoint,
+          color: colorSelected,
+          points: points,
+          frecuency: frecuency,
+          days: days,
+          daysPerWeek: week,
+          daysPerMonth: month,
+          time: group,
+          status: 'active',
+          childId: childrenList[i]['childId']);
+
+      await Firebase().addHabit(newHabit);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          duration: const Duration(seconds: 5),
+          content: Container(
+            decoration: BoxDecoration(
+                color: Colors.black,
+                border: Border.all(width: 2.0, color: Colors.black),
+                borderRadius: BorderRadius.circular(8)),
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 75),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+              child: Text(
+                'Habit added',
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 1000));
+      Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+    }
   }
 }

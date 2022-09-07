@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:habitos/models/habit_model.dart' as model;
 
 class Firebase {
   final _collectionRef = FirebaseFirestore.instance.collection('children');
@@ -13,8 +14,11 @@ class Firebase {
     return children;
   }
 
-  Future addHabit(data) async {
-    CollectionReference users = FirebaseFirestore.instance.collection('habits');
-    return users.add(data);
+  Future addHabit(model.Habit data) async {
+    CollectionReference habits =
+        FirebaseFirestore.instance.collection('habits');
+    return await habits.add(data.toJson()).then((value) {
+      habits.doc(value.id).update({'id': value.id});
+    });
   }
 }
