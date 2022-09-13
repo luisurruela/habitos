@@ -303,7 +303,7 @@ class SubmitButton extends StatelessWidget {
                   const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(30))))),
           onPressed: validation ? () => callback() : null,
-          child: Text('Login',
+          child: Text('Create',
               style: TextStyle(
                   color: validation
                       ? const Color.fromRGBO(12, 8, 40, 1)
