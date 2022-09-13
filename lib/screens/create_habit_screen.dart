@@ -231,76 +231,88 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Wrap(
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              children: childrenList
-                                  .map(
-                                    (element) => Stack(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: SizedBox(
-                                            width: 60,
-                                            height: 60,
-                                            child: ElevatedButton(
-                                              child: Text(
-                                                element['name']
-                                                    .toString()
-                                                    .substring(0, 1)
-                                                    .toUpperCase(),
-                                                style: const TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              onPressed: () =>
-                                                  updateChildrenSelected(
-                                                      element['childId']),
-                                              style: ElevatedButton.styleFrom(
-                                                primary: AppTheme.darkPurple,
-                                                side: BorderSide(
-                                                    width: 2,
-                                                    color: childrenSelected
-                                                            .contains(element[
-                                                                'childId'])
-                                                        ? const Color(
-                                                            0xFFFF6668)
-                                                        : Colors.white),
-                                                elevation: 0,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            50)),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        if (childrenSelected
-                                            .contains(element['childId'])) ...[
-                                          Positioned(
-                                              right: 0,
-                                              top: 0,
-                                              child: CircleAvatar(
-                                                radius: 13,
-                                                backgroundColor:
-                                                    const Color(0xFFFF6668),
-                                                child: IconButton(
-                                                  iconSize: 11,
-                                                  icon: const Icon(
-                                                    Icons.check,
-                                                    color: Colors.white,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Wrap(
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  children: childrenList
+                                      .map(
+                                        (element) => Stack(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: SizedBox(
+                                                width: 60,
+                                                height: 60,
+                                                child: ElevatedButton(
+                                                  child: Text(
+                                                    element['name']
+                                                        .toString()
+                                                        .substring(0, 1)
+                                                        .toUpperCase(),
+                                                    style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                   onPressed: () =>
                                                       updateChildrenSelected(
                                                           element['childId']),
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    primary:
+                                                        AppTheme.darkPurple,
+                                                    side: BorderSide(
+                                                        width: 2,
+                                                        color: childrenSelected
+                                                                .contains(element[
+                                                                    'childId'])
+                                                            ? const Color(
+                                                                0xFFFF6668)
+                                                            : Colors.white),
+                                                    elevation: 0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50)),
+                                                  ),
                                                 ),
-                                              )),
-                                        ],
-                                      ],
-                                    ),
-                                  )
-                                  .toList()),
+                                              ),
+                                            ),
+                                            if (childrenSelected.contains(
+                                                element['childId'])) ...[
+                                              Positioned(
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: CircleAvatar(
+                                                    radius: 13,
+                                                    backgroundColor:
+                                                        const Color(0xFFFF6668),
+                                                    child: IconButton(
+                                                      iconSize: 11,
+                                                      icon: const Icon(
+                                                        Icons.check,
+                                                        color: Colors.white,
+                                                      ),
+                                                      onPressed: () =>
+                                                          updateChildrenSelected(
+                                                              element[
+                                                                  'childId']),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ],
+                                        ),
+                                      )
+                                      .toList()),
+                            ),
+                          ),
                           const SizedBox(
                             height: 150,
                           ),
