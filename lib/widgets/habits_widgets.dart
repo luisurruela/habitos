@@ -264,9 +264,8 @@ class SliderWidget extends StatelessWidget {
           min: 1,
           max: 100,
           value: currentValue.ceil(),
-          activeColor: AppTheme.secondary,
+          activeColor: AppTheme.starYellow,
           inactiveColor: const Color(0xFF6553D4),
-          thumbShape: StarShape(),
           enableTooltip: true,
           tooltipTextFormatterCallback:
               (dynamic actualValue, String formattedText) {
@@ -387,7 +386,7 @@ class IconsColorsButtons extends StatelessWidget {
                   width: double.maxFinite,
                   height: MediaQuery.of(context).size.height * 0.55,
                   child: GridView.count(
-                      crossAxisCount: 6,
+                      crossAxisCount: 4,
                       padding: const EdgeInsets.all(4.0),
                       mainAxisSpacing: 4.0,
                       crossAxisSpacing: 4.0,

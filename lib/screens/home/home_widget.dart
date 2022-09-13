@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:habitos/models/preference_model.dart';
 import 'package:habitos/screens/home/calendar_widget.dart';
 import 'package:habitos/screens/home/habits_widget.dart';
+import 'package:habitos/services/firebase.dart';
 import 'package:habitos/services/shared_preferences.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -21,6 +23,8 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   int selectedChild = 0;
   List children = [];
+  List habits = [];
+  bool loading = true;
   String childName = '';
   String childPoints = '0';
   String childInitial = '';
@@ -40,21 +44,27 @@ class _HomeWidgetState extends State<HomeWidget> {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                header(),
-                PointsBar(childName: childName, childPoints: childPoints),
-                const SizedBox(height: 20),
-                Calendar(function: updateSelectedDate),
-                const SizedBox(height: 30),
-                // Habtis(
-                //   currentDate: _currentDate.toString(),
-                // )
-                _noHabits()
-              ],
+          child: Stack(children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  header(),
+                  PointsBar(childName: childName, childPoints: childPoints),
+                  const SizedBox(height: 20),
+                  Calendar(function: updateSelectedDate),
+                  const SizedBox(height: 30),
+                  if (habits.isNotEmpty) ...[
+                    Habits(
+                      currentDate: _currentDate.toString(),
+                      habits: habits,
+                    ),
+                  ],
+                  if (habits.isEmpty && loading == false) ...[_noHabits()]
+                ],
+              ),
             ),
-          ),
+            if (loading) ...[const Loader()],
+          ]),
         ),
       ),
     );
@@ -63,6 +73,13 @@ class _HomeWidgetState extends State<HomeWidget> {
   void updateSelectedDate(DateTime date) {
     _currentDate = date;
     setState(() {});
+  }
+
+  Future getHabits(String id) async {
+    final getHabits = await Firebase().getHabits(id);
+    habits = getHabits;
+    setState(() {});
+    loading = false;
   }
 
   void getChildren() async {
@@ -111,6 +128,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     childPoints = children[index]['points'].toString();
     childInitial =
         children[index]['name'].toString().substring(0, 1).toUpperCase();
+    getHabits(children[index]['childId']);
     setState(() {});
   }
 
@@ -279,6 +297,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 onTap: () {
                                   Navigator.pop(context);
                                   setChild(index);
+                                  habits = [];
+                                  loading = true;
+                                  setState(() {});
                                 },
                               );
                             },
@@ -384,6 +405,20 @@ class PointsBar extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class Loader extends StatelessWidget {
+  const Loader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SpinKitRing(
+      color: AppTheme.secondary,
+      size: 50.0,
     );
   }
 }

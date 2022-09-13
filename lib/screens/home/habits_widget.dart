@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:habitos/theme/theme.dart';
 import 'package:habitos/theme/habity_icons_icons.dart';
+import 'package:habitos/theme/theme.dart';
 import 'package:intl/intl.dart';
 
-class Habtis extends StatelessWidget {
-  const Habtis({Key? key, required this.currentDate}) : super(key: key);
+class Habits extends StatelessWidget {
+  const Habits({Key? key, required this.currentDate, required this.habits})
+      : super(key: key);
   final String currentDate;
+  final List habits;
 
   @override
   Widget build(BuildContext context) {
@@ -36,50 +38,23 @@ class Habtis extends StatelessWidget {
           height: 10,
         ),
         Column(
-          children: const [
-            HabityComponent(
-              icon: HabityIcons.cleanHands,
-            )
-          ],
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        const Text('AFTERNOON',
-            style: TextStyle(
-                color: Colors.white70,
-                fontWeight: FontWeight.bold,
-                fontSize: 14)),
-        const SizedBox(
-          height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 0),
-          child: Column(
-            children: const [
-              HabityComponent(icon: HabityIcons.breakfastDining),
-              HabityComponent(
-                icon: HabityIcons.faceRetouchingNatural,
-              ),
-              HabityComponent(
-                icon: HabityIcons.settings,
-              ),
-            ],
-          ),
-        ),
+          children:
+              habits.map((habit) => HabityComponent(data: habit)).toList(),
+        )
       ],
     );
   }
 }
 
 class HabityComponent extends StatelessWidget {
-  const HabityComponent({Key? key, required this.icon}) : super(key: key);
-  final IconData icon;
+  final dynamic data;
+  const HabityComponent({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
 
+    print(data);
     return Column(
       children: [
         Container(
@@ -88,7 +63,7 @@ class HabityComponent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Icon(
-                icon,
+                IconData(data['icon'], fontFamily: 'HabityIcons'),
                 color: AppTheme.tertiary,
                 size: 30,
               ),
@@ -97,19 +72,19 @@ class HabityComponent extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
-                        'Following Bedtimes Routines',
-                        style: TextStyle(
+                        data['title'],
+                        style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             color: Colors.white,
                             fontSize: 18),
                         overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
-                      Text(
+                      const Text(
                         'Go for it!',
                         style:
                             TextStyle(color: AppTheme.tertiary, fontSize: 18),
@@ -118,15 +93,15 @@ class HabityComponent extends StatelessWidget {
                   ),
                 ),
               ),
-              Row(children: const [
-                Icon(
+              Row(children: [
+                const Icon(
                   Icons.star,
                   color: AppTheme.secondary,
                   size: 20,
                 ),
                 Text(
-                  '+5',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                  '+${data['points'].toString()}',
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
                 )
               ])
             ],
