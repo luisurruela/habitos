@@ -425,6 +425,28 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     setState(() {});
   }
 
+  notifyAndredirect() {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        duration: const Duration(seconds: 5),
+        content: Container(
+          decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(width: 2.0, color: Colors.black),
+              borderRadius: BorderRadius.circular(8)),
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 75),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
+            child: Text(
+              'Habit added',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 1000));
+    Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+  }
+
   submit() async {
     for (var i = 0; i < childrenSelected.length; i++) {
       model.Habit newHabit = model.Habit(
@@ -441,25 +463,9 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
           childId: childrenList[i]['childId']);
 
       await Firebase().addHabit(newHabit);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          duration: const Duration(seconds: 5),
-          content: Container(
-            decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(width: 2.0, color: Colors.black),
-                borderRadius: BorderRadius.circular(8)),
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 75),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
-              child: Text(
-                'Habit added',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 1000));
-      Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
+      if (i == childrenSelected.length - 1) {
+        notifyAndredirect();
+      }
     }
   }
 }
