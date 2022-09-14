@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/services/firebase.dart';
+import 'package:habitos/theme/habity_icons_icons.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:habitos/models/habit_model.dart' as model;
 
@@ -50,7 +51,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
   int points = 1;
   String weeklyDaysSelected = '1';
   String monthlyDaysSelected = '1';
-  IconData iconSelected = Icons.import_contacts_rounded;
+  int iconSelected = HabityIcons.breakfastDining.codePoint;
   int colorSelected = 0xFF8BE763;
   List childrenSelected = [];
   TextEditingController title = TextEditingController();
@@ -451,7 +452,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     for (var i = 0; i < childrenSelected.length; i++) {
       model.Habit newHabit = model.Habit(
           title: title.text,
-          icon: iconSelected.codePoint,
+          icon: iconSelected,
           color: colorSelected,
           points: points,
           frecuency: frecuency,

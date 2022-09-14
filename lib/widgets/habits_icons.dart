@@ -1,145 +1,226 @@
 import 'package:habitos/theme/habity_icons_icons.dart';
 
 List icons = [
-  {'name': 'breakfastDining', 'icon': HabityIcons.breakfastDining},
-  {'name': 'cleanHands', 'icon': HabityIcons.cleanHands},
-  {'name': 'faceRetouchingNatural', 'icon': HabityIcons.faceRetouchingNatural},
-  {'name': 'emojiEvents', 'icon': HabityIcons.emojiEvents},
-  {'name': 'settings', 'icon': HabityIcons.settings},
-  {'name': 'taskAlt', 'icon': HabityIcons.taskAlt},
-  {'name': 'kingBed', 'icon': HabityIcons.kingBed},
-  {'name': 'waterDrop', 'icon': HabityIcons.waterDrop},
-  {'name': 'icRroundAddTask', 'icon': HabityIcons.icRroundAddTask},
-  {'name': 'amusementParkCastle', 'icon': HabityIcons.amusementParkCastle},
+  {'name': 'breakfastDining', 'icon': HabityIcons.breakfastDining.codePoint},
+  {'name': 'cleanHands', 'icon': HabityIcons.cleanHands.codePoint},
+  {
+    'name': 'faceRetouchingNatural',
+    'icon': HabityIcons.faceRetouchingNatural.codePoint
+  },
+  {'name': 'emojiEvents', 'icon': HabityIcons.emojiEvents.codePoint},
+  {'name': 'settings', 'icon': HabityIcons.settings.codePoint},
+  {'name': 'taskAlt', 'icon': HabityIcons.taskAlt.codePoint},
+  {'name': 'kingBed', 'icon': HabityIcons.kingBed.codePoint},
+  {'name': 'waterDrop', 'icon': HabityIcons.waterDrop.codePoint},
+  {'name': 'icRroundAddTask', 'icon': HabityIcons.icRroundAddTask.codePoint},
+  {
+    'name': 'amusementParkCastle',
+    'icon': HabityIcons.amusementParkCastle.codePoint
+  },
   {
     'name': 'amusementParkFerrisWheel_1',
-    'icon': HabityIcons.amusementParkFerrisWheel_1
+    'icon': HabityIcons.amusementParkFerrisWheel_1.codePoint
   },
   {
     'name': 'astronomyPlanetRingStar',
-    'icon': HabityIcons.astronomyPlanetRingStar
+    'icon': HabityIcons.astronomyPlanetRingStar.codePoint
   },
-  {'name': 'awardTrophyStar', 'icon': HabityIcons.awardTrophyStar},
-  {'name': 'bathroomShower', 'icon': HabityIcons.bathroomShower},
-  {'name': 'beachPalmSunbed', 'icon': HabityIcons.beachPalmSunbed},
-  {'name': 'bearBody', 'icon': HabityIcons.bearBody},
-  {'name': 'bird', 'icon': HabityIcons.bird},
-  {'name': 'brainHead_1', 'icon': HabityIcons.brainHead_1},
-  {'name': 'breadFree', 'icon': HabityIcons.breadFree},
-  {'name': 'breakfastCroissant_2', 'icon': HabityIcons.breakfastCroissant_2},
-  {'name': 'camera_1', 'icon': HabityIcons.camera_1},
-  {'name': 'campingTent_1', 'icon': HabityIcons.campingTent_1},
-  {'name': 'catFishToy', 'icon': HabityIcons.catFishToy},
-  {'name': 'catSitting', 'icon': HabityIcons.catSitting},
-  {'name': 'chessFigures', 'icon': HabityIcons.chessFigures},
-  {'name': 'chick_1', 'icon': HabityIcons.chick_1},
-  {'name': 'circusTent_1', 'icon': HabityIcons.circusTent_1},
-  {'name': 'colorPaintingPalette', 'icon': HabityIcons.colorPaintingPalette},
-  {'name': 'concertDj', 'icon': HabityIcons.concertDj},
-  {'name': 'concertRock', 'icon': HabityIcons.concertRock},
-  {'name': 'concertSpeakers', 'icon': HabityIcons.concertSpeakers},
+  {'name': 'awardTrophyStar', 'icon': HabityIcons.awardTrophyStar.codePoint},
+  {'name': 'bathroomShower', 'icon': HabityIcons.bathroomShower.codePoint},
+  {'name': 'beachPalmSunbed', 'icon': HabityIcons.beachPalmSunbed.codePoint},
+  {'name': 'bearBody', 'icon': HabityIcons.bearBody.codePoint},
+  {'name': 'bird', 'icon': HabityIcons.bird.codePoint},
+  {'name': 'brainHead_1', 'icon': HabityIcons.brainHead_1.codePoint},
+  {'name': 'breadFree', 'icon': HabityIcons.breadFree.codePoint},
+  {
+    'name': 'breakfastCroissant_2',
+    'icon': HabityIcons.breakfastCroissant_2.codePoint
+  },
+  {'name': 'camera_1', 'icon': HabityIcons.camera_1.codePoint},
+  {'name': 'campingTent_1', 'icon': HabityIcons.campingTent_1.codePoint},
+  {'name': 'catFishToy', 'icon': HabityIcons.catFishToy.codePoint},
+  {'name': 'catSitting', 'icon': HabityIcons.catSitting.codePoint},
+  {'name': 'chessFigures', 'icon': HabityIcons.chessFigures.codePoint},
+  {'name': 'chick_1', 'icon': HabityIcons.chick_1.codePoint},
+  {'name': 'circusTent_1', 'icon': HabityIcons.circusTent_1.codePoint},
+  {
+    'name': 'colorPaintingPalette',
+    'icon': HabityIcons.colorPaintingPalette.codePoint
+  },
+  {'name': 'concertDj', 'icon': HabityIcons.concertDj.codePoint},
+  {'name': 'concertRock', 'icon': HabityIcons.concertRock.codePoint},
+  {'name': 'concertSpeakers', 'icon': HabityIcons.concertSpeakers.codePoint},
   {
     'name': 'craftsOrigamiAlternate',
-    'icon': HabityIcons.craftsOrigamiAlternate
+    'icon': HabityIcons.craftsOrigamiAlternate.codePoint
   },
-  {'name': 'datingChatMan', 'icon': HabityIcons.datingChatMan},
-  {'name': 'deer_1', 'icon': HabityIcons.deer_1},
-  {'name': 'dentistryToothBrush', 'icon': HabityIcons.dentistryToothBrush},
-  {'name': 'designDraw', 'icon': HabityIcons.designDraw},
-  {'name': 'divingMask', 'icon': HabityIcons.divingMask},
-  {'name': 'dogBone', 'icon': HabityIcons.dogBone},
-  {'name': 'dogLeash', 'icon': HabityIcons.dogLeash},
-  {'name': 'ecologyPlantHand_1', 'icon': HabityIcons.ecologyPlantHand_1},
-  {'name': 'drugsPill', 'icon': HabityIcons.drugsPill},
-  {'name': 'dog', 'icon': HabityIcons.dog},
-  {'name': 'elephantWater', 'icon': HabityIcons.elephantWater},
-  {'name': 'familyChild', 'icon': HabityIcons.familyChild},
-  {'name': 'fastFoodBurger', 'icon': HabityIcons.fastFoodBurger},
-  {'name': 'fastFoodPizza', 'icon': HabityIcons.fastFoodPizza},
-  {'name': 'fishBowl', 'icon': HabityIcons.fishBowl},
+  {'name': 'datingChatMan', 'icon': HabityIcons.datingChatMan.codePoint},
+  {'name': 'deer_1', 'icon': HabityIcons.deer_1.codePoint},
+  {
+    'name': 'dentistryToothBrush',
+    'icon': HabityIcons.dentistryToothBrush.codePoint
+  },
+  {'name': 'designDraw', 'icon': HabityIcons.designDraw.codePoint},
+  {'name': 'divingMask', 'icon': HabityIcons.divingMask.codePoint},
+  {'name': 'dogBone', 'icon': HabityIcons.dogBone.codePoint},
+  {'name': 'dogLeash', 'icon': HabityIcons.dogLeash.codePoint},
+  {
+    'name': 'ecologyPlantHand_1',
+    'icon': HabityIcons.ecologyPlantHand_1.codePoint
+  },
+  {'name': 'drugsPill', 'icon': HabityIcons.drugsPill.codePoint},
+  {'name': 'dog', 'icon': HabityIcons.dog.codePoint},
+  {'name': 'elephantWater', 'icon': HabityIcons.elephantWater.codePoint},
+  {'name': 'familyChild', 'icon': HabityIcons.familyChild.codePoint},
+  {'name': 'fastFoodBurger', 'icon': HabityIcons.fastFoodBurger.codePoint},
+  {'name': 'fastFoodPizza', 'icon': HabityIcons.fastFoodPizza.codePoint},
+  {'name': 'fishBowl', 'icon': HabityIcons.fishBowl.codePoint},
   {
     'name': 'familyOutdoorsPlayhouseSwing',
-    'icon': HabityIcons.familyOutdoorsPlayhouseSwing
+    'icon': HabityIcons.familyOutdoorsPlayhouseSwing.codePoint
   },
-  {'name': 'flower_1', 'icon': HabityIcons.flower_1},
-  {'name': 'foxTail', 'icon': HabityIcons.foxTail},
-  {'name': 'fruitWatermelon_1', 'icon': HabityIcons.fruitWatermelon_1},
-  {'name': 'gardeningTools', 'icon': HabityIcons.gardeningTools},
-  {'name': 'gardeningWateringPipe', 'icon': HabityIcons.gardeningWateringPipe},
-  {'name': 'gardeningLawnMower_1', 'icon': HabityIcons.gardeningLawnMower_1},
-  {'name': 'fruitWatermelon', 'icon': HabityIcons.fruitWatermelon},
-  {'name': 'giftBox', 'icon': HabityIcons.giftBox},
-  {'name': 'hairDressComb', 'icon': HabityIcons.hairDressComb},
-  {'name': 'hotelBed', 'icon': HabityIcons.hotelBed},
-  {'name': 'instrumentPianoKeys', 'icon': HabityIcons.instrumentPianoKeys},
-  {'name': 'like_1', 'icon': HabityIcons.like_1},
-  {'name': 'livestockCowBody', 'icon': HabityIcons.livestockCowBody},
-  {'name': 'loveItCircle', 'icon': HabityIcons.loveItCircle},
-  {'name': 'lovePlant', 'icon': HabityIcons.lovePlant},
+  {'name': 'flower_1', 'icon': HabityIcons.flower_1.codePoint},
+  {'name': 'foxTail', 'icon': HabityIcons.foxTail.codePoint},
+  {
+    'name': 'fruitWatermelon_1',
+    'icon': HabityIcons.fruitWatermelon_1.codePoint
+  },
+  {'name': 'gardeningTools', 'icon': HabityIcons.gardeningTools.codePoint},
+  {
+    'name': 'gardeningWateringPipe',
+    'icon': HabityIcons.gardeningWateringPipe.codePoint
+  },
+  {
+    'name': 'gardeningLawnMower_1',
+    'icon': HabityIcons.gardeningLawnMower_1.codePoint
+  },
+  {'name': 'fruitWatermelon', 'icon': HabityIcons.fruitWatermelon.codePoint},
+  {'name': 'giftBox', 'icon': HabityIcons.giftBox.codePoint},
+  {'name': 'hairDressComb', 'icon': HabityIcons.hairDressComb.codePoint},
+  {'name': 'hotelBed', 'icon': HabityIcons.hotelBed.codePoint},
+  {
+    'name': 'instrumentPianoKeys',
+    'icon': HabityIcons.instrumentPianoKeys.codePoint
+  },
+  {'name': 'like_1', 'icon': HabityIcons.like_1.codePoint},
+  {'name': 'livestockCowBody', 'icon': HabityIcons.livestockCowBody.codePoint},
+  {'name': 'loveItCircle', 'icon': HabityIcons.loveItCircle.codePoint},
+  {'name': 'lovePlant', 'icon': HabityIcons.lovePlant.codePoint},
   {
     'name': 'messagesBubbleSquareSmile',
-    'icon': HabityIcons.messagesBubbleSquareSmile
+    'icon': HabityIcons.messagesBubbleSquareSmile.codePoint
   },
-  {'name': 'modernMusicBassGuitar', 'icon': HabityIcons.modernMusicBassGuitar},
-  {'name': 'microphoneKaraoke_1', 'icon': HabityIcons.microphoneKaraoke_1},
-  {'name': 'modernMusicCymbal', 'icon': HabityIcons.modernMusicCymbal},
-  {'name': 'medicalFolder', 'icon': HabityIcons.medicalFolder},
-  {'name': 'moodHappy', 'icon': HabityIcons.moodHappy},
-  {'name': 'movieCinemaWatch_1', 'icon': HabityIcons.movieCinemaWatch_1},
-  {'name': 'musicGenreBaby', 'icon': HabityIcons.musicGenreBaby},
-  {'name': 'musicGenreMoon', 'icon': HabityIcons.musicGenreMoon},
-  {'name': 'musicNote_1', 'icon': HabityIcons.musicNote_1},
+  {
+    'name': 'modernMusicBassGuitar',
+    'icon': HabityIcons.modernMusicBassGuitar.codePoint
+  },
+  {
+    'name': 'microphoneKaraoke_1',
+    'icon': HabityIcons.microphoneKaraoke_1.codePoint
+  },
+  {
+    'name': 'modernMusicCymbal',
+    'icon': HabityIcons.modernMusicCymbal.codePoint
+  },
+  {'name': 'medicalFolder', 'icon': HabityIcons.medicalFolder.codePoint},
+  {'name': 'moodHappy', 'icon': HabityIcons.moodHappy.codePoint},
+  {
+    'name': 'movieCinemaWatch_1',
+    'icon': HabityIcons.movieCinemaWatch_1.codePoint
+  },
+  {'name': 'musicGenreBaby', 'icon': HabityIcons.musicGenreBaby.codePoint},
+  {'name': 'musicGenreMoon', 'icon': HabityIcons.musicGenreMoon.codePoint},
+  {'name': 'musicNote_1', 'icon': HabityIcons.musicNote_1.codePoint},
   {
     'name': 'nauticSportsSailingPerson',
-    'icon': HabityIcons.nauticSportsSailingPerson
+    'icon': HabityIcons.nauticSportsSailingPerson.codePoint
   },
-  {'name': 'outdoorsBenchSit', 'icon': HabityIcons.outdoorsBenchSit},
-  {'name': 'outdoorsCampFire', 'icon': HabityIcons.outdoorsCampFire},
-  {'name': 'outdoorsHorse', 'icon': HabityIcons.outdoorsHorse},
-  {'name': 'outdoorsKiteFlying', 'icon': HabityIcons.outdoorsKiteFlying},
-  {'name': 'partyBalloon', 'icon': HabityIcons.partyBalloon},
-  {'name': 'plane_1', 'icon': HabityIcons.plane_1},
-  {'name': 'plantSmile', 'icon': HabityIcons.plantSmile},
-  {'name': 'rabbitSide', 'icon': HabityIcons.rabbitSide},
-  {'name': 'rankingWinnerBadge', 'icon': HabityIcons.rankingWinnerBadge},
-  {'name': 'ratingStarCircle', 'icon': HabityIcons.ratingStarCircle},
-  {'name': 'readGlasses_1', 'icon': HabityIcons.readGlasses_1},
-  {'name': 'recyclingHandTrash', 'icon': HabityIcons.recyclingHandTrash},
-  {'name': 'recyclingTrashBin_2', 'icon': HabityIcons.recyclingTrashBin_2},
-  {'name': 'religionBible', 'icon': HabityIcons.religionBible},
-  {'name': 'sailingBoatWater_1', 'icon': HabityIcons.sailingBoatWater_1},
-  {'name': 'religionCross', 'icon': HabityIcons.religionCross},
-  {'name': 'restaurantEatingSet', 'icon': HabityIcons.restaurantEatingSet},
-  {'name': 'savingPiggyBank', 'icon': HabityIcons.savingPiggyBank},
-  {'name': 'schoolBag', 'icon': HabityIcons.schoolBag},
-  {'name': 'schoolBookApple', 'icon': HabityIcons.schoolBookApple},
-  {'name': 'scienceFictionShip', 'icon': HabityIcons.scienceFictionShip},
-  {'name': 'shirtPlain', 'icon': HabityIcons.shirtPlain},
-  {'name': 'showHatMagician_1', 'icon': HabityIcons.showHatMagician_1},
-  {'name': 'smileyAngry', 'icon': HabityIcons.smileyAngry},
-  {'name': 'smileyBlessed', 'icon': HabityIcons.smileyBlessed},
-  {'name': 'smileyLolAlternate_1', 'icon': HabityIcons.smileyLolAlternate_1},
-  {'name': 'spaceBase', 'icon': HabityIcons.spaceBase},
-  {'name': 'spaceRocket_2', 'icon': HabityIcons.spaceRocket_2},
-  {'name': 'studyLightIdea', 'icon': HabityIcons.studyLightIdea},
-  {'name': 'tigerBengal', 'icon': HabityIcons.tigerBengal},
-  {'name': 'toolsWenchHold', 'icon': HabityIcons.toolsWenchHold},
-  {'name': 'treeTwo', 'icon': HabityIcons.treeTwo},
-  {'name': 'tvDisable', 'icon': HabityIcons.tvDisable},
-  {'name': 'tvFlatScreenDisable', 'icon': HabityIcons.tvFlatScreenDisable},
-  {'name': 'trendsHotFlame', 'icon': HabityIcons.trendsHotFlame},
-  {'name': 'vegetablesBroccoli_1', 'icon': HabityIcons.vegetablesBroccoli_1},
-  {'name': 'vegetablesCarrot', 'icon': HabityIcons.vegetablesCarrot},
-  {'name': 'videoGameMagicWand', 'icon': HabityIcons.videoGameMagicWand},
-  {'name': 'videoGameMarioFlower', 'icon': HabityIcons.videoGameMarioFlower},
-  {'name': 'videoGamePotion', 'icon': HabityIcons.videoGamePotion},
-  {'name': 'videoGameShwings', 'icon': HabityIcons.videoGameShwings},
+  {'name': 'outdoorsBenchSit', 'icon': HabityIcons.outdoorsBenchSit.codePoint},
+  {'name': 'outdoorsCampFire', 'icon': HabityIcons.outdoorsCampFire.codePoint},
+  {'name': 'outdoorsHorse', 'icon': HabityIcons.outdoorsHorse.codePoint},
+  {
+    'name': 'outdoorsKiteFlying',
+    'icon': HabityIcons.outdoorsKiteFlying.codePoint
+  },
+  {'name': 'partyBalloon', 'icon': HabityIcons.partyBalloon.codePoint},
+  {'name': 'plane_1', 'icon': HabityIcons.plane_1.codePoint},
+  {'name': 'plantSmile', 'icon': HabityIcons.plantSmile.codePoint},
+  {'name': 'rabbitSide', 'icon': HabityIcons.rabbitSide.codePoint},
+  {
+    'name': 'rankingWinnerBadge',
+    'icon': HabityIcons.rankingWinnerBadge.codePoint
+  },
+  {'name': 'ratingStarCircle', 'icon': HabityIcons.ratingStarCircle.codePoint},
+  {'name': 'readGlasses_1', 'icon': HabityIcons.readGlasses_1.codePoint},
+  {
+    'name': 'recyclingHandTrash',
+    'icon': HabityIcons.recyclingHandTrash.codePoint
+  },
+  {
+    'name': 'recyclingTrashBin_2',
+    'icon': HabityIcons.recyclingTrashBin_2.codePoint
+  },
+  {'name': 'religionBible', 'icon': HabityIcons.religionBible.codePoint},
+  {
+    'name': 'sailingBoatWater_1',
+    'icon': HabityIcons.sailingBoatWater_1.codePoint
+  },
+  {'name': 'religionCross', 'icon': HabityIcons.religionCross.codePoint},
+  {
+    'name': 'restaurantEatingSet',
+    'icon': HabityIcons.restaurantEatingSet.codePoint
+  },
+  {'name': 'savingPiggyBank', 'icon': HabityIcons.savingPiggyBank.codePoint},
+  {'name': 'schoolBag', 'icon': HabityIcons.schoolBag.codePoint},
+  {'name': 'schoolBookApple', 'icon': HabityIcons.schoolBookApple.codePoint},
+  {
+    'name': 'scienceFictionShip',
+    'icon': HabityIcons.scienceFictionShip.codePoint
+  },
+  {'name': 'shirtPlain', 'icon': HabityIcons.shirtPlain.codePoint},
+  {
+    'name': 'showHatMagician_1',
+    'icon': HabityIcons.showHatMagician_1.codePoint
+  },
+  {'name': 'smileyAngry', 'icon': HabityIcons.smileyAngry.codePoint},
+  {'name': 'smileyBlessed', 'icon': HabityIcons.smileyBlessed.codePoint},
+  {
+    'name': 'smileyLolAlternate_1',
+    'icon': HabityIcons.smileyLolAlternate_1.codePoint
+  },
+  {'name': 'spaceBase', 'icon': HabityIcons.spaceBase.codePoint},
+  {'name': 'spaceRocket_2', 'icon': HabityIcons.spaceRocket_2.codePoint},
+  {'name': 'studyLightIdea', 'icon': HabityIcons.studyLightIdea.codePoint},
+  {'name': 'tigerBengal', 'icon': HabityIcons.tigerBengal.codePoint},
+  {'name': 'toolsWenchHold', 'icon': HabityIcons.toolsWenchHold.codePoint},
+  {'name': 'treeTwo', 'icon': HabityIcons.treeTwo.codePoint},
+  {'name': 'tvDisable', 'icon': HabityIcons.tvDisable.codePoint},
+  {
+    'name': 'tvFlatScreenDisable',
+    'icon': HabityIcons.tvFlatScreenDisable.codePoint
+  },
+  {'name': 'trendsHotFlame', 'icon': HabityIcons.trendsHotFlame.codePoint},
+  {
+    'name': 'vegetablesBroccoli_1',
+    'icon': HabityIcons.vegetablesBroccoli_1.codePoint
+  },
+  {'name': 'vegetablesCarrot', 'icon': HabityIcons.vegetablesCarrot.codePoint},
+  {
+    'name': 'videoGameMagicWand',
+    'icon': HabityIcons.videoGameMagicWand.codePoint
+  },
+  {
+    'name': 'videoGameMarioFlower',
+    'icon': HabityIcons.videoGameMarioFlower.codePoint
+  },
+  {'name': 'videoGamePotion', 'icon': HabityIcons.videoGamePotion.codePoint},
+  {'name': 'videoGameShwings', 'icon': HabityIcons.videoGameShwings.codePoint},
   {
     'name': 'videoGameXboxController',
-    'icon': HabityIcons.videoGameXboxController
+    'icon': HabityIcons.videoGameXboxController.codePoint
   },
   {
     'name': 'wildlifeProtectionHold',
-    'icon': HabityIcons.wildlifeProtectionHold
+    'icon': HabityIcons.wildlifeProtectionHold.codePoint
   },
 ];

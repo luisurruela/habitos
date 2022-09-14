@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/widgets/habits_icons.dart';
-import 'package:habitos/widgets/star_shape.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../theme/theme.dart';
@@ -260,20 +259,17 @@ class SliderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: SfSlider(
-          min: 1,
-          max: 100,
-          value: currentValue.ceil(),
-          activeColor: AppTheme.starYellow,
-          inactiveColor: const Color(0xFF6553D4),
-          enableTooltip: true,
-          tooltipTextFormatterCallback:
-              (dynamic actualValue, String formattedText) {
-            return '+$formattedText';
-          },
-          tooltipShape: const SfRectangularTooltipShape(),
-          interval: 1,
-          onChanged: (value) => callback(value),
+        child: SliderTheme(
+          data: const SliderThemeData(
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15)),
+          child: Slider(
+              value: currentValue.ceil().toDouble(),
+              max: 100,
+              divisions: 100,
+              activeColor: AppTheme.starYellow,
+              inactiveColor: const Color(0xFF6553D4),
+              label: currentValue.round().toString(),
+              onChanged: (value) => callback(value)),
         ));
   }
 }
@@ -314,7 +310,7 @@ class SubmitButton extends StatelessWidget {
 
 class IconsColorsButtons extends StatelessWidget {
   final Function callback;
-  final dynamic icon;
+  final int icon;
   final int color;
   const IconsColorsButtons(
       {Key? key,
@@ -330,7 +326,7 @@ class IconsColorsButtons extends StatelessWidget {
       child: Row(
         children: [
           RoundedButton(
-            icon: icon,
+            icon: IconData(icon, fontFamily: 'HabityIcons'),
             text: 'Icon',
             color: const Color(0xFFB2A9E9),
             callback: showIconPopup,
@@ -395,7 +391,8 @@ class IconsColorsButtons extends StatelessWidget {
                               onPressed: () =>
                                   callback(element['icon'], 'icon'),
                               icon: Icon(
-                                element['icon'],
+                                IconData(element['icon'],
+                                    fontFamily: 'HabityIcons'),
                                 color: Colors.white,
                               )))
                           .toList()),
