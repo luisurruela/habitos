@@ -222,7 +222,10 @@ class _HomeWidgetState extends State<HomeWidget> {
     await showModalBottomSheet<void>(
       backgroundColor: AppTheme.darkPurple,
       context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      useRootNavigator: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       builder: (context) {
         return Wrap(
           children: [
