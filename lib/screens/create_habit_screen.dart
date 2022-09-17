@@ -3,6 +3,7 @@ import 'package:habitos/services/firebase.dart';
 import 'package:habitos/theme/habity_icons_icons.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:habitos/models/habit_model.dart' as model;
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../widgets/habits_widgets.dart';
 
@@ -57,11 +58,15 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
   TextEditingController title = TextEditingController();
   bool validation = false;
 
+  late FToast fToast;
+
   @override
   void initState() {
     children.then((value) {
       childrenList = value;
     });
+    fToast = FToast();
+    fToast.init(context);
     super.initState();
   }
 
@@ -407,6 +412,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     } else {
       childrenSelected.add(id);
     }
+    print(childrenSelected);
     updateValidation();
     setState(() {});
   }
@@ -427,29 +433,40 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
   }
 
   notifyAndredirect() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        duration: const Duration(seconds: 5),
-        content: Container(
-          decoration: BoxDecoration(
-              color: Colors.black,
-              border: Border.all(width: 2.0, color: Colors.black),
-              borderRadius: BorderRadius.circular(8)),
-          margin: const EdgeInsets.fromLTRB(0, 0, 0, 75),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 15),
-            child: Text(
-              'Habit added',
-              textAlign: TextAlign.center,
-            ),
+    Widget toast = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 18.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: AppTheme.darkPurple,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Text(
+            "Habit added",
+            style: TextStyle(color: Colors.white),
           ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 1000));
+        ],
+      ),
+    );
+
+    // Custom Toast Position
+    fToast.showToast(
+        child: toast,
+        toastDuration: const Duration(seconds: 3),
+        positionedToastBuilder: (context, child) {
+          return Positioned(
+            child: child,
+            bottom: 130.0,
+            left: MediaQuery.of(context).size.width * 0.5 - 55,
+          );
+        });
+
     Navigator.pushNamedAndRemoveUntil(context, 'home', (route) => false);
   }
 
   submit() async {
-    for (var i = 0; i < childrenSelected.length; i++) {
+    for (final child in childrenSelected) {
       model.Habit newHabit = model.Habit(
           title: title.text,
           icon: iconSelected,
@@ -461,10 +478,12 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
           daysPerMonth: month,
           time: group,
           status: 'active',
-          childId: childrenList[i]['childId']);
+          childId: child);
 
+      final index = childrenSelected.indexOf(child);
+      final lastElementIndex = childrenSelected.indexOf(childrenSelected.last);
       await Firebase().addHabit(newHabit);
-      if (i == childrenSelected.length - 1) {
+      if (index == lastElementIndex) {
         notifyAndredirect();
       }
     }

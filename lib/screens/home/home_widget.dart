@@ -78,6 +78,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   Future getHabits(String id) async {
     final getHabits = await Firebase().getHabits(id);
     habits = getHabits;
+    if (!mounted) return;
     setState(() {});
     loading = false;
   }
@@ -129,6 +130,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     childInitial =
         children[index]['name'].toString().substring(0, 1).toUpperCase();
     getHabits(children[index]['childId']);
+    if (!mounted) return;
     setState(() {});
   }
 
