@@ -40,7 +40,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: AppTheme.backgroundGradient,
+      decoration: AppTheme.homeBackgroundGradient,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),

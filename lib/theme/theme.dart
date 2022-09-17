@@ -73,4 +73,17 @@ class AppTheme {
         AppTheme.primaryLight,
         AppTheme.primary,
       ]));
+
+  static BoxDecoration homeBackgroundGradient = const BoxDecoration(
+      gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          stops: [
+        0.4,
+        0.8
+      ],
+          colors: [
+        AppTheme.primary,
+        AppTheme.darkPurple,
+      ]));
 }

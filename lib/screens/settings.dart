@@ -8,7 +8,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: AppTheme.backgroundGradient,
+        decoration: AppTheme.homeBackgroundGradient,
         child: const SafeArea(
             child: Center(
           child: Text(
