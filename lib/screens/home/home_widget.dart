@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:habitos/models/preference_model.dart';
 import 'package:habitos/screens/home/calendar_widget.dart';
 import 'package:habitos/screens/home/habits_widget.dart';
+import 'package:habitos/services/firebase.dart';
 import 'package:habitos/services/shared_preferences.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -21,6 +23,8 @@ class HomeWidget extends StatefulWidget {
 class _HomeWidgetState extends State<HomeWidget> {
   int selectedChild = 0;
   List children = [];
+  List habits = [];
+  bool loading = true;
   String childName = '';
   String childPoints = '0';
   String childInitial = '';
@@ -36,25 +40,31 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: AppTheme.backgroundGradient,
+      decoration: AppTheme.homeBackgroundGradient,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                header(),
-                PointsBar(childName: childName, childPoints: childPoints),
-                const SizedBox(height: 20),
-                Calendar(function: updateSelectedDate),
-                const SizedBox(height: 30),
-                // Habtis(
-                //   currentDate: _currentDate.toString(),
-                // )
-                _noHabits()
-              ],
+          child: Stack(children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  header(),
+                  PointsBar(childName: childName, childPoints: childPoints),
+                  const SizedBox(height: 20),
+                  Calendar(function: updateSelectedDate),
+                  const SizedBox(height: 30),
+                  if (habits.isNotEmpty) ...[
+                    Habits(
+                      currentDate: _currentDate.toString(),
+                      habits: habits,
+                    ),
+                  ],
+                  if (habits.isEmpty && loading == false) ...[_noHabits()]
+                ],
+              ),
             ),
-          ),
+            if (loading) ...[const Loader()],
+          ]),
         ),
       ),
     );
@@ -65,6 +75,14 @@ class _HomeWidgetState extends State<HomeWidget> {
     setState(() {});
   }
 
+  Future getHabits(String id) async {
+    final getHabits = await Firebase().getHabits(id);
+    habits = getHabits;
+    if (!mounted) return;
+    setState(() {});
+    loading = false;
+  }
+
   void getChildren() async {
     final query = await _collectionRef
         .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
@@ -73,16 +91,29 @@ class _HomeWidgetState extends State<HomeWidget> {
     children = query.docs.map((doc) => doc.data()).toList();
     setState(() {});
 
-    if (await SharedPref().contains('selectedChild')) {
-      // await SharedPref().remove('selectedChild');
-      final preferences = await SharedPref().read('selectedChild');
-      if (preferences.uid != FirebaseAuth.instance.currentUser!.uid) {
-        setChild(0);
-      } else {
-        setChild(int.parse(preferences.selectedChild));
-      }
+    if (children.isEmpty) {
+      await SharedPref().remove('selectedChild');
+      Navigator.pop(context);
+      Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return const AddKidScreen();
+          },
+        ),
+        (_) => false,
+      );
     } else {
-      setChild(0);
+      if (await SharedPref().contains('selectedChild')) {
+        // await SharedPref().remove('selectedChild');
+        final preferences = await SharedPref().read('selectedChild');
+        if (preferences.uid != FirebaseAuth.instance.currentUser!.uid) {
+          setChild(0);
+        } else {
+          setChild(int.parse(preferences.selectedChild));
+        }
+      } else {
+        setChild(0);
+      }
     }
   }
 
@@ -98,6 +129,8 @@ class _HomeWidgetState extends State<HomeWidget> {
     childPoints = children[index]['points'].toString();
     childInitial =
         children[index]['name'].toString().substring(0, 1).toUpperCase();
+    getHabits(children[index]['childId']);
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -146,8 +179,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ),
                     (_) => false,
                   );
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (BuildContext context) => const Login()));
                 },
                 icon: const Icon(Icons.notifications_outlined),
                 iconSize: 26,
@@ -191,7 +222,10 @@ class _HomeWidgetState extends State<HomeWidget> {
     await showModalBottomSheet<void>(
       backgroundColor: AppTheme.darkPurple,
       context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      useRootNavigator: true,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       builder: (context) {
         return Wrap(
           children: [
@@ -268,6 +302,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 onTap: () {
                                   Navigator.pop(context);
                                   setChild(index);
+                                  habits = [];
+                                  loading = true;
+                                  setState(() {});
                                 },
                               );
                             },
@@ -299,10 +336,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                           pageTransitionAnimation:
                               PageTransitionAnimation.cupertino,
                         );
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => const AddKidScreen()),);
                       },
                     ),
                   ],
@@ -377,6 +410,20 @@ class PointsBar extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class Loader extends StatelessWidget {
+  const Loader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const SpinKitRing(
+      color: AppTheme.secondary,
+      size: 50.0,
     );
   }
 }

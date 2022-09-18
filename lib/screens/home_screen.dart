@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:habitos/screens/add_kid.dart';
+import 'package:habitos/screens/create_habit_screen.dart';
 import 'package:habitos/screens/email_verification_screen.dart';
 import 'package:habitos/screens/home/home_widget.dart';
 import 'package:habitos/screens/loading_screen.dart';
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: AppTheme.primary, // Default is Colors.white.
+      backgroundColor: AppTheme.darkPurple, // Default is Colors.white.
       handleAndroidBackButtonPress: true, // Default is true.
       resizeToAvoidBottomInset:
           true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
@@ -130,13 +131,13 @@ class _HomePageState extends State<HomePage> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(HabityIcons.task_alt),
+        icon: const Icon(HabityIcons.taskAlt),
         title: ("Habits"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(HabityIcons.emoji_events),
+        icon: const Icon(HabityIcons.emojiEvents),
         title: ("Rewards"),
         activeColorPrimary: Colors.white,
         inactiveColorPrimary: Colors.white,
@@ -170,15 +171,23 @@ class FloatingButtonWidget extends StatelessWidget {
               overlayOpacity: 0,
               backgroundColor: AppTheme.tertiary,
               foregroundColor: Colors.black,
+              spaceBetweenChildren: 15,
+              spacing: 5,
+              animationDuration: const Duration(milliseconds: 100),
               children: [
                 SpeedDialChild(
-                  child: const Icon(HabityIcons.ic_round_add_task),
+                  child: const Icon(HabityIcons.icRroundAddTask),
                   label: 'Add habit',
                   backgroundColor: AppTheme.tertiary,
-                  onTap: () {/* Do something */},
+                  onTap: () => pushNewScreen(
+                    context,
+                    screen: const CreateHabitScreen(),
+                    withNavBar: false, // OPTIONAL VALUE. True by default.
+                    pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                  ),
                 ),
                 SpeedDialChild(
-                  child: const Icon(HabityIcons.emoji_events),
+                  child: const Icon(HabityIcons.emojiEvents),
                   label: 'Add reward',
                   backgroundColor: AppTheme.tertiary,
                   onTap: () {/* Do someting */},
