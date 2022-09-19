@@ -266,8 +266,9 @@ class SliderWidget extends StatelessWidget {
               value: currentValue.ceil().toDouble(),
               max: 100,
               divisions: 100,
-              activeColor: AppTheme.starYellow,
+              activeColor: AppTheme.secondary,
               inactiveColor: const Color(0xFF6553D4),
+              thumbColor: AppTheme.starYellow,
               label: currentValue.round().toString(),
               onChanged: (value) => callback(value)),
         ));

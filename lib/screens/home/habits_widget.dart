@@ -32,7 +32,10 @@ class Habits extends StatelessWidget {
         const Text(
           'MORNING',
           style: TextStyle(
-              color: Colors.white70, fontWeight: FontWeight.bold, fontSize: 14),
+              color: Colors.white70,
+              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              letterSpacing: 2),
         ),
         const SizedBox(
           height: 10,
@@ -90,8 +93,7 @@ class HabityComponent extends StatelessWidget {
                         ),
                         const Text(
                           'Go for it!',
-                          style:
-                              TextStyle(color: AppTheme.tertiary, fontSize: 18),
+                          style: TextStyle(color: Colors.white, fontSize: 18),
                         ),
                       ],
                     ),
@@ -103,8 +105,11 @@ class HabityComponent extends StatelessWidget {
                   child: Row(children: [
                     const Icon(
                       Icons.star,
-                      color: AppTheme.secondary,
+                      color: AppTheme.lightPurple,
                       size: 20,
+                    ),
+                    const SizedBox(
+                      width: 3,
                     ),
                     Text(
                       '+${data['points'].toString()}',
