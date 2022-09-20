@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:habitos/theme/habity_icons_icons.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:intl/intl.dart';
 
 class Habits extends StatelessWidget {
-  const Habits({Key? key, required this.currentDate, required this.habits})
-      : super(key: key);
   final String currentDate;
   final List habits;
+  final List morningHabits;
+  final List afternoonHabits;
+  final List nightHabits;
+  const Habits(
+      {Key? key,
+      required this.currentDate,
+      required this.habits,
+      required this.morningHabits,
+      required this.afternoonHabits,
+      required this.nightHabits})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +37,66 @@ class Habits extends StatelessWidget {
         const SizedBox(
           height: 25,
         ),
-        const Text(
-          'MORNING',
-          style: TextStyle(
-              color: Colors.white70,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-              letterSpacing: 2),
-        ),
+        if (morningHabits.isNotEmpty) ...[
+          const Text(
+            'MORNING',
+            style: TextStyle(
+                color: Colors.white70,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                letterSpacing: 2),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Column(
+            children: morningHabits
+                .map((habit) => HabityComponent(data: habit))
+                .toList(),
+          )
+        ],
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
-        Column(
-          children:
-              habits.map((habit) => HabityComponent(data: habit)).toList(),
-        )
+        if (afternoonHabits.isNotEmpty) ...[
+          const Text(
+            'Afternoon',
+            style: TextStyle(
+                color: Colors.white70,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                letterSpacing: 2),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Column(
+            children: afternoonHabits
+                .map((habit) => HabityComponent(data: habit))
+                .toList(),
+          )
+        ],
+        const SizedBox(
+          height: 20,
+        ),
+        if (nightHabits.isNotEmpty) ...[
+          const Text(
+            'Night',
+            style: TextStyle(
+                color: Colors.white70,
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                letterSpacing: 2),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Column(
+            children: nightHabits
+                .map((habit) => HabityComponent(data: habit))
+                .toList(),
+          )
+        ],
       ],
     );
   }

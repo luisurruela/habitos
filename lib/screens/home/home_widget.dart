@@ -61,6 +61,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Habits(
                       currentDate: _currentDate.toString(),
                       habits: habits,
+                      morningHabits: morningHabits,
+                      afternoonHabits: afternoonHabits,
+                      nightHabits: nightHabits,
                     ),
                   ],
                   if (habits.isEmpty && loading == false) ...[_noHabits()]
