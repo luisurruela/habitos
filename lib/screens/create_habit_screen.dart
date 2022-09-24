@@ -275,7 +275,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
                                                                   'childId']),
                                                       style: ElevatedButton
                                                           .styleFrom(
-                                                        primary:
+                                                        backgroundColor:
                                                             AppTheme.darkPurple,
                                                         side: BorderSide(
                                                             width: 2,
@@ -427,7 +427,7 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     } else {
       childrenSelected.add(id);
     }
-    print(childrenSelected);
+
     updateValidation();
     setState(() {});
   }
