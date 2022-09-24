@@ -83,6 +83,10 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   Future getHabits(String id) async {
+    morningHabits = [];
+    afternoonHabits = [];
+    nightHabits = [];
+    habits = [];
     final getHabits = await Firebase().getHabits(id);
     habits = getHabits;
 
@@ -111,6 +115,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         .get();
 
     children = query.docs.map((doc) => doc.data()).toList();
+    if (!mounted) return;
     setState(() {});
 
     if (children.isEmpty) {
@@ -170,7 +175,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
             onPressed: () => showBottomModal(context),
             style: ElevatedButton.styleFrom(
-              primary: AppTheme.secondary,
+              backgroundColor: AppTheme.secondary,
               side: const BorderSide(width: 2, color: Colors.white),
               elevation: 3,
               shape: RoundedRectangleBorder(
@@ -293,7 +298,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     onPressed: () => showBottomModal(context),
                                     style: ElevatedButton.styleFrom(
-                                      primary: AppTheme.secondary,
+                                      backgroundColor: AppTheme.secondary,
                                       side: const BorderSide(
                                           width: 2, color: Colors.white),
                                       elevation: 3,

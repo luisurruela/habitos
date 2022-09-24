@@ -60,7 +60,7 @@ class Habits extends StatelessWidget {
         ),
         if (afternoonHabits.isNotEmpty) ...[
           const Text(
-            'Afternoon',
+            'AFTERNOON',
             style: TextStyle(
                 color: Colors.white70,
                 fontWeight: FontWeight.bold,
@@ -81,7 +81,7 @@ class Habits extends StatelessWidget {
         ),
         if (nightHabits.isNotEmpty) ...[
           const Text(
-            'Night',
+            'NIGHT',
             style: TextStyle(
                 color: Colors.white70,
                 fontWeight: FontWeight.bold,
@@ -127,29 +127,27 @@ class HabityComponent extends StatelessWidget {
               ),
               SizedBox(
                 width: width * 0.54,
-                child: Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data['title'],
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w900,
-                              color: Colors.white,
-                              fontSize: 18),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        const Text(
-                          'Go for it!',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ],
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data['title'],
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            fontSize: 18),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      const Text(
+                        'Go for it!',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ],
                   ),
                 ),
               ),
