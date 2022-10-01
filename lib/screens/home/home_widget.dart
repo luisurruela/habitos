@@ -148,7 +148,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
             onPressed: () => showBottomModal(context),
             style: ElevatedButton.styleFrom(
-              primary: AppTheme.secondary,
+              backgroundColor: AppTheme.secondary,
               side: const BorderSide(width: 2, color: Colors.white),
               elevation: 3,
               shape: RoundedRectangleBorder(
@@ -271,7 +271,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     ),
                                     onPressed: () => showBottomModal(context),
                                     style: ElevatedButton.styleFrom(
-                                      primary: AppTheme.secondary,
+                                      backgroundColor: AppTheme.secondary,
                                       side: const BorderSide(
                                           width: 2, color: Colors.white),
                                       elevation: 3,

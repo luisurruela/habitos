@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/widgets/habits_icons.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../theme/theme.dart';
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:habitos/theme/habity_icons_icons.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:intl/intl.dart';
 
