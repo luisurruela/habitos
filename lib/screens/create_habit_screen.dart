@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitos/services/firebase.dart';
+import 'package:habitos/services/util.dart';
 import 'package:habitos/theme/habity_icons_icons.dart';
 import 'package:habitos/theme/theme.dart';
 import 'package:habitos/models/habit_model.dart' as model;
@@ -248,6 +249,47 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
                                       .map(
                                         (element) => Stack(
                                           children: [
+
+                                            Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: SizedBox(
+                                                    width: 60,
+                                                    height: 60,
+                                                    child: ElevatedButton(
+                                                      child: Text(
+                                                        element['name']
+                                                            .toString()
+                                                            .substring(0, 1)
+                                                            .toUpperCase(),
+                                                        style: const TextStyle(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      onPressed: () =>
+                                                          updateChildrenSelected(
+                                                              element[
+                                                                  'childId']),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            AppTheme.darkPurple,
+                                                        side: BorderSide(
+                                                            width: 2,
+                                                            color: childrenSelected
+                                                                    .contains(
+                                                                        element[
+                                                                            'childId'])
+                                                                ? const Color(
+                                                                    0xFFFF6668)
+                                                                : Colors.white),
+                                                        elevation: 0,
+                                                        shape: RoundedRectangleBorder(
+
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(8.0),
@@ -282,13 +324,24 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
                                                     elevation: 0,
                                                     shape:
                                                         RoundedRectangleBorder(
+
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
                                                                         50)),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
+                                                Text(
+                                                  Util.getFirstWord(
+                                                      element['name']),
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500),
+                                                )
+                                              ],
                                             ),
                                             if (childrenSelected.contains(
                                                 element['childId'])) ...[
@@ -411,8 +464,8 @@ class CreateHabitScreenState extends State<CreateHabitScreen> {
     } else {
       childrenSelected.add(id);
     }
-    
-    updateValidation();
+
+updateValidation();
     setState(() {});
   }
 

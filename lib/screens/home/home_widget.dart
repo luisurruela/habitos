@@ -7,6 +7,7 @@ import 'package:habitos/screens/home/calendar_widget.dart';
 import 'package:habitos/screens/home/habits_widget.dart';
 import 'package:habitos/services/firebase.dart';
 import 'package:habitos/services/shared_preferences.dart';
+import 'package:habitos/services/util.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../theme/theme.dart';
@@ -24,6 +25,9 @@ class _HomeWidgetState extends State<HomeWidget> {
   int selectedChild = 0;
   List children = [];
   List habits = [];
+  List morningHabits = [];
+  List afternoonHabits = [];
+  List nightHabits = [];
   bool loading = true;
   String childName = '';
   String childPoints = '0';
@@ -57,6 +61,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Habits(
                       currentDate: _currentDate.toString(),
                       habits: habits,
+                      morningHabits: morningHabits,
+                      afternoonHabits: afternoonHabits,
+                      nightHabits: nightHabits,
                     ),
                   ],
                   if (habits.isEmpty && loading == false) ...[_noHabits()]
@@ -76,8 +83,27 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   Future getHabits(String id) async {
+    morningHabits = [];
+    afternoonHabits = [];
+    nightHabits = [];
+    habits = [];
     final getHabits = await Firebase().getHabits(id);
     habits = getHabits;
+
+    for (final habit in habits) {
+      if (habit['time']['morning']) {
+        morningHabits.add(habit);
+      }
+
+      if (habit['time']['afternoon']) {
+        afternoonHabits.add(habit);
+      }
+
+      if (habit['time']['night']) {
+        nightHabits.add(habit);
+      }
+    }
+
     if (!mounted) return;
     setState(() {});
     loading = false;
@@ -89,6 +115,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         .get();
 
     children = query.docs.map((doc) => doc.data()).toList();
+    if (!mounted) return;
     setState(() {});
 
     if (children.isEmpty) {
@@ -386,7 +413,7 @@ class PointsBar extends StatelessWidget {
             Flexible(
               child: RichText(
                   text: TextSpan(
-                      text: childName,
+                      text: Util.getFirstWord(childName),
                       style: const TextStyle(
                           fontWeight: FontWeight.w800, fontSize: 24),
                       children: <TextSpan>[

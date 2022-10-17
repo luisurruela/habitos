@@ -341,7 +341,7 @@ class _AddKidScreenState extends State<AddKidScreen> {
                   ),
                   textButtonTheme: TextButtonThemeData(
                     style: TextButton.styleFrom(
-                      foregroundColor: AppTheme.primary, // button text color
+                      backgroundColor: AppTheme.primary, // button text color
                     ),
                   )),
               child: child!);
